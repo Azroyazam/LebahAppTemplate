@@ -1,11 +1,12 @@
 # LebahAppTemplate
-A Java framework for developing web applications, based on the Lebah Framework.
 
-An Eclipse project that can be right away open with your Eclipse IDE.
+1. A Java framework for developing web applications, based on the Lebah Framework.
 
-Contains example application that is using the LebahRecordTemplateModule to perform database driven web application.
+2. An Eclipse project that can be right away open with your Eclipse IDE.
 
-About Lebah Framework
+3. Contains example application that is using the LebahRecordTemplateModule to perform database driven web application.
+
+4. About Lebah Framework
 
 Lebah is a lightweight web-based application that act as a container for other applications called portlets. 
 
