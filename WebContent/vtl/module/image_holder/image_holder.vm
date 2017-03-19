@@ -1,0 +1,284 @@
+<form name="frm$moduleId" method="post">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td height="5" colspan="3"></td></tr>
+<tr>
+	<td width="5"></td>
+	<td>
+#if ($isController == true)
+	<table cellpadding="2" cellspacing="1" border="0">
+	<tr>
+		<td colspan="2">
+		Provide valid Image URL and Target URL.<br>
+		Image URL is a compulsory field.
+		</td>
+	</tr>
+	<tr>
+		<td class="table_head">Order</td>
+		<td>
+			<select name="order">
+			#foreach ($order in [1..$rowCount])
+			<option value = "$order" #if($order == $rowCount) selected #end >$order</option>
+			#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="table_head">Media Type</td>
+		<td>
+			<select name="isFlash">
+				<option value="0">Non-Flash</option>
+				<option value="1">Flash</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="table_head">Image URL</td>
+		<td><input type="text" name="image_url" size="60" maxlength="255"></td>
+	</tr>
+	<tr><td colspan="2" >Note: When Width or Height is not specified, the default dimensions of the image will be used.</td></tr>
+	<tr>
+		<td class="table_head">Width</td>
+		<td><input type="text" name="image_width" size="5" maxlength="4"></td>
+	</tr>
+	<tr>
+		<td class="table_head">Height</td>
+		<td><input type="text" name="image_height" size="5" maxlength="4"></td>
+	</tr>
+	<tr>
+		<td class="table_head">Caption</td>
+		<td><input type="text" name="image_caption" size="60" maxlength="255"></td>
+	</tr>
+	<tr>
+		<td class="table_head">Target URL</td>
+		<td><input type="text" name="target_url" size="60" maxlength="255"></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">
+			<input type="button" name="btnAdd" value="Add Image" onclick="doAdd()">
+			<input type="button" name="btnUpdate" value="Update Image" onclick="doUpdate()" disabled>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" value="Reset" onclick="doReset()">
+		</td>
+	</tr>
+	</table>
+	<hr>
+#end
+#if ($imageHolders.isEmpty() == false)
+	<table width="100%" cellpadding="1" cellspacing="3" border="0">
+	#foreach($obj in $imageHolders)
+	<tr>
+		#if ($obj.isFlash() == false)
+		<td valign="top" align="center">
+			#if ($obj.getTargetURL().equals(""))
+			<img src="$obj.getImageURL()" border="0">
+			#else
+			<a href="javascript:openWindow('$obj.getTargetURL()','$obj.getId()')"><img src="$obj.getImageURL()" border="0" 
+				#if (!$obj.getWidth().equals("")) width="$obj.getWidth()" #end
+				#if (!$obj.getHeight().equals("")) height="$obj.getHeight()" #end
+				#if (!$obj.getCaption().equals("")) alt="$obj.getCaption()" #end ></a>
+			#end
+		</td>
+		#else
+		<td valign="top" align="center" bgcolor="#000000">
+			<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" 
+				codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0"
+				#if (!$obj.getWidth().equals("")) width="$obj.getWidth()" #end 
+				#if (!$obj.getHeight().equals("")) height="$obj.getHeight()" #end >
+			<param name="movie" value="$obj.getImageURL()" />
+			<param name="quality" value="high" />
+			<param name="scale" value="exactfit" />
+			<param name="wmode" value="opaque" />
+			<param name="bgcolor" value="#FFFFFF" />
+			<EMBED src="$obj.getImageURL()" 
+				quality="high" scale="exactfit" wmode="opaque" bgcolor="#FFFFFF"  WIDTH="100%" HEIGHT="100%"   swLiveConnect="true" NAME="CF4" TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"></EMBED>
+			</OBJECT>
+		</td>
+		#end
+		#if ($isController == true)
+			#if ($obj.isFlash() == false)
+				#set ($isFlash = "0")
+			#else
+				#set ($isFlash = "1")
+			#end
+		<td valign="top" width="100%">
+			<b>Order:</b> [$obj.getOrder()]<br>
+			<b>Image URL:</b> $obj.getImageURL()<br>
+			<b>Target URL:</b> $obj.getTargetURL()<br>
+			<b>Width:</b> $obj.getWidth()<br>
+			<b>Height:</b> $obj.getHeight()<br>
+			<b>Caption:</b> $obj.getCaption()<br>
+			<b>Upload Date:</b> $obj.getUploadDate()<br><br>
+			<b>Hits:</b> $obj.getHitCount()<br>
+			<b>Latest Hit:</b> $obj.getLatestHit()<br>
+			<input type="button" value="Edit" onclick="doEdit('$obj.getId()','$obj.getImageURL()','$obj.getTargetURL()','$obj.getOrder()','$isFlash','$obj.getWidth()','$obj.getHeight()','$obj.getCaption()')">
+			<input type="button" value="Delete" onclick="doDelete('$obj.getId()')"><br><br>
+		</td>
+		#end
+	</tr>
+	#end
+	</table>
+#end
+
+	</td>
+	<td width="5"></td>
+</tr>
+<tr><td height="5" colspan="3"></td></tr>
+</table>
+<input type="hidden" name="old_order" value="">
+<input type="hidden" name="image_id" value="">
+</form>
+<script>
+var illegalURLChars= /[\(\)\<\>\,\;\\\"\[\]\~\!\@\#\$\^\*\'\|\`]/;
+var validNums = /^\d{1,4}$/;
+
+#if ($isController == true)
+function validateURL(url)
+{
+	if (illegalURLChars.test(url))	{
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function validateNumber(num)
+{
+	if (validNums.test(num))	{
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function doAdd()
+{
+	var imageURL = document.frm${moduleId}.image_url.value;
+	var targetURL = document.frm${moduleId}.target_url.value;
+	var w = document.frm${moduleId}.image_width.value;
+	var h = document.frm${moduleId}.image_height.value;
+	
+	if (imageURL == "") {
+		alert("Image URL cannot remain empty.");
+		return;
+	}
+    if (validateURL(imageURL) == false) {
+		alert("Image URL contains illegal character.")
+    	document.frm${moduleId}.image_url.focus();
+    	return;
+    }
+	if (w != "") {
+	    if (validateNumber(w) == false) {
+			alert("Use numbers only for Width.")
+	    	document.frm${moduleId}.image_width.focus();
+	    	return;
+	    }
+    }    
+	if (h != "") {
+	    if (validateNumber(h) == false) {
+			alert("Use numbers only for Height.")
+	    	document.frm${moduleId}.image_height.focus();
+	    	return;
+	    }
+    }    
+    if (validateURL(targetURL) == false) {
+		alert("Target URL contains illegal character.")
+    	document.frm${moduleId}.target_url.focus();
+    	return;
+    }    
+	document.frm${moduleId}.action = "?command=add";
+	document.frm${moduleId}.submit();
+}
+
+function doDelete(id)
+{
+	if (confirm("Delete this image?") == false)
+	{
+		return;
+	}
+	document.frm${moduleId}.image_id.value = id;
+	document.frm${moduleId}.action = "?command=delete";
+	document.frm${moduleId}.submit();
+}
+
+function doUpdate()
+{
+	var imageURL = document.frm${moduleId}.image_url.value;
+	var targetURL = document.frm${moduleId}.target_url.value;
+	var w = document.frm${moduleId}.image_width.value;
+	var h = document.frm${moduleId}.image_height.value;
+	
+	if (imageURL == "") {
+		alert("Image URL cannot remain empty.");
+		return;
+	}
+    if (validateURL(imageURL) == false) {
+		alert("Image URL contains illegal character.")
+    	document.frm${moduleId}.image_url.focus();
+    	return;
+    }    
+	if (w != "") {
+	    if (validateNumber(w) == false) {
+			alert("Use numbers only for Width.")
+	    	document.frm${moduleId}.image_width.focus();
+	    	return;
+	    }
+    }    
+	if (h != "") {
+	    if (validateNumber(h) == false) {
+			alert("Use numbers only for Height.")
+	    	document.frm${moduleId}.image_height.focus();
+	    	return;
+	    }
+    }    
+    if (validateURL(targetURL) == false) {
+		alert("Target URL contains illegal character.")
+    	document.frm${moduleId}.target_url.focus();
+    	return;
+    }
+	if (document.frm${moduleId}.order.value == $rowCount) {
+		alert("This order has not been assigned.")
+		return;
+	}
+	document.frm${moduleId}.action = "?command=update";
+	document.frm${moduleId}.submit();
+}
+
+function doEdit(id,imageURL,targetURL,ord,isFlash,w,h,caption)
+{
+	document.frm${moduleId}.image_id.value = id;
+	document.frm${moduleId}.image_url.value = imageURL;
+	document.frm${moduleId}.target_url.value = targetURL;
+	document.frm${moduleId}.isFlash.value = isFlash;
+	document.frm${moduleId}.image_width.value = w;
+	document.frm${moduleId}.image_height.value = h;
+	document.frm${moduleId}.image_caption.value = caption;
+	document.frm${moduleId}.order.value = ord;
+	document.frm${moduleId}.old_order.value = ord;
+	document.frm${moduleId}.btnAdd.disabled = true;
+	document.frm${moduleId}.btnUpdate.disabled = false;
+}
+function doReset()
+{
+	document.frm${moduleId}.image_id.value = "";
+	document.frm${moduleId}.image_url.value = "";
+	document.frm${moduleId}.target_url.value = "";
+	document.frm${moduleId}.isFlash.value = "0";
+	document.frm${moduleId}.image_width.value = "";
+	document.frm${moduleId}.image_height.value = "";
+	document.frm${moduleId}.image_caption.value = "";
+	document.frm${moduleId}.order.value = "${rowCount}";
+	document.frm${moduleId}.old_order.value = "";
+	document.frm${moduleId}.btnAdd.disabled = false;
+	document.frm${moduleId}.btnUpdate.disabled = true;
+}
+#end
+
+function openWindow(url,id)
+{
+	document.frm${moduleId}.image_id.value = id;
+	var newBrowser = window.open (url, "win", "height=600,width=800,location,menubar,resizable,scrollbars,status,toolbar");
+	newBrowser.focus();
+	document.frm${moduleId}.action = "?command=openurl";
+	document.frm${moduleId}.submit();
+}
+</script>

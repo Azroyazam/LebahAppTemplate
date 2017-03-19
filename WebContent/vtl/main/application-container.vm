@@ -1,0 +1,139 @@
+<div id="app-container">#parse("vtl/main/application-content.vm")</div>
+
+<script>
+function doAjaxCallform_container(actionName){
+    
+   var url = '../w/_application_menu_widget';
+   var target = 'app-container';
+   var qs = "";
+
+   if ( qs == "" ) qs = qs + "menuWidget=yes";
+   else qs = qs + "&menuWidget=yes";
+
+   doAjaxUpdater(document.form_container, url, target, actionName, qs);
+ 
+   document.getElementById('app-container').innerHTML ='<table width="100%"><tr><td align="center"><img src="../img/wait-animated.gif"></td></tr><tr><td align="center">Please wait ...</td></tr></table>';    
+   
+}
+function doAjaxCallform_container(actionName, qs){
+
+   	var url = '../w/_application_menu_widget';
+   	var target = 'app-container';
+   
+   if ( qs == "" ) qs = qs + "menuWidget=yes";
+   else qs = qs + "&menuWidget=yes";
+   
+	doAjaxUpdater(document.form_container, url, target, actionName, qs);
+	document.getElementById('app-container').innerHTML ='<table width="100%"><tr><td align="center"><img src="../img/wait-animated.gif"></td></tr><tr><td align="center">Please wait ...</td></tr></table>';    
+   
+}
+function doDivAjaxCallform_container(divName, actionName, qs){
+
+   document.getElementById(divName).style.visibility = 'visible';
+
+   ##var url = '../div/_application_menu_widget';
+   var url = '../wdiv/_application_menu_widget';
+   var target = divName;
+   
+   if ( qs == "" ) qs = qs + "menuWidget=yes";
+   else qs = qs + "&menuWidget=yes";
+   
+   doAjaxUpdater(document.form_container, url, target, actionName, qs);
+	   
+   document.getElementById(divName).innerHTML ='<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center"><img src="../img/indicator.gif"></td></tr></table>';
+
+}
+function doDivAjaxChainCallform_container(divName, actionName, qs, divName2, actionName2, qs2){
+
+    ##var url = '../div/_application_menu_widget';
+    var url = '../wdiv/_application_menu_widget';
+    
+   if ( qs == "" ) qs = qs + "menuWidget=yes";
+   else qs = qs + "&menuWidget=yes";
+   
+   if ( qs2 == "" ) qs2 = qs2 + "menuWidget=yes";
+   else qs2 = qs2 + "&menuWidget=yes";
+      
+	doAjaxUpdaterChain(document.form_container, url, divName, actionName, qs, divName2, actionName2, qs2);
+   	document.getElementById(divName).innerHTML ='<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center"><img src="../img/indicator.gif"></td></tr></table>';
+}
+function doDivAjaxCall2form_container(divName, actionName, qs){
+
+    ##var url = '../div/_application_menu_widget';
+    var url = '../wdiv/_application_menu_widget';
+    var target = divName;
+    
+   if ( qs == "" ) qs = qs + "menuWidget=yes";
+   else qs = qs + "&menuWidget=yes";
+    
+   
+   	doAjaxUpdater(document.form_container, url, target, actionName, qs);
+   
+   	document.getElementById(divName).innerHTML ='<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center"><img src="../img/indicator.gif"></td></tr></table>';
+   
+	blindDown(divName);
+}
+
+
+function doDivAjaxCall3form_container(divName, actionName, qs){
+
+
+    ##var url = '../div/_application_menu_widget';
+    var url = '../wdiv/_application_menu_widget';
+    var target = divName;
+    
+   if ( qs == "" ) qs = qs + "menuWidget=yes";
+   else qs = qs + "&menuWidget=yes";
+    
+   
+	doAjaxUpdater(document.form_container, url, target, actionName, qs);
+   
+}
+
+function doDivAjaxChainCall3form_container(divName, actionName, qs, divName2, actionName2, qs2){
+
+   ##var url = '../div/_application_menu_widget';
+   var url = '../wdiv/_application_menu_widget';
+   
+   if ( qs == "" ) qs = qs + "menuWidget=yes";
+   else qs = qs + "&menuWidget=yes";
+   
+   
+   if ( qs2 == "" ) qs2 = qs2 + "menuWidget=yes";
+   else qs2 = qs2 + "&menuWidget=yes";
+   
+      
+   document.getElementById(divName).style.visibility = 'visible';
+   document.getElementById(divName2).style.visibility = 'visible';
+   doAjaxUpdaterChain(document.form_container, url, divName, actionName, qs, divName2, actionName2, qs2);
+
+}
+
+
+function blindDown(elementId) {
+	if ( document.all ) element = document.all[elementId];
+	else element = document.getElementById(elementId);
+  	new Effect.BlindDown(element,{duration:0.5}); 
+	new Effect.Highlight(element,{duration:1.5})
+	return false;
+}
+
+function dnKeyPress(e, div, cmd, par) {
+   var characterCode;
+   if(e && e.which){
+     e = e;
+     characterCode = e.which;
+   }
+   else{
+     e = event;
+     characterCode = e.keyCode;
+   }
+   if(characterCode == 13){
+     doDivAjaxCallform_container(div, cmd, par);
+     return false;
+   }
+   else {
+     return true;
+   }
+}
+</script>

@@ -1,0 +1,50 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr> 
+		<td class="page_footer" align="right">
+		Created with LeBAH Portal Framework, 2011.
+		</td>
+	</tr>
+</table>
+
+
+
+#**
+
+
+<div id="bottom-bar">
+#parse("vtl/main/statusbar/bottombar.vm")
+</div>
+
+
+<div id="whos-online" style="display:none;">
+#parse("vtl/main/statusbar/whosonline.vm")
+</div>
+
+
+<div id="popup_about" style="background: url(../img/bg.png) no-repeat; display:none;height:252px;padding:15px;width:454px;">
+<p style="text-align:right"><a style="cursor:pointer;font-family:helvetica;font-weight:bold;position:absolute;right:15px;text-decoration:none;top:10px;" onclick="_jq('#popup_about').bPopup().close();">X</a></p>
+<p style="font-family:helvetica;font-weight:bold;font-size:18pt;text-align:center">
+LeBAH Portal
+</p>
+<p style="font-family:helvetica;font-weight:bold;font-size:14pt;text-align:center">
+Light and Easy Bussiness Architecture
+</p>
+<p><br><br><br></p>
+<p style="font-family:helvetica;font-weight:bold;font-size:12pt;text-align:center">
+Powered by: LeBAH FRAMEWORK 2011
+</p>
+</div>
+<script>
+##POPUP
+_jq(document).ready(function(){
+   
+   _jq("#popup-about-link").bind('click', function(){
+      _jq("#popup_about").bPopup({fadeSpeed:1, followSpeed:1, opacity:0.8, modalClose:true});
+      return false
+   });
+   
+
+});
+</script>
+
+**#

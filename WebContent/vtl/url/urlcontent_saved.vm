@@ -1,0 +1,5 @@
+#if ( $contentSaved )
+    <script>
+    parent.showUpdatedContent_$formname();
+    </script>
+#end

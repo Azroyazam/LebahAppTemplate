@@ -1,0 +1,42 @@
+
+<p>
+$jdbc_driver<br>
+$jdbc_url<br>
+</p>
+<form name="catalogs" method="post">
+	<b>List of databases</b>
+	</p>
+	<table border="1">
+		<tr>
+			<td align="center">
+				Database List
+			</td>
+		</tr>	
+		<tr bgcolor="silver">
+			<td>
+				Name
+			</td>
+		</tr>		
+		#foreach ( $catalog in $catalogs )
+		<tr>
+			<td>
+				<a href="javascript:list_tables('$catalog')">
+				$catalog
+				</a>
+			</td>
+		</tr>
+		
+		#end
+	</table>
+	
+	<input type="hidden" name="catalog">
+	<input type="hidden" name="command">
+</form>
+<script>
+function list_tables(catalog) {
+	document.catalogs.command.value = "tables";
+	document.catalogs.catalog.value = catalog;
+	document.catalogs.action = "";
+	document.catalogs.submit();
+}
+</script>

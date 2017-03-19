@@ -1,0 +1,31 @@
+
+
+							<table>
+								<tr>
+									<td>
+										<b>Demo Login as:</b>
+										<br>
+									<td>
+								</tr>
+								<tr>
+									<td>
+									&gt;
+				
+				Content Creation User
+						&nbsp;
+						[													<a href="javascript:loginAs('anon', 'anon')">
+Login</a>
+]
+									<br>
+									This user is able to add/edit/delete html
+									content in this portal, and can customize the portal pages (layout),
+									as shall be
+									viewed by visitors (i.e. when people are
+									viewing the portal page without login in).
+									<br><br>
+			
+								
+									</td>
+								</tr>
+							</table>
+

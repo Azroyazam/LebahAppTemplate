@@ -1,0 +1,115 @@
+<br>   
+<form name="fcus" method="post">
+<table cellpadding="2" cellspacing="0" border="0" align="right">
+	<tr><td>
+		<input class="linkbutton" type="button" value="Page Theme" onclick="document.location.href='pagetheme'">
+	</td></tr>
+</table>
+
+
+<table width="600" align="center" cellspacing="2" border="0">
+<tr style="height:50px">
+<td style="font-weight:bold" align="center">
+List of Menu Tabs
+</td></tr>
+
+    <tr>
+	<td align="center">
+        <ul id="tablist" style="list-style-type:none; padding: 10px;">
+        #set ($cnt = 0 )
+        #foreach( $tab in $tabs)
+        	#set ( $cnt = $cnt + 1 )
+            <li id="tablist_$cnt" style="cursor:hand;padding:1px">
+				<div style="border-radius:10px;border:1px solid #ccc;background:#C6D9F1">
+            	<table width="80%" cellspacing="0" cellpadding="4" border="0" bgcolor="lightgrey">
+            		<tr style="height:30px">
+            			<td>
+            				<table width="100%">
+            					<tr>
+                					<td>$tab.title<input type="hidden" style="cursor:pointer" name="tabIds" value="${tab.id}"></td>
+            						<td width="200" align="center" nowrap>
+                                        #if ( !$tab.locked )
+                                        <a href="javascript:listModules('$tab.id')" style="text-decoration:underline">Contents</a>
+                                        |
+                                        <a href="javascript:editTab('$tab.id', '$tab.title')" style="text-decoration:underline">Rename</a>
+                                        |
+                                        <a href="javascript:deleteTab('$tab.id')" style="text-decoration:none">X</a>
+                                        #else
+                                        <img src="../img/icon_lock.gif">
+                                        #end
+            						</td>
+            					</tr>
+            				</table>
+            			</td>
+            		</tr>
+            	</table>
+				</div>
+            </li>
+        #end
+        </ul>
+    </td>
+</tr>
+<tr><td align="right" height="40">
+<input class="linkbutton" type="button" value="Save Changes" onclick="saveTabs()">
+</td></tr>
+<tr><td align="center" height="40">
+Add Tab:
+<input class="inputField" name="tab_title" style="width:200px">
+<input class="linkbutton" type="button" name="buttonTab" value="ADD" onclick="doTab()">
+##<input type="button" name="buttonReset" value="RESET" onclick="doReset()">
+</td></tr>
+</table>
+<input type="hidden" name="tabId">
+
+
+</form>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+Sortable.create('tablist');
+</script>
+
+<script>
+function addNewTab() {
+    document.fcus.action = "customize?type=tab&do=add";
+    document.fcus.submit();
+}
+function deleteTab(tabid) {
+    if ( !confirm("Delete this Tab?") ) return;
+    document.fcus.action = "customize?type=tab&tabId=" + tabid + "&do=deleteTab";
+    document.fcus.submit();
+}
+
+function saveTabs() {
+document.fcus.action = "customize?type=tab&do=saveTabs";
+document.fcus.submit();
+}
+function addTab() {
+if ( document.fcus.tab_title.value == "" ) return;
+document.fcus.action = "customize?type=tab&do=addTab";
+document.fcus.submit();
+}
+function editTab(id, title) {
+document.fcus.tabId.value = id;
+document.fcus.tab_title.value = title;
+document.fcus.buttonTab.value = "UPDATE";
+}
+function updateTab() {
+document.fcus.action = "customize?type=tab&do=updateTab";
+document.fcus.submit();
+}
+function doTab() {
+if ( document.fcus.buttonTab.value == "UPDATE" ) updateTab();
+else addTab();
+}
+function doReset(){
+document.fcus.buttonTab.value = "ADD";
+document.fcus.tab_title.value = "";
+document.fcus.tabId.value = "";
+}
+function listModules(tabId) {
+document.fcus.tabId.value = tabId;
+document.fcus.action = "customize?type=tab&do=listModules";
+document.fcus.submit();
+}
+
+</script>

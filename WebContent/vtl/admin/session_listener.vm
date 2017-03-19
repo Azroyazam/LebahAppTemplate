@@ -1,0 +1,1 @@
+Currently there are $sessionCount active session#if( $sessionCount > 1 )s#end

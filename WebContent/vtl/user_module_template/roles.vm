@@ -1,0 +1,24 @@
+<form name="f" method="post">
+<table align="center">
+<tr>
+<td>
+Select Role:
+<select class="inputField" style="width:200px" name="role" onchange="selectRole()">
+<option value="">- select role -</option>
+#foreach( $role in $roles )
+<option value="$role.name">$role.name</option>
+#end
+</select>
+</td>
+</tr>
+</table>
+
+
+<input type="hidden" name="command">
+</form>
+<script>
+function selectRole(){
+document.f.command.value = "listTabs";
+document.f.submit();
+}
+</script>

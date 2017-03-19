@@ -1,0 +1,46 @@
+
+
+##-- HEADER STYLE
+
+#set ( $headerStyle = "normal" ) ##values are "normal", "flash"
+
+##--DON'T REMOVE THIS --
+#set ( $visitor = $session.getAttribute("_portal_visitor") )
+
+##----SHOW OR HIDE LOGIN FIELDS --
+#set ( $showLogin = true )
+
+##---SHOW OR HIDE SELECT VISITOR'S TYPE --
+#set ( $useVisitor = false )
+
+##---WHETHER TO SELECT VISITOR'S TYPE FROM LIST OR NOT --
+#set ( $useList = true )
+
+##--- ADD VISITOR VALUES HERE --
+
+#set ( $i = $portalVisitorList.put("anon", "English" ) )
+#set ( $i = $portalVisitorList.put("anon2", "BM" ) )
+
+
+
+##--- END ADD VALUES --
+
+##--- DON'T REMOVE THIS --
+
+#set ( $listVisitor = $portalVisitorList.keySet() )
+
+##-- SHOW HEADER --
+
+#set ( $userIsLogged = false )
+#if ( ${session.getAttribute("_portal_islogin")} == "true" )
+	#set ( $userIsLogged = true )
+#end
+
+#if ( $headerStyle == "normal" )
+	#parse ( "vtl/main/header_normal.vm" )
+#elseif ( $headerStyle == "2" )
+	#parse ( "vtl/main/header_style2.vm" )
+	#elseif ( $headerStyle == "flash" )
+		#parse ( "vtl/main/header_flash.vm" )
+#end
+

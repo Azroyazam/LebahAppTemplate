@@ -1,0 +1,268 @@
+<script>
+	
+	
+	var mTimer;
+	var counter = 0;
+	var flag = " ";
+	var user = '$!session.getAttribute("_portal_login")';
+	var userName = '$!session.getAttribute("_portal_username")';
+	var s = "";
+	var currentChatId = "";
+	var chatLogs = {};
+	
+	function log(msg) {
+    	setTimeout(function() {
+        	throw new Error(msg);
+    	}, 0);
+	}
+	
+		
+	function ajaxCall(qs) {
+	    var result;
+	    var url = '${serverUrl}/servlet/lebah.msg.ChatServlet';
+	    new Ajax.Request(url,  {
+            						method: 'post', 
+            						parameters: qs, 
+            						asynchronous: false,
+            						onComplete: function(t) {
+               							result = t.responseText;
+            						},
+            						on404: function(t) {
+               							alert('Error 404: location "' + t.statusText + '" was not found.');
+               							clearInterval(mTimer);
+            						},
+            						onFailure: function(t) {
+               							alert('Error ' + t.status + ' -- ' + t.statusText);
+               							clearInterval(mTimer);
+            						}            				
+        						}
+	    );
+	    return result;
+	}
+	
+	function listUsers() {
+		var userArrays = new Array();
+		result = ajaxCall('action=listUsers');
+		if ( result != "" ) {
+			var json = eval("(" + result + ")");
+			var s = "<table width='100%'>";
+			var userName = "";
+			var repeated = 0;
+			var userCount = 0;
+			for ( var i=0; i < json.users.length; i++ ) {
+				userId = json.users[i].userId;
+				userName = json.users[i].userName;
+				userArrays[i] = userName;
+				repeated = 0;
+				for ( var k=0; k < i; k++ ) {
+					if ( userArrays[k] == userName ) {
+						repeated++;
+					}
+				}
+				if ( repeated > 0 ) {
+					repeated++;
+					userName = userName + "-" + repeated;
+				}
+				if ( user != userId && repeated == 0 ) {
+					userCount++;
+					s += '<tr class="whos-online-1" style="cursor:pointer" onmouseover="this.className=\'whos-online-2\'" onmouseout="this.className=\'whos-online-1\'" onclick="chatWith(\'' + userId + '\', \'' + userName + '\')">';
+					s += "<td height=20px>" + userName + "</td></tr>";
+				}
+			}
+			s += "</table>";
+			
+			Set_Cookie(user + '_listWhosOnline', s);
+			Set_Cookie(user + '_whosOnlineCounter', userCount);
+				
+			$('online-users-list').innerHTML = s;
+			$('online-counter').innerHTML = "<b>(" + userCount + ")</b>";
+		}
+	}
+	
+	function getMessage() {
+	
+		#if ( $userIsLogged )
+		counter++;
+		if ( counter == 3 ) {
+			counter = 0;
+			listUsers(); //ajax call to list online users
+		}
+		$('ajax-flag').innerHTML = flag;
+		if ( flag == " " ) flag = ".";
+		else flag = " ";
+		
+  		result = ajaxCall('action=doMessage&user=' + escape(user));
+  		
+		if ( result != "" ) {
+  			var response = eval("(" + result + ")");
+  			var i = parseInt(response.messageCounter);
+  			
+  			if ( i > 0 ) {
+				
+				##log(result);  				
+  				
+  				for ( k=0;k<i;k++) {
+  					
+  					if ( currentChatId == response.messages[k].from ) {
+						$('chat-area-1').innerHTML += "<div><b>" + response.messages[k].fromName + ":</b><br/> " + response.messages[k].text + "</div>";
+					} else {
+						chatLogs[response.messages[k].from] += "<div><b>" + response.messages[k].fromName + ":</b><br/> " + response.messages[k].text + "</div>";
+					}
+					
+					$('chat-area-1').scrollTop = $('chat-area-1').scrollHeight;
+					
+					//this incoming chat is from 
+					incomingUser = response.messages[k].from;
+					if ( incomingUser != currentChatId ) {
+						if ( document.getElementById('div-' + incomingUser ) == null ) {
+							var newdiv = document.createElement('div');
+							newdiv.setAttribute('id', 'div-' + incomingUser);
+							newdiv.setAttribute('style', 'height:20px');
+							newdiv.innerHTML = '<table cellpadding="0" cellspacing="0" width="100%"><tr><td width="23px"><img src="../img/incoming.png" border="0"></td><td><a href="javascript:void()" onclick="chatWith(\'' + response.messages[k].from + '\', \'' + response.messages[k].fromName + '\')">' + response.messages[k].fromName + '</a></td></tr></table>';
+							$('incoming-list').appendChild(newdiv);
+						}
+					}
+					
+  				}
+  				
+  				Set_Cookie(user + '_incomingChats', $('incoming-list').innerHTML);
+  			}
+  			 
+  		}
+  		
+		mTimer = setTimeout('getMessage();',2000);
+		
+		#else
+		
+		$('ajax-flag').innerHTML = "<b>x</b>";
+		
+		#end
+	}
+	
+	function sendMessage(msg, to) {
+		$('chat-area-1').innerHTML += "<div><b><font color=\"blue\">" + userName + "</font>:</b><br/> " + msg + "</div>";
+		$('chat-area-1').scrollTop = $('chat-area-1').scrollHeight;
+		ajaxCall('action=sendMessage&from=' + escape(user) + '&fromName=' + escape(userName) + '&to=' + escape(to) + '&txt=' + escape(msg));
+	}
+	
+	function checkKey(e, i) {
+		var keynum;
+		if(window.event) keynum = e.keyCode;
+  		else if(e.which) keynum = e.which;
+		if ( keynum == 13 ) {
+			sendMessage($('chat-text-' + i).value, $('chat-id-' + i).value);
+			$('chat-text-' + i).value = "";
+			return false;
+		}
+	}
+	
+	function openWhosOnline() {
+		if ( $('whos-online').style.display == 'none' ) { 
+			_jq('#whos-online').hide().slideDown('slow');
+			$('whos-online').style.zIndex='999'; 
+			Set_Cookie(user + '_whosOnlineOpen', 'true');
+		} else { 
+			_jq('#whos-online').slideUp('slow');
+			Set_Cookie(user + '_whosOnlineOpen', 'false'); 
+		}
+	}
+	
+	function openChat() {
+		if ( $('chatbox-1').style.display == 'none' ) { 
+			_jq('#chatbox-1').hide().slideDown('slow');
+			$('chatbox-1').style.zIndex='999'; 
+			Set_Cookie(user + '_chatOpen', 'true');
+		} else {
+			_jq('#chatbox-1').slideUp('slow'); 
+			Set_Cookie(user + '_chatOpen', 'false');
+		};
+	}
+	
+	function chatWith(whoId, whoName) {
+	
+		Set_Cookie(user + '_currentChatId', whoId);
+		Set_Cookie(user + '_currentChatName', whoName);
+		Set_Cookie(user + '_chatOpen', 'true');
+	
+		var prevChatId = currentChatId;
+		currentChatId = whoId;
+		
+		chatLogs[prevChatId] = $('chat-area-1').innerHTML;
+		$('chat-user-1').innerHTML = "<b>" + whoName + "</b>";
+		$('chat-id-1').value = whoId;
+		
+		if (chatLogs[currentChatId] == null ) {
+			$('chat-area-1').innerHTML = "";
+		} else {
+			$('chat-area-1').innerHTML = chatLogs[currentChatId];
+		}
+		
+		_jq('#chatbox-1').hide().slideDown('slow');
+		$('chatbox-1').style.zIndex='999';
+		
+		//remove incoming element of this user
+		var divremove = document.getElementById('div-' + whoId);
+		if ( divremove != null ) {
+			$('incoming-list').removeChild(divremove);
+		}
+	}
+	
+	function openChatWith(whoId, whoName) {
+	
+		Set_Cookie(user + '_currentChatId', whoId);
+		Set_Cookie(user + '_currentChatName', whoName);
+		Set_Cookie(user + '_chatOpen', 'true');
+		
+		currentChatId = whoId;
+		$('chat-user-1').innerHTML = "<b>" + whoName + "</b>";
+		$('chat-id-1').value = whoId;
+		if (chatLogs[currentChatId] == null ) {
+			$('chat-area-1').innerHTML = "";
+		} else {
+			$('chat-area-1').innerHTML = chatLogs[currentChatId];
+		}
+		_jq('#chatbox-1').show();
+		$('chatbox-1').style.zIndex='999'
+		
+	}
+	
+	#if ( $userIsLogged )
+	onload = function() {
+		log('onload event is triggered .... ');
+		if ( Get_Cookie(user + '_listWhosOnline') ) {
+		    $('online-users-list').innerHTML = Get_Cookie(user + '_listWhosOnline');
+		} 
+		if ( Get_Cookie(user + '_whosOnlineCounter') ) {
+			$('online-counter').innerHTML = "<b>(" + Get_Cookie(user + '_whosOnlineCounter') + ")</b>";
+		}
+		if ( Get_Cookie(user + '_whosOnlineOpen' ) == 'true' ) {
+			_jq('#whos-online').show();
+		}
+		log( Get_Cookie(user + '_chatOpen' ) );
+		if ( Get_Cookie(user + '_chatOpen' ) == 'true' ) {
+			_jq('#chatbox-1').show();
+			if ( Get_Cookie(user + '_currentChatId') ) {
+				var chatUserId = Get_Cookie(user + '_currentChatId');
+				var chatUserName = Get_Cookie(user + '_currentChatName');
+				openChatWith(chatUserId, chatUserName);
+			}
+		}	
+		if ( Get_Cookie(user + '_currentChatId') ) {
+			currentChatId = Get_Cookie(user + '_currentChatId');
+		}	
+		if ( Get_Cookie(user + '_incomingChats') ) {
+		    $('incoming-list').innerHTML = Get_Cookie(user + '_incomingChats');
+		} 
+		if ( Get_Cookie(user + '_chatArea') ) {
+		    $('chat-area-1').innerHTML = Get_Cookie(user + '_chatArea');
+		    $('chat-area-1').scrollTop = $('chat-area-1').scrollHeight;
+		} 
+			
+	}
+	#end
+
+	#if ( $userIsLogged )
+	mTimer = setTimeout('getMessage();',1000);
+	#end
+
+</script>

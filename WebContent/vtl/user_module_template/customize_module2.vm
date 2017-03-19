@@ -1,0 +1,189 @@
+  <script type="text/javascript">
+   //<![CDATA[
+   var myStartEffect = function(element) {
+     element._opacity = Element.getOpacity(element);
+     new Effect.Opacity(element, {duration:0.2, from:element._opacity, to:0.7});
+     new Effect.Highlight(element, {});
+   }
+   //]]>
+  </script>
+<br>
+#set ($currenttab = $cTab.id)
+<form name="fcus" method="post" action="javascript:submitCustomize()">
+<table align="center" width="500" cellpadding="1" cellspacing="1" border="0">
+<tr><td class="table_head">
+<table align="center" width="100%" cellpadding="1" cellspacing="1" border="0">
+    <tr>
+        <td class="table_head">
+            <table width="100%" cellpadding="2" cellspacing="0" border="0">
+                <tr>
+                    <td class="table_head">Role: <b>$userRole</b></td>
+                    <td class="table_head" align="right"><input type="button" value="Back to Tab List" onclick="goBack()"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="row1">
+            <table width="100%" cellpadding="2" cellspacing="0" border="0">
+                <tr>
+                    <td class="row1" nowrap><b>Tab Title: </b></td>
+                    <td class="row1" width="100%"><input name="tabtitle" value="${cTab.title}" size="40"></td>
+                </tr>
+                <tr>
+                    <td class="row1" nowrap>
+                        <b>Page type: </b>
+                    </td>
+                    <td class="row1" width="100%">
+                        <select name="displaytype">
+                        #set ( $selected = "" )
+                        #foreach ( $displaytype in $displaytypes )
+                            #if ( $cTab.displayType == $displaytype )
+                                #set ( $selected = "selected" )
+                            #else
+                                #set ( $selected = "" )
+                            #end
+                        <option value="$displaytype" $selected>$displaytype</option>
+                        #end
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="table_head">
+        <table width="100%" cellpadding="2" cellspacing="0" border="0">
+            <tr>
+                <td class="table_head" align="left"><b>List of modules</b></td>
+                <td class="table_head" align="right">
+                    <input type="button" value="Save Changes" onclick="goSave()">
+                    <input type="button" value="Add / Remove Modules" onclick="submitAdd()">
+                </td>
+            </tr>
+        </table>
+        </td>
+    </tr>   
+    <tr>
+        <td class="table_head">
+            <table width="100%" cellpadding="2" cellspacing="1" border="0">
+                <tr>
+                <td ></td>
+                <td  align="center">Title</td>
+                <td  align="center">Custom Title</td>
+                <td  align="center">Change Order</td>
+                <td  align="center">Column Position</td>
+                </tr>
+                #set ($i = 0)
+                #foreach ( $module in $modules )
+                    #set ($i = $i + 1)
+                <tr>
+                    <td class="row1" width="20">$i</td>
+                    <td class="row1" width="200">
+                    ${module.title}
+                    #if ( $module.title != "" ) <br> #end
+                    <i>[${module.id}]</i>
+                    </td>
+                    <td class="row1">
+                    <input name="custom_titles" value="${module.customTitle}" size="30">
+                    </td>                               
+                    <td class="row1" width="100" align="center">
+                    #if ( $i > 1 )
+                        [<a href="javascript:doUp('$module.id')">Up</a>]
+                    #end
+                    #if ( $i < ${modules.size()} )
+                        [<a href="javascript:doDown('$module.id')">Down</a>]
+                    #end
+                    </td>
+                    <td class="row1" align="center">
+                    #set ( $selected = "" )
+                    #set ( $num_str = "" )
+                    #set ( $num = [0,1,2] )
+                    <select name="column_numbers">
+                    #foreach ( $n in $num )
+                        #if ( $n == $module.column )
+                            #set ( $selected = "selected" )
+                        #else
+                            #set ( $selected = "" )
+                        #end
+                        #set ( $column = "" )
+                        #if ( $n == 0 )
+                            #set ( $column = "Column 1" )
+                        #elseif ( $n == 1 )
+                            #set ( $column = "Column 2" )
+                        #elseif ( $n == 2 )
+                            #set ( $column = "Column 3" )                            
+                        #end
+                        <option value="$n" $selected>$column</option>
+                    #end
+                    </select>
+                    </td>
+                </tr>
+                #end
+            </table>        
+        </td>
+    </tr>
+</table>
+</td></tr></table>
+<input type="hidden" name="item" value="">
+<input type="hidden" name="process" value="">
+<input type="hidden" name="tabid" value="$currenttab">
+<input type="hidden" name="moduleid" value="">
+<input type="hidden" name="role" value="$userRole">
+</form>
+
+
+<script type="text/javascript" charset="utf-8">
+Sortable.create('sort1', {starteffect: myStartEffect});
+new Draggable('drag1', {starteffect:myStartEffect});
+</script>
+
+<script>
+function doSubmit()
+{
+    document.fcus.action = "";
+    document.fcus.submit();
+}
+
+function doUp(moduleid)
+{
+    document.fcus.item.value = "module";
+    document.fcus.process.value = "up";
+    document.fcus.moduleid.value = moduleid;
+    doSubmit();
+}
+
+function doDown(moduleid)
+{
+    document.fcus.item.value = "module";
+    document.fcus.process.value = "down";
+    document.fcus.moduleid.value = moduleid;
+    doSubmit();
+}
+
+function goBack()
+{
+    doSubmit();
+}
+
+function goSave()
+{
+    document.fcus.process.value = "save";
+    doSubmit();  
+}
+
+function submitChangeTitle()
+{
+    document.fcus.item.value = "module";
+    document.fcus.process.value = "changetitle";
+    doSubmit();
+}
+
+function submitAdd()
+{
+    document.fcus.action = "customize?type=module&tabid=${currenttab}&do=addmodule";
+    document.fcus.item.value = "module";
+    document.fcus.process.value = "addmodule";
+    doSubmit();
+}
+</script>

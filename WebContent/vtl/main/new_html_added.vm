@@ -1,0 +1,4 @@
+Redirecting... Please wait..
+<script>
+document.location.href = "../c/" + $tabId;
+</script>

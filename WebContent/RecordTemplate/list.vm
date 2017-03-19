@@ -1,0 +1,77 @@
+
+
+#** 
+<script>
+listRecords();
+</script>
+**#
+
+#parse("${viewPath}/label_titles.vm")
+
+#if ( $data_size && $data_size > 0 )
+<table width="100%">
+
+<tr><td style="font-weight:bold">
+Number Of Records: <span id="data_size">$data_size</span>, Number of Pages: <span id="total_page">$total_page</span>
+<input type="hidden" name="last_page" value="$!total_page">
+</td></tr>
+</table>
+
+<table width="100%">
+<tr>
+<td>
+
+##ADD BUTTON
+
+#if ( $recordAddNew )
+<input type="button" class="orange-button" style="width:150px"
+	value="Add New Record" 
+	onclick="doDivAjaxCall$formname('div_main_entry','add_new_record','');"
+	>
+#end
+
+##EXTRA BUTTON
+#parse("$viewPath/extra_button.vm")
+
+
+</td>
+<td style="font-weight:bold" align="right">
+
+<span id="_wait"></span>
+
+<select id="page_num" name="page_num" class="texts" style="width:80px;text-align:center" onchange="$('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_page','data_size=$data_size&total_page=$total_page')">
+#foreach ( $i in [1..$total_page] )
+<option value="$i">$i</option>
+#end
+</select>
+<input type="button" class="linkbutton" style="padding:5px" value="&lt;&lt;" onclick="$('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_first_page','data_size=$data_size&total_page=$total_page')">
+<input type="button" class="linkbutton" style="padding:5px" value="&lt;" onclick="if ( $('page_num').value != '1' )  { $('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_previous','data_size=$data_size&total_page=$total_page') }">
+<input type="button" class="linkbutton" style="padding:5px" value="&gt;" onclick="if ( $('page_num').value != '$total_page' )  { $('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_next','data_size=$data_size&total_page=$total_page'); }">
+<input type="button" class="linkbutton" style="padding:5px" value="&gt;&gt;" onclick="$('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_last_page','data_size=$data_size&total_page=$total_page')">
+
+</td></tr>
+</table>
+
+<table width="100%">
+<tr><td>
+
+<div id="div_items">
+#parse("$templateDir/div_items.vm")
+</div>
+
+</td></tr>
+</table>
+#elseif ( $data_size && $data_size == 0 )
+<table align="center" width="500px">
+
+<tr><td align="center" style="font-weight:bold">
+No Data
+<br/>
+#if ( $recordAddNew )
+	<input type="button" class="orange-button" style="width:150px"
+	value="Add New Record" 
+	onclick="$('div_main_entry').style.display='block';doDivAjaxCall$formname('div_main_entry','add_new_record','')"
+	>
+#end
+</td></tr></table>
+#end

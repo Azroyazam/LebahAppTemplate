@@ -1,0 +1,160 @@
+<form name="fcus" method="post">
+<table width="500" cellpadding="2" cellspacing="0">
+<tr>
+	<td class="table_row" colspan="3">
+		You are not allowed to setup template for anonymous here.  To do that, please login
+		as anonymous in the portal.
+		<br>
+		<br>
+	</td>
+</tr>
+<tr>
+    <td nowrap>Select a role</td>
+    <td>
+        <select name="role">
+            <option value="">- Select One -</option>
+        #foreach ( $role in $roleList )
+            #if ( $role.name != "root" && $role.name != "anon" )
+                #if ( $userRole ==  $role.name )
+                    #set ( $description = $role.description )
+            		<option value="$role.name" selected>$role.name</option>
+                #else
+            		<option value="$role.name">$role.name</option>
+                #end
+            #end
+        #end
+        </select>
+    </td>
+    <td width="100%"><input type="button" value="Get" onclick="doGetModule()"></td>
+</tr>
+
+<tr>
+    <td valign="top" nowrap><b>Role Description:</b>&nbsp;</td>
+    <td colspan="2">#if ( $isRoleSelected ) $description #end</td>
+</tr>
+</table>
+#if ( $isRoleSelected )
+<hr>
+<table align="center" width="500" cellpadding="1" cellspacing="1" border="0">
+#if (!$tabs.isEmpty())
+<tr>
+    <td align="center">
+        <input type="button" value="Apply template to all users with this role" onclick="doApplyTemplate()">
+    </td>
+</tr>
+#end
+<tr><td class="table_head">
+<table width="100%" cellpadding="2" cellspacing="1" border="0" align="center">
+    <tr>
+        <td class="table_head" align="center" colspan="3"><b>Setup User TABs</b></td>       
+    </tr>
+    <tr>
+        <td  width="50" align="center">Tab Order</td>
+        <td  width="250" align="center">Tab Title</td>
+        <td  width="200"></td>
+    </tr>
+    #set ($i = 0)
+    #foreach ( $tab in $tabs )
+        #set ($i = $i + 1)
+    <tr>
+        <td class="row1" align="center">$i</td>
+        <td class="row1">
+        <a href="javascript:doModify('$tab.id')">
+        ${tab.title}
+        <a href="javascript:doModify('$tab.id')">
+        </td>
+        <td class="row1" align="center">
+        #if ( $i > 1 )
+            [<a href="javascript:doUp('$tab.id')">Up</a>]&nbsp;
+        #end
+        #if ( $i < ${tabs.size()} )
+            [<a href="javascript:doDown('$tab.id')">Down</a>]&nbsp;
+        #end
+        [<a href="javascript:doModify('$tab.id')">Modify</a>]&nbsp;
+        [<a href="javascript:deleteTab('${tab.id}')">Delete</a>]
+        </td>                   
+    </tr>
+    #end
+    <tr>
+        <td class="table_head" align="center" colspan="3">
+        <b>New Tab:<b> <input name="newtab" size="30">
+        <input type="button" value="Add" onclick="addNewTab()">
+        </td>
+    </tr>
+</table>
+</td></tr>
+</table>
+#end
+<input type="hidden" name="item" value="">
+<input type="hidden" name="process" value="">
+<input type="hidden" name="tabid" value="">
+</form>
+<script>
+function doSubmit()
+{
+    document.fcus.action = "";
+    document.fcus.submit();
+}
+
+function doModify(tabid)
+{
+    document.fcus.item.value = "tab";
+    document.fcus.process.value = "content";
+    document.fcus.tabid.value = tabid;   
+    doSubmit();
+}
+
+function doUp(tabid)
+{
+    document.fcus.item.value = "tab";
+    document.fcus.process.value = "up";
+    document.fcus.tabid.value = tabid;   
+    doSubmit();
+}
+
+function doDown(tabid)
+{
+    document.fcus.item.value = "tab";
+    document.fcus.process.value = "down";
+    document.fcus.tabid.value = tabid;   
+    doSubmit();
+}
+
+function addNewTab()
+{
+    if(document.fcus.newtab.value == "")
+    {
+        alert("New Tab table_head required");
+        return false;
+    } else {
+        document.fcus.item.value = "tab";
+        document.fcus.process.value = "add";
+        doSubmit();
+    }
+}
+
+function deleteTab(tabid)
+{
+    if ( !confirm("Delete this Tab?") ) return;
+    document.fcus.item.value = "tab";
+    document.fcus.process.value = "delete";
+    document.fcus.tabid.value = tabid;
+    doSubmit();
+}
+
+function doGetModule()
+{
+    doSubmit();
+}
+
+function doApplyTemplate()
+{
+    if( (confirm("This will replace all existing user customization with this template.\nDo yo want to continue?"))==false )
+    {
+    } else {
+        document.fcus.item.value = "tab";
+        document.fcus.process.value = "apply_template";
+        doSubmit();
+    }
+}
+</script>

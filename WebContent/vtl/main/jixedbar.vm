@@ -1,0 +1,52 @@
+
+#**
+<div id="popup_about" style="background: url(../jx/about/bg.png) no-repeat; display:none;height:252px;padding:15px;width:454px;z-index:999">
+<p style="text-align:right"><a style="cursor:pointer;font-family:helvetica;font-weight:bold;position:absolute;right:15px;text-decoration:none;top:10px;" onclick="_jq('#popup_about').bPopup().close();">X</a></p>
+<p style="font-family:helvetica;font-weight:bold;font-size:18pt;text-align:center">
+LeBAH Portal
+</p>
+<p style="font-family:helvetica;font-weight:bold;font-size:14pt;text-align:center">
+Light and Easy Bussiness Architecture
+</p>
+<p><br><br><br></p>
+<p style="font-family:helvetica;font-weight:bold;font-size:12pt;text-align:center">
+Powered by: LeBAH FRAMEWORK 2011
+</p>
+</div>
+
+<div id="whos-online" style="display:none;">
+#parse("vtl/main/statusbar/whosonline.vm")
+</div>
+
+<div id="chatbox-1" style="display:none;">
+#parse("vtl/main/statusbar/chatbox-1.vm")
+</div>
+
+<div id="bottom-bar">
+#parse("vtl/main/statusbar/bottombar.vm")
+</div>
+
+
+<script type="text/javascript">
+
+_jq(document).ready(function(){
+   _jq("#popup_about_link").bind('click', function(){
+      _jq("#popup_about").bPopup({fadeSpeed:1, followSpeed:1, opacity:0.8, modalClose:true});
+      return false
+   });
+   
+   _jq("#bottom-bar").width(_jq(window).width()-200);
+   
+});
+
+_jq(window).resize(function(){
+    _jq("#bottom-bar").width(_jq(window).width()-200);
+});
+
+
+
+</script>
+
+#parse("vtl/main/statusbar/script.vm")
+
+**#

@@ -1,0 +1,28 @@
+<style>
+#editModule {
+    position:fixed;
+    top: 30%;
+    left: 10%;
+    width:800px;
+    margin-top: -100px;
+    border: 2px solid #494949;
+    padding:3px;
+    background:#FFF;
+    display:none;
+}
+</style>
+<table>
+<tr>
+<td>Group:</td><td>
+<select style="width:400px" name="module_group" onchange="doDivAjaxCall3$formname('listModules','listModules','')">
+<option value=""></option>
+#foreach ( $g in $groups )
+<option alue="$g">$g</option>
+#end
+</select>
+<input type="button" value="..." onclick="doDivAjaxCall3$formname('listModules','listModules','')">
+</td></tr>
+</table>
+<br/>
+<div id="listModules"></div>
+<div id="editModule"></div>

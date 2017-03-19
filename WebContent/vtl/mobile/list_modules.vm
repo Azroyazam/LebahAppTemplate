@@ -1,0 +1,50 @@
+<form name="f" method="post">
+<table>
+  <tr>
+    <td>
+      Select Group:
+      <select name="group" onchange="listModules()">
+      <option value=""> - select -</option>
+      #foreach( $group in $groupList )
+      <option value="$group" #if ( $group == $groupSelect ) selected #end>$group</option>
+      #end
+      </select>
+    </td>
+  </tr>
+</table>
+<table width="100%">
+  <tr class="table_header">
+    <td>
+    Id
+    </td>
+    <td>
+    Title (Class Name)
+    </td>
+  </tr>
+#foreach( $module in $moduleList )
+  <tr>
+    <td>
+    <a href="javascript:setModule('$module.id')">
+    $module.id
+    </a>
+    </td>
+    <td>
+    $module.title<br>
+    (<i>$module.className</i>)
+    </td>
+  </tr>
+#end
+</table>
+    
+
+<input type="hidden" name="command">
+</form>
+<script>
+function listModules() {
+document.f.command.value = "listModules";
+document.f.submit();
+}
+function setModule(module) {
+parent.setModule(module);
+}
+</script>

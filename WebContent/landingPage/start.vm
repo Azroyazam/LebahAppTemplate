@@ -1,0 +1,132 @@
+<style>
+
+.centerPage { 
+	width:300px; 
+	height:100px; 
+	position: fixed; 
+	background-color: #FFF; 
+	top: 60%; 
+	left: 50%; 
+	margin-top: -150px; 
+	margin-left: -100px; 
+}
+
+.texts {
+	color:#000;
+	background-color:#FFF;
+	font-weight:normal;
+	font-family:verdana;
+	font-size:9pt;
+	border-top:1px solid #BCB3B3; 
+	border-bottom:1px solid #969696; 
+	border-left: 1px solid #BCB3B3;
+	border-right:1px solid #969696; 
+	height:30px; 
+	width:100%;
+	padding-left:5px; 
+	padding-top:2px; 
+	padding-bottom: 2px;
+	-moz-border-radius: 5px;
+	border-radius: 5px; 
+}
+
+#landing-top-bar {
+	border-top-left-radius:15px;
+	border-top-right-radius:15px;
+	padding-left:20px;
+	height:30px;
+	background:#004b85;
+}
+
+#landing-bottom-bar {
+	border-bottom-left-radius:15px;
+	border-bottom-right-radius:15px;
+	padding-left:20px;
+	height:60px;
+	background:#004b85;
+}
+	
+#landingLogo {
+	z-index: 999;
+	margin-left: auto ;
+	margin-right: auto ;
+	width:50%;
+    	padding:3px;
+	margin-top:5px;
+	background:#FFF;
+	height:550px;
+}
+
+.txtinput {
+	width:150px;
+}
+
+@media only screen and (max-width : 860px){
+ 
+    #landingLogo {
+    	z-index: 999;
+    	margin-left: auto ;
+	margin-right: auto ;
+    	width:100%;
+        padding:3px;
+    	margin-top:5px;
+    	background:#FFF;
+		height:100%;
+		
+    }
+	
+	.txtinput {
+	width:100%;
+	}
+}
+</style>
+
+<div style="margin-top:1px">
+<div id="landingLogo" >
+	##<div id="landing-top-bar"></div>
+	
+	<img style = "width:100%" src="../landingPage/splash.png">
+	<br/>
+	
+	#if ( $userIsLogged )
+		<div style="padding:10px;margin-bottom:50px;margin-top:10px;padding-top:20px;font-size:12pt;font-weight:bold;text-align:center">
+			Welcome<br/>
+			$!{session.getAttribute("_portal_username")}
+		</div>
+	#else
+    	<div id="landing-bottom-bar"  style="padding:10px;margin-bottom:50px;margin-top:0px;text-align:center">
+    		<span style="padding-bottom:50px;padding-left:20px;font-weight:bold">
+    		<input class="texts txtinput" style="height:35px;width:150px" placeholder="Username" id="txtusername" onfocus="$('spanPortalLoginResult2').style.display = 'none';" onKeyDown="loginInput(event, this)">
+    		</span>
+    		<span style="padding-bottom:50px;padding-left:20px;font-weight:bold">
+    		<input class="texts txtinput" style="height:35px;width:150px" placeholder="Password" type="password" id="txtpassword" onfocus="$('spanPortalLoginResult2').style.display = 'none';" onKeyDown="loginInput(event, this)">
+    		</span>
+    		<span style="padding-left:20px;font-weight:bold;padding-top:2px">
+    		<button type="button" class="btn btn-default" style="width:100px"  onclick="doPortalLogin()">Login</button>
+    		</span>
+    	</div>
+    	<div id="divPortalLoginResult2" class="centerPage" style="text-align:center;display:none"></div>
+	#end
+	
+</div>
+</div>
+	
+<script>
+function doPortalLogin() {
+	$('divPortalLoginResult2').style.display = "block";
+	submitAjaxLogin($('divPortalLoginResult2'), $('txtusername').value, $('txtpassword').value);
+}
+
+function loginInput(e, el) {
+	var keynum;
+	if (window.event) keynum = e.keyCode;
+	else if (e.which) keynum = e.which;
+	if ( keynum == 13 ) {
+		if ( el.id == "txtusername" ) {
+			$('txtpassword').focus();
+		} else if ( el.id == "txtpassword" ) {
+			$('buttonPageLogin').focus();
+		}
+	}
+}
+</script>

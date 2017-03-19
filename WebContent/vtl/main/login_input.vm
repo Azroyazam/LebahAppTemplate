@@ -1,0 +1,17 @@
+
+##parse ( "vtl/main/visitor_choose.vm" )
+
+#if ( $showLogin )
+
+<div style="-moz-border-radius: 3px;border-radius: 3px;border:1px solid #000; color:#ffffff;font-weight:bold;float:right;background-color:#000">
+&nbsp;
+<a style="cursor:hand; cursor:pointer;color:#fff;font-family:Verdana;font-size:10pt;"
+onclick="$('tab_login').style.visibility='visible';">$label.Login</a>
+&nbsp;
+
+</div>
+
+
+
+#end
+ 

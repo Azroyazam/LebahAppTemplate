@@ -1,0 +1,159 @@
+
+
+<table width="100%" border="0">
+
+	<tr>
+		<td colspan="2">
+			<table border="0" width="100%"  bgcolor="lightgrey">
+				<tr>
+					<td>
+					#if ( $dir != "" ) 
+						<a href="?module=mecca.lcms.modules.ListFilesModule&dir=$upDir">
+						[Up]
+						</a>
+					#end
+					&nbsp;
+
+					<a href="?module=mecca.lcms.modules.ListFilesModule&dir=">
+					<b>..</b>
+					</a>						
+					&nbsp;\ &nbsp;
+					<b>
+					#foreach ( $d in $dirs)
+						<a href="?module=mecca.lcms.modules.ListFilesModule&dir=$goDirTbl.get($d)">
+						$d
+						</a>
+						&nbsp;\ &nbsp;								
+					#end
+					</b>
+
+					</td>
+</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+	
+		<td valign="top">
+			<form name="listfiles" method="post">
+			<table border="0" width="100%" border="0" cellpadding="0" cellspacing="0">
+
+
+
+				#foreach ( $name in $folders )
+
+					#set ( $next_dir = "" )
+					#if ( $dir == "" ) 
+						#set ($next_dir = "/$name" )
+					#else
+						#set ($next_dir = "$dir/$name" )
+					#end
+					
+				<tr>
+					
+					<td align="center" width="10">
+						<a href="?module=mecca.lcms.modules.ListFilesModule&dir=$next_dir">
+						<img src="/$appname/img/filefolder.gif" border="0">
+						</a>
+					</td>
+					<td>
+						<a href="?module=mecca.lcms.modules.ListFilesModule&dir=$next_dir" style="text-decoration:none">
+<b>						$name</b>
+						</a>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td width="20px">
+					</td>
+				</tr>
+
+				#end
+
+				#foreach ( $name in $names )
+#if ( $util.isFlashFile("${name.fileName}") )
+				<tr>
+				
+					<td valign="middle" align="center" width="10">
+
+					<td valign="middle">
+					<a href="javascript:selectImage('http://${server}/${imageUrl}${dir}/${name.fileName}');">
+<b>										$name.fileName</b>
+</a><br>
+$name.size
+					</td>
+					<td >
+					&nbsp;
+					</td>
+					<td valign="middle">
+			
+$util.getDateTime($name.lastModified, "d MMM yyyy")</br>
+$util.getDateTime($name.lastModified, "hh:mm:ss")</BR>
+
+					</td>
+				</tr>
+				<tr>
+				<td></td>
+				<td colspan="4">
+				[
+				<a target="_new" href="http://${server}/${imageUrl}${dir}/${name.fileName}">
+											View Image
+						</a>
+						|
+											<a href="javascript:selectImageAndClose('http://${server}/${imageUrl}${dir}/${name.fileName}');">
+Select Image
+</a>
+]
+<br /><hr />
+				</td>
+				</tr>
+				#end
+#end
+
+				<tr>
+					<td colspan="3">
+
+					</td>
+				</tr>
+			</table>
+			</form>
+		</td>
+		</tr>	
+</table>
+<form name="form_2" method="post">
+	<input type="hidden" name="course_id">
+	<input type="hidden" name="file">
+	<input type="hidden" name="dir">
+</form>
+<script>
+function delete_file(name, dir) {
+	if ( !confirm("Delete " + name + " ?") ) return;
+	document.form_2.action = "?module=mecca.lcms.modules.ListFilesModule&command=delete";
+	document.form_2.file.value = name;
+	document.form_2.dir.value = dir;
+	document.form_2.submit();
+}
+function open_manifest(course_id) {
+	document.form_2.action = "?module=mecca.lcms.modules.ManifestModule&command=prepare";
+	document.form_2.course_id.value = course_id;
+	document.form_2.submit();
+}
+function doDelete() {
+	if ( !confirm("Delete selected files?  Are you Sure?") ) return;
+	document.listfiles.action = "?module=mecca.lcms.modules.ListFilesModule&command=deletefiles";
+	document.listfiles.submit();
+}
+function selectImage(url) {
+window.opener.txtUrl.value = url;
+window.opener.UpdatePreview();
+}
+function selectImageAndClose(url) {
+window.opener.txtUrl.value = url;
+window.opener.UpdatePreview();
+self.close();
+}
+</script>
+
+
+

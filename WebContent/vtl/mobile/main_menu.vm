@@ -1,0 +1,18 @@
+<form method="post">
+<ol>
+#if ( !$isLogin )
+<li><a href="$!userSessionId?_portal_module=mobile_login" >Login</a></li>
+#else
+<li><a href="$!userSessionId?_portal_module=mobile_logout" >Logout</a></li>
+#end
+#foreach( $module in $modules)
+<li><a href="$!userSessionId?_portal_module=$module.id" style="white-space:nowrap">$module.title</a></li>
+#end
+</ol>
+</form>
+
+<wml>
+  <card title="A Tag">
+    <p><a href="$!userSessionId?_portal_module=mobile_logout">Next page</a></p>
+  </card>
+</wml>

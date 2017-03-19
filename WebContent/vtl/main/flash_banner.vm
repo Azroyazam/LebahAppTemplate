@@ -1,0 +1,10 @@
+<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+ codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0"
+ WIDTH=100% HEIGHT=128>
+<param name="movie" value="../css/bank/Movie1.swf" />
+<param name="quality" value="high" />
+<param name="scale" value="exactfit" />
+<param name="wmode" value="opaque" />
+<param name="bgcolor" value="#666666" />
+<EMBED src="../css/bank/Movie1.swf" quality="high" scale="exactfit" wmode="opaque" bgcolor="#666666"  WIDTH=100% HEIGHT=100%   swLiveConnect=true NAME=CF4 TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"></EMBED>
+</OBJECT>

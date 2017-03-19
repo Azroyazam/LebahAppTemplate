@@ -1,0 +1,9 @@
+<table width="100%" cellpadding="0" cellspacing="1">
+<tr><td style="height:30px;background-color:#898989;color:#fff">&nbsp;Who's Online</td></tr>
+<tr><td style="border-bottom:1px solid #66CCCC">
+<div id="incoming-list"></div>
+</td></tr>
+<tr><td>
+<div id="online-users-list" style="overflow:auto;height:218px"></div>
+</td></tr>
+</table>

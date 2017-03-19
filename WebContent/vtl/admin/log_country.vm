@@ -1,0 +1,38 @@
+
+<table width="80%" align="center" border="1">
+	<tr style="font-weight:bold" class="table_header">
+
+		<td>
+		<b>
+			Country
+			</b>
+		</td>
+		
+				<td align="right">
+				<b>
+Total 			Hits
+			</b>
+		</td>
+		
+	</tr>
+	##set ( $total = 0 )
+	#foreach ( $item in $list )
+	##set ( $total = $total + $item.count )
+	<tr>
+		
+		<td>
+			$item.country
+		</td>
+		
+		<td align="right">
+			$item.count
+		</td>
+		
+	</tr>
+	#end
+	
+
+</table>
+
+<input type="hidden" name="command">
+

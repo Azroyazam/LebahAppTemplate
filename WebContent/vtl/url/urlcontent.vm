@@ -1,0 +1,47 @@
+
+<div id="displayContent_${formname}">
+	#parse("vtl/url/urlcontent_display.vm")
+</div>
+<div id="displayContentButton_${formname}">
+#if ( $isLogin && $userId == "anon" )
+    <table width="100%" cellpadding="0" cellspacing="1" bgcolor="lightgrey">
+        <tr class="table_row">
+            <td align="right">
+    			<input class="linkbutton" type="button" value="Edit this content..." onclick="doDivAjaxCall$formname('editContent_${formname}','editContent','contentUrl=$!url&formname=$!formname')">	
+            	##<input class="linkbutton" type="button" value="X" onclick="delete_${formname}()">
+            </td>
+        </tr>
+    </table>
+#end
+</div>
+
+<div id="editContent_${formname}" style="display:none"></div>
+<iframe id="submitTarget_${formname}" name="submitTarget_${formname}" style="border:0px;height:0px"></iframe>
+
+
+##$contentUrl
+
+<script>
+function submitContent_${formname}() {
+	document.${formname}.target='submitTarget_${formname}';
+	document.${formName}.action='?command=saveContent&formname=$!formname';
+	document.${formName}.submit();
+}
+function showUpdatedContent_${formname}() {
+	doDivAjaxCall$formname('displayContent_${formname}','showUpdatedContent','');
+	$('editContent_${formname}').style.display='none';
+	$('displayContent_${formname}').style.display='block';
+	$('displayContentButton_${formname}').style.display='block';
+}
+function updateCanceled_${formname}() {
+	$('editContent_${formname}').style.display='none';
+	$('displayContent_${formname}').style.display='block';
+	$('displayContentButton_${formname}').style.display='block';
+}
+function delete_${formname}() {
+if ( !window.confirm('Are you sure to delete this HTML Module?') ) return;
+	//document.${formname}.action = "../x/${securityToken}/lebah.portal.XModule?command=deleteModule&moduleId=$formname";
+	document.${formname}.action = "../x/lebah.portal.XModule?command=deleteModule&moduleId=$formname";
+	document.${formname}.submit();	
+}
+</script>

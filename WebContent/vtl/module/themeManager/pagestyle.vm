@@ -1,0 +1,107 @@
+<form name="formPageStyle" method="post">
+<table width="100%" cellpadding="0" cellspacing="5">
+    <tr>
+        <td>
+        <table class="table_bg" width="100%" cellpadding="2" cellspacing="2">
+            <tr>
+                <td class="table_header">Register Page Style</td>
+            </tr>
+            <tr>
+                <td class="table_body">
+                <table width="100%" cellpadding="2" cellspacing="0">
+                    <tr>
+                        <td>Title</td>
+                        <td><input type="text" name="pagetitle" size="60"></td>
+                        <td width="100%"></td>
+                    </tr>
+                    <tr>
+                        <td>Filename</td>
+                        <td><input type="text" name="filename" size="60"></td>
+                        <td width="100%"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right">
+                            <input type="button" name="btnSubmit" onclick="doSubmit()" value="Register">
+                            <!--<input type=button name="btnUpdate" onclick="doUpdate()" disabled value=Update>-->
+                            <input type="reset" value="Reset">
+                        </td>
+                        <td width="100%"></td>
+                    </tr>
+                </table>
+                </td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <table class="table_bg" width="100%" cellpadding="2" cellspacing="2">
+            <tr>
+                <td class="table_head"><b>List Of Page Syles</b></td>
+            </tr>
+            <tr>
+                <td class="table_body">
+                <table width="100%" cellpadding="2" cellspacing="1">
+                    <tr>
+                        <td class=cell_head width="2%"><b>No.</b></td>
+                        <td class=cell_head width="50%"><b>Title</b></td>
+                        <td class=cell_head width="45%"><b>Filename</b></td>
+                        <td class=cell_head width="3%"></td>
+                    </tr>
+#if ($pageStyleList.isEmpty())
+                    <tr>
+                        <td colspan="4" align="center">No page style registered.</td>
+                    </tr>
+#else
+    #foreach ($pagestyle in $pageStyleList)
+        #set ($i = $velocityCount)
+        #if ($i%2 == 0)
+            #set ($cls = "row2")
+        #else
+            #set ($cls = "row1")
+        #end
+                    <tr>
+                        <td class=$cls width="2%">$i</td>
+                        <td class=$cls width="50%">$pagestyle.getTitle()</td>
+                        <td class=$cls width="45%">$pagestyle.getFilename()</td>
+                        <td class=$cls width="3%"><a href="javascript:doDelete('$pagestyle.getTitle()')")><img src=../img/delete.gif border=0></a></td>
+                    </tr>
+    #end
+#end
+                </table>
+                </td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+</table>
+</form>
+<script>
+function doSubmit()
+{
+    if (document.formPageStyle.pagetitle.value == "")
+    {
+        alert("Title is required.");
+        return;
+    } else if (document.formPageStyle.filename.value == "")
+    {
+        alert("Filename is required.");
+        return;
+    } else
+    {
+        document.formPageStyle.action = "?command=add";
+        document.formPageStyle.submit();
+    }
+}
+
+function doDelete(ptitle)
+{
+    if (confirm("Delete this item?") == true)
+    {
+        document.formPageStyle.action = "?command=delete&deltitle="+ptitle;
+        document.formPageStyle.submit();
+    } else {
+        return;
+    }
+}
+</script>

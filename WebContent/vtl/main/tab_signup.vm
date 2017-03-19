@@ -1,0 +1,14 @@
+
+
+
+<div id="tab_signup"
+style="position:absolute;  background: rgba(20,0,0,0.3); visibility:hidden;height:200px; margin-top:1px; padding:20px; -moz-border-radius: 10px; border-radius: 10px;">
+
+<a href="javascript:void" onclick="$('tab_signup').style.visibility='hidden';"><img src="../img/dialog_close_button.png" border="0"></a>
+<form id="formSignup" name="formSignup" style="margin-top:1px;" method="post">
+            
+</form> 
+            
+
+</div>
+

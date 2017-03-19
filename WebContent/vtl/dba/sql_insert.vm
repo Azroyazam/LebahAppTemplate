@@ -1,0 +1,5 @@
+<textarea cols="100" rows="20">
+#foreach( $txt in $sqldata)
+$txt
+#end
+</textarea>

@@ -1,0 +1,98 @@
+
+<table class="tab" width="100%"  cellspacing="0" cellpadding="0" border="0">
+	<tr>
+		##<td width="10px"></td>
+		<td valign="bottom">
+			##the real tabs
+			<table  cellspacing="0" cellpadding="0" border="0">
+			<tr>
+			#set ( $td_class = "" )
+			#set ( $td_left_class = "" )
+			#set ( $td_right_class = "" )
+			#set ( $a_class = "" )
+			#set ( $tabC = 0 )
+				
+		<td width="5"></td>
+					
+			#foreach ($tab in $tabs)
+				#set ( $tabC = $tabC + 1 )
+				#if (${session.getAttribute("_portal_action")} == ${tab.command})
+					#set ( $td_class = "tab_background_active" )
+					#set ( $a_class = "tab_link_active" )
+					#set ( $td_left_class = "tab_background_left_active" )
+					#set ( $td_right_class = "tab_background_right_active" )
+				#else
+					#set ( $td_class = "tab_background" )
+					#set ( $a_class = "tab_link" )
+					#set ( $td_left_class = "tab_background_left" )
+					#set ( $td_right_class = "tab_background_right" )							
+				#end
+				<td class="$td_left_class"></td>
+				#if ( $tab.displayType == "pulldown_menu" )
+					<td class="$td_class" style="cursor:hand; cursor:pointer;" onclick="document.location='${tab.command}'">
+						
+						<span id="menu_parent${tabC}">
+						
+						#if ( $label.get("${tab.title}") )
+						$label.get("${tab.title}")
+						#else							
+						${tab.title}
+						#end						
+						
+						</span>
+						
+						
+					</td>
+				#else
+					<td class="$td_class" style="cursor:hand; cursor:pointer;" onclick="document.location='${tab.command}'">
+						
+						#if ( $label.get("${tab.title}") )
+						$label.get("${tab.title}")
+						#else							
+						${tab.title}
+						#end
+						
+						
+					</td>
+				#end
+				<td class="$td_right_class"></td>
+			#end ##foreach $tab in $tabs	
+			<td>&nbsp;</td>
+			</tr>
+			</table>
+
+		</td>
+	</tr>
+</table>
+
+									
+#set ( $tabC = 0 )
+#foreach ($tab in $tabs)
+	#set ( $tabC = $tabC + 1 )
+	#if ( $tab.displayType == "pulldown_menu" )
+		<div id="menu_child${tabC}" class="tab_pulldown" style="position: absolute; visibility: hidden;z-index:1000;">
+		#set ( $menus = $tab.modules )
+		#foreach ( $menu in $menus )
+		<a class="pulldown_menu" href="$tab.id?_portal_module=$menu.id">
+		#if ( $label.get("$menu.moduleTitle") )
+			$label.get("$menu.moduleTitle")
+		#else							
+			$menu.moduleTitle
+		#end
+		</a>
+		#end
+		</div>
+	#end
+#end
+
+
+
+<script type="text/javascript">
+#set ( $tabC = 0 )
+#foreach ($tab in $tabs)
+#set ( $tabC = $tabC + 1 )
+#if ( $tab.displayType == "pulldown_menu" )
+at_attach("menu_parent${tabC}", "menu_child${tabC}", "hover", "y", "pointer");
+#end
+#end
+</script>

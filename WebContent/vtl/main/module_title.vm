@@ -1,0 +1,49 @@
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td class="module_title_left"></td>
+		<td class="module_title" valign="bottom">
+			<table width="100%" cellpadding="0" cellspacing="0" border="0">
+			<tr><td class="module_title">
+			
+			#if ( $moduleClassName == "lebah.app.ApplicationContainerPortlet" )
+			
+				<span id="__application_container_title__">
+				#if ( $label.get("$moduleTitle") )
+					$label.get("$moduleTitle")
+				#else							
+					$moduleTitle
+				#end
+				</span>
+			
+			
+			#else
+			
+				#if ( $label.get("$moduleTitle") )
+					$label.get("$moduleTitle")
+				#else							
+					$moduleTitle
+				#end
+			
+			#end
+			
+			
+			</td><td style="width:10px">
+			#if ( $showMaximizeIcon )
+			#if ( !$isMaximized )
+				<a href="javascript:void(0)" onclick="document.location.href='?moduleState=maximize&moduleId=$_moduleId'"><img src="../img/max.png" border="0"></a>
+			#else
+				<a href="javascript:void(0)" onclick="document.location.href='?moduleState=restore&moduleId=$_moduleId'"><img src="../img/max2.png" border="0"></a>
+			#end
+			#end
+			</td></tr></table>
+			
+		</td>
+		<td class="module_title_right"></td>
+	</tr>
+	<tr>
+		<td class="module_title_left_bot"></td>
+		<td class="module_title_bot"></td>
+		<td class="module_title_right_bot"></td>
+	</tr>	
+</table>
+

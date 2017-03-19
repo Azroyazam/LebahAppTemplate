@@ -1,0 +1,21 @@
+
+<div style="padding:10px">
+	
+<textarea class="ckeditor" cols="80" id="editor_${formname}" name="editor_${formname}" rows="10">$!content</textarea>
+<script>
+CKEDITOR.replace( 'editor_$formname' );
+</script>
+
+<table style="width:100%"><td><td align="right">
+    <input class="linkbutton" type="button" value="Save Content" onclick="submitContent_${formname}()">
+	<input class="linkbutton" type="button" value="Cancel" onclick="updateCanceled_${formname}()">
+    <input type="hidden" name="contentUrl_${formname}" value="$!contentUrl">
+	<input type="hidden" name="formname" value="$!formname">
+</td></tr></table>
+</div>
+
+<script>
+$('displayContent_${formname}').style.display="none";
+$('displayContentButton_${formname}').style.display="none";
+$('editContent_${formname}').style.display="block";
+</script>

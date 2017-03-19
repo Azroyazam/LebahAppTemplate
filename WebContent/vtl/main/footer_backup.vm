@@ -1,0 +1,27 @@
+<table class="font_footer" width="100%"  border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td height="1" bgcolor="FFFFFF"></td>
+  </tr>
+  <tr>
+    <td height="3" background="/my-medic/img/footer_bg.gif"></td>
+  </tr>
+
+      <tr>
+    <td height="1" bgcolor="FFFFFF"></td>
+  </tr>
+      <tr>
+    <td height="3" bgcolor="3E6074"></td>
+  </tr>
+  <tr>
+    <td height="30" valign="top" bgcolor="3E6074"><div align="center">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><div align="center"></div>            
+            <div align="right"><font color="#FFFFFF">University ERP System Ver01, In-Fusion Systems 2005 &copy; All rights reserved</font><font color="#FFFFFF"> 2005</font></div></td>
+          <td width="10"><div align="right"></div></td>
+        </tr>
+      </table>
+      </div></td>
+  </tr>
+
+</table>

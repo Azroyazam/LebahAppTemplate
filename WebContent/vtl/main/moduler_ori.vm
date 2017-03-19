@@ -1,0 +1,67 @@
+
+<table style="width:220px" class="navigation_menu" cellspacing="1" cellpadding="0" border="0">
+	<tr>
+		<td valign="top">
+
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		
+				#set ( $td_class = "" )
+				#set ( $td_left_top_class = "" )
+				#set ( $td_right_top_class = "" )
+				#set ( $td_left_bot_class = "" )
+				#set ( $td_right_bot_class = "" )
+				#set ( $td_left = "" )
+				#set ( $td_right = "" )
+				#set ( $a_class = "" )
+				#foreach ($module in $modules)
+					#if (${session.getAttribute("_portal_module")} == ${module.id})
+						#set ( $td_class = "nav_background_active")
+						#set ( $td_left_top_class = "nav_background_top_left_active" )
+						#set ( $td_right_top_class = "nav_background_top_right_active" )
+						#set ( $td_left_bot_class = "nav_background_bot_left_active" )
+						#set ( $td_right_bot_class = "nav_background_bot_right_active" )
+						#set ( $td_left = "nav_background_left_active" )
+						#set ( $td_right = "nav_background_right_active" )
+						#set ( $td_top = "nav_background_top_active" )
+						#set ( $td_bot = "nav_background_bot_active" )						
+						#set ( $a_class = "nav_link_active")
+					#else
+						#set ( $td_class = "nav_background")
+						#set ( $td_left_top_class = "nav_background_top_left" )
+						#set ( $td_right_top_class = "nav_background_top_right" )
+						#set ( $td_left_bot_class = "nav_background_bot_left" )
+						#set ( $td_right_bot_class = "nav_background_bot_right" )
+						#set ( $td_left = "nav_background_left" )
+						#set ( $td_right = "nav_background_right" )
+						#set ( $td_top = "nav_background_top" )
+						#set ( $td_bot = "nav_background_bot" )						
+						
+						#set ( $a_class = "nav_link")
+					#end		
+
+
+
+					<tr>
+						<td class="$td_left"></td>
+						#set ( $link = "${session.getAttribute('_portal_action')}?_portal_module=${module.id}" )
+						<td class="$td_class" style="cursor:pointer" onclick="document.location = '$link'">
+						
+						#if ( $label.get("${module.customTitle}") )
+							$label.get("${module.customTitle}")
+						#else							
+							${module.customTitle}
+						#end
+						
+						</td>
+						
+						<td class="$td_right"></td>
+					</tr>
+
+						
+				#end					
+			</table>
+		
+		</td>
+		</tr>
+</table>
+

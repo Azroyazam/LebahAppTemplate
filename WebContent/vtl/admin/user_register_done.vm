@@ -1,0 +1,41 @@
+<form name="f" method="post">
+<table width="80%" align="center">
+	#if ( $success )
+	<tr class="table_header">
+		<td style="font-family:arial; font-weight:bold; font-size:14pt">
+			YOU ARE NOW SUCCESSFULLY REGISTERED !!!
+		</td>
+	</tr>
+	<tr>
+		<td>
+		&nbsp;
+		</td>
+	</tr>
+	<tr>
+		<td style="font-family:arial; font-weight:bold; font-size:12pt">
+			You login name is <font color="red"><b>$userInfo.login</b></font>
+		</td>
+	</tr>
+	#else
+	<tr class="table_header">
+		<td style="font-family:arial; font-weight:bold; font-size:14pt; font-color:red">
+			REGISTRATION FAILED !!!
+		</td>
+	</tr>
+	<tr>
+		<td>
+		&nbsp;
+		</td>
+	</tr>
+	<tr>
+		<td style="font-family:arial; font-weight:bold; font-size:12pt">
+			Please use other login name!!
+		</td>
+	</tr>
+	
+	
+	#end
+</table>
+
+
+</form>

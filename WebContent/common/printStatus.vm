@@ -1,0 +1,48 @@
+#**
+
+    This function will use Bootstrap's Alert function to display
+    messages from the server. Example usage:
+
+    @Command("Example")
+    public String Example() throws Exception {
+        try {
+            context.put("status", "success");
+            context.put("message", "Room has been successfully added.");
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+
+            context.put("status", "danger");
+            context.put("message", "An error has occured. Please contact your system administrator.");
+        }
+
+        return "common/printStatus.vm";
+    }
+
+**#
+
+#if ($status == "success")
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Success</strong><br/>
+        $message
+    </div>
+#elseif ($status == "info")
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Info</strong><br/>
+        $message
+    </div>
+#elseif ($status == "warning")
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Warning</strong><br/>
+        $message
+    </div>
+#elseif ($status == "danger")
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Failed</strong><br/>
+        $message
+    </div>
+#end

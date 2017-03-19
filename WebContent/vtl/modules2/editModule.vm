@@ -1,0 +1,36 @@
+<script>
+$('editModule').style.display="block";
+</script>
+
+<table style="width:100%;height:30px;border-bottom:2px solid #000">
+<tr><td style="font-family:Verdana;font-size:11pt;font-weight:bold;color:#000">$module.title</td>
+<td style="width:20px"></td></tr></table>
+<table style="width:100%"><tr><td align="right">
+<input type="button" value="Save" onclick="doDivAjaxCall3$formname('listModules','saveModule','saveModuleId=$module.id')">
+<input type="button" value="X" onclick="$('editModule').style.display='none';">
+</td></tr></table>
+<table style="width:100%">
+<tr><td style="width:150px"></td><td style="width:10px"></td><td></td></tr>
+<tr><td>Id</td><td>:</td><td><input style="width:100%;" name="module_id" value="$!module.id" readonly></td></tr>
+<tr><td>Title</td><td>:</td><td><input style="width:100%" name="module_title" value="$!module.title"></td></tr>
+<tr><td>Class Name</td><td>:</td><td><input style="width:100%" name="module_class" value="$!module.className"></td></tr>
+<tr><td>Group Name</td><td>:</td><td>
+<select style="width:100%" name="group_name">
+<option value=""></option>
+#foreach ( $g in $groups )
+<option value="$g" #if ( $!module.groupName == $g ) selected #end>$g</option>
+#end
+</select>
+</td></tr>
+</table>
+
+<table>
+<tr><td style="width:150px" valign="top">Assigned To</td><td style="width:10px" valign="top">:</td><td valign="top">
+<table>
+#foreach ( $r in $userRoles )
+<tr>
+<td><input type="checkbox" name="selectedRoles" value="$r.name" #if ( $roleMap.get("$r.name") == "true" ) checked #end></td><td>$r.description</td>
+</tr>
+#end
+</table>
+</td></tr></table>

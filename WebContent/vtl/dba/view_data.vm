@@ -1,0 +1,105 @@
+<p>
+$jdbc_driver<br>
+$jdbc_url<br>
+</p>
+<form name="columns" method="post">
+	<a href="javascript:back()">Back</a>
+	</p>
+	<b>Data viewer</b>
+	</p>
+	<table border="1">
+		<tr bgcolor="silver">
+			#set ( $fld = 0 )
+			#set ( $del_col = "" )
+			#foreach ($cols in $colnames )
+				#set ( $fld = $fld + 1 )
+				#if ( $fld == 1 )
+					#set ( $del_col = $cols )
+				#end
+			<td>
+				$cols
+			</td>
+			#end
+			<td>
+				&nbsp;
+			</td>			
+		</tr>	
+		#set ( $del_val = "" )
+		#foreach ( $e in $data )
+		<tr>
+			#foreach ($cols in $colnames )
+				#if ( $fld == 1 )
+					#set ( $del_val = $e.get("$cols") )
+				#end
+			<td>
+				$e.get("$cols")
+			</td>
+			#end
+			<td>
+				#if ( $fld == 1 )
+					<input type="button" value="Delete" onclick="delete_data('$del_val')">
+				#else
+					&nbsp;
+				#end
+			</td>			
+		</tr>
+		#end
+	</table>
+	</p>
+	<table>
+		#foreach ($cols in $colnames )
+		<tr>
+			<td align="right">
+				$cols: 
+			</td>
+			<td>
+				<input size="30" name="$cols">
+			</td>
+		</tr>
+		#end
+		<tr>
+			<td colspan="2" align="right">
+				<input type="button" value="Insert" onclick="insert_data()">
+			</td>
+		</tr>
+	</table>	
+	
+	#foreach ($cols in $colnames )
+	<input type="hidden" name="colnames" value="$cols">
+	#end	
+	
+	<input type="hidden" name="catalog" value="$catalog">
+	<input type="hidden" name="table" value="$table">
+	<input type="hidden" name="del_value">
+	<input type="hidden" name="command">
+	#if ( $fld == 1 )
+		<input type="hidden" name="del_col" value="$del_col">
+	#end	
+</form>
+<script>
+function view_data() {
+	document.columns.command.value = "viewdata";
+	document.columns.action = "";
+	document.columns.submit();
+}
+function insert_data() {
+	document.columns.command.value = "insertdata";
+	document.columns.action = "";
+	document.columns.submit();
+}
+function delete_data(s) {
+	if ( !window.confirm("ARE YOU SURE TO DELETE DATA?") ) return;
+	document.columns.command.value = "deletedata";
+	document.columns.del_value.value = s;
+	document.columns.action = "";
+	document.columns.submit();
+}
+function back() {
+	document.columns.command.value = "columns";
+	document.columns.submit();
+}
+function createInsertSQL() {
+document.columns.command.value = "createInsertSQL";
+document.columns.submit();
+}
+</script>

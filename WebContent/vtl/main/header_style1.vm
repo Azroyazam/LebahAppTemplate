@@ -1,0 +1,14 @@
+<table class="page_header" cellpadding="1" cellspacing="0" width="100%"  border="0">
+    <tr>
+        <td valign="top">
+													        #parse ( "vtl/main/portal_title.vm" )
+      	  </td>
+        <td valign="top" align="right">
+        #if ( $userIsLogged )
+			           #parse ( "vtl/main/greeting.vm" )
+        #elseif ( $showLogin )
+			           #parse ( "vtl/main/login_input.vm" )                   
+       			 #end
+      </td>
+    </tr>
+</table>

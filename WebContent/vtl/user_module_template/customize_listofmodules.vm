@@ -1,0 +1,124 @@
+#set ($moduleVector = $session.getAttribute("_portal_moduleVector"))
+#set ($currenttab = $cTab.id)
+#set ($total = $totalInt.intValue())
+#set ($startno = $startnoInt.intValue())
+#set ($i = $startno)
+#set ($cnt = 0)
+<br>
+<form name="fcus" method="post">
+<table align="center" width="500" cellpadding="1" cellspacing="1" border="0">
+<tr><td class="table_head">
+<table width="100%" cellpadding="1" cellspacing="1" border="0">
+    <tr>
+        <td class="table_head">
+            <table width="100%" cellpadding="2" cellspacing="0" border="0">
+                <tr>
+                    <td class="table_head"><b>${cTab.title}</b></td>                    
+                    <td class="table_head" align="right">
+                        <input type="button" value="&nbsp;Update This Tab&nbsp;" onclick="saveChanges()">
+                        <input type="button" value="Back To Tab's Modules" onclick="goBack()">
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="row1">
+            <table width="100%" align="center" cellpadding="1" cellspacing="1" border="0">
+                <tr><td class="row1"><i>Note: Check the modules you want to 'add' and uncheck those that you want to 'remove'.</i></td></tr>
+                <tr>
+                    <td >
+                        <table width="100%" align="center" cellpadding="2" cellspacing="1" border="0" >
+                    #set ( $group_name = "" )
+                    #foreach ( $module in $moduleVector )
+                        #set ($i = $i + 1)
+                        #if ( $module.marked)
+                            #set ( $row = "selected")
+                            #set ( $checked = "checked")
+                        #else
+                            #set ( $row = "row1")
+                            #set ( $checked = "")                               
+                        #end
+                        
+                        #if ( $group_name != $module.groupName )
+                            #set ( $group_name = $module.groupName )
+                            <tr>
+                                <td  colspan="2" align="center">
+                                <b>$module.groupName</b>
+                                </td>                                       
+                            </tr>
+                        #end                                
+                                
+                            <tr>
+                                <td class="$row" width="25"><input class="cb" type="checkbox" name="cbmodules" value="$module.id" $checked></td>
+                                <td class="$row" width="475">
+                                #if ( $module.title == "" )
+                                [<i>$module.id</i>]
+                                #else
+                                $module.title
+                                #end
+                                </td>
+                            </tr>
+                    #end
+                        </table>        
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="table_head">
+            <table width="100%" cellpadding="2" cellspacing="0" border="0">
+                <tr>
+                    <td class="table_head" width="100">
+                    #if ( $i > $moduleVector.size() )
+                        <input type="button" value="&lt Prev" onclick="goPrevious()">
+                    #end
+                    </td>
+                    <td class="table_head" align="center">
+                    <input type="button" value="&nbsp;Update This Tab&nbsp;" onclick="saveChanges()">   
+                    </td>
+                    <td class="table_head" width="100" align="right">
+                    #if ( $i < $total)
+                    <input type="button" value="Next &gt;" onclick="goNext()">
+                    #end
+                    </td>
+                </tr>
+             </table>
+        </td>
+    </tr>               
+</table>
+</td></tr></table>
+<input type="hidden" name="item" value="">
+<input type="hidden" name="process" value="">
+<input type="hidden" name="tabid" value="$currenttab">
+<input type="hidden" name="role" value="$userRole">
+</form>
+<script>
+function doSubmit()
+{
+    document.fcus.action = "";
+    document.fcus.submit();
+}
+
+function goBack() {
+    document.fcus.item.value = "tab";
+    document.fcus.process.value = "content";
+    doSubmit();
+}
+function goNext() {
+    document.fcus.item.value = "listmodules";
+    document.fcus.process.value = "next";
+    doSubmit();
+}
+function goPrevious() {
+    document.fcus.item.value = "listmodules";
+    document.fcus.process.value = "previous";
+    doSubmit();
+}
+function saveChanges() {
+    document.fcus.item.value = "listmodules";
+    document.fcus.process.value = "save";
+    doSubmit();
+}
+</script>

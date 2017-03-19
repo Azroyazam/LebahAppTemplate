@@ -1,0 +1,41 @@
+<form name="f" method="post">
+<center>
+User id :<input name="user_id" value="$!user.login"><input type="button" value="GET" onclick="getUser()">
+</center>
+<br><br><br>
+<table align="center">
+<tr>
+<td>User Name:</td><td><b>$!user.name</b></td>
+</tr>
+<tr>
+<td>Primary role:</td><td><b>$!user.role.description</b></td>
+</tr>
+<tr>
+<td valign="top">Secondary roles:</td>
+<td>
+#foreach ( $role in $roleList )
+#if ( $role.name != $user.role.name && $role.name != "anon" )
+<input type="checkbox" name="roleList" value="$role.name" #if ( $user.isRole("$role.name") ) checked #end>$role.description</input>
+<br>
+#end
+#end
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td><input type="button" value="Save Roles" onclick="updateRoles()"></td>
+</tr>
+</table>
+<input type="hidden" name="command">
+</form>
+<script>
+function getUser(){
+document.f.command.value = "getUser";
+document.f.submit();
+}
+function updateRoles(){
+document.f.command.value = "updateRoles";
+document.f.submit();
+}
+</script>

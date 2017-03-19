@@ -1,0 +1,8 @@
+
+<span>
+
+#if ( $lang == "en" ) EN #else <a href="?lang=en" style="font-weight:bold">EN</a> #end
+|
+#if ( $lang == "bm" ) BM #else <a href="?lang=bm" style="font-weight:bold">BM</a> #end
+</span>
+&nbsp;&nbsp;

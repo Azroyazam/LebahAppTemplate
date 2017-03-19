@@ -1,0 +1,25 @@
+<form name="flogin" method="post" action="javascript:submitLogin()">
+<table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td align="right" valign="middle">
+           	Username:&nbsp;
+           	<input class="font_login" name="username" size="5">
+           	Password:&nbsp;
+           	<input class="font_login" type="password" name="password" size="5">
+			<input class="login_button" type="submit" value="Login">
+        </td>
+    </tr>
+</table>     
+</form>
+<script>
+function submitLogin() {
+    if ( document.flogin.username.value == "" ) { alert("Please enter username!"); document.flogin.username.focus(); return; }
+    if ( document.flogin.password.value == "" ) { alert("Please enter password!"); document.flogin.password.focus(); return; }
+    document.flogin.action = "login";
+    document.flogin.submit();
+}
+function changeVisitor(visitor) {
+	var visitor = document.flogin.visitor.value;
+	document.location = "?visitor="+visitor;
+}
+</script>  

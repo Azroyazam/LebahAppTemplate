@@ -1,0 +1,16 @@
+#set ( $button_list_all = "List All" )
+#set ( $button_search = "Search" )
+#set ( $button_reset = "Reset" )
+
+#set ( $button_add = "Add New" )
+
+
+#set ( $label_search = "Search Criteria" )
+#set ( $label_list = "List" )
+#set ( $label_entry = "Basic Information" )
+
+
+#set ( $button_add = "Add New" )
+#set ( $button_save = "Save" )
+#set ( $button_done = "Done" )
+#set ( $button_save_and_add = "Save & Add New" )

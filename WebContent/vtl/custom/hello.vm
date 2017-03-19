@@ -1,0 +1,14 @@
+<form name="frhello" method="post" action="javascript:submitHello()">
+	<font size="3"><b>Hello $who</b></font>
+	<br>
+	<input name="who" size="20">
+	<input type="submit" value="Go">
+</form>
+<script>
+frhello.who.focus();
+function submitHello() {
+	frhello.action = "";	
+	frhello.submit();
+}
+</script>
+

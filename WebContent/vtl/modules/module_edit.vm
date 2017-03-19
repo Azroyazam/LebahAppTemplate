@@ -1,0 +1,97 @@
+#set ($moduleVector = $session.getAttribute("_portal_moduleVector"))
+#set ($total = $totalInt.intValue())
+#set ($startno = $startnoInt.intValue())
+#set ($i = $startno)
+#set ($cnt = 0)
+<form name="fcus" method="post">
+<br>
+<table width="100%" cellpadding="1" cellspacing="1" border="0">
+
+    <tr>
+        <td>   
+            <table width="100%" align="left" cellpadding="1" cellspacing="0" border="0">
+                <tr>
+                    <td width="500">
+                    
+                        <table width="100%" align="center" cellpadding="2" cellspacing="1" border="0">
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td width="40%"><b>Module's Title</b></td>
+                                <td width="60%"><b>Module's Class Name</b></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            #set ( $group_name = "" )
+                            #foreach ( $module in $moduleVector )
+                                #set ($i = $i + 1)
+
+                                #if ( $group_name != $module.groupName )
+                                    #set ( $group_name = $module.groupName )
+                            <tr>
+                                <td  colspan="4"><br/><b>$module.groupName</b><hr/></td>                                       
+                            </tr>
+                                #end
+
+                            <tr>                            
+                                <td class="row1">$i.</td>                            
+                                <td class="row1">#if ( $module.title == "" ) [$module.id] #else ${module.title} #end</td>
+                                <td class="row1">${module.className}</td>       
+                                <td class="row1" nowrap>
+                                    <a href="javascript:submitEdit('$module.id')"><img src="../img/edit.gif" border="0"></a>
+                                    <a href="javascript:submitDelete('$module.id')"><img src="../img/delete.gif" border="0"></a>
+                                </td>                       
+                            </tr>
+                            #end
+                        </table>        
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    
+    
+    
+    <tr>
+       <td align="center">
+        #if ( $i < $total)
+        <input type="button" value="Next &gt;" onclick="goNext()">
+        #else
+        <input type="button" value="Next &gt;" disabled>
+        #end
+        #if ( $i > $moduleVector.size() )
+        <input type="button" value="&lt Prev" onclick="goPrevious()">
+        #else
+        <input type="button" value="&lt Prev" disabled>
+        #end        
+        </td>
+    </tr> 
+    
+    
+</table>
+<input type="hidden" name="nav">
+<input type="hidden" name="module_id">
+</form>
+<script>
+function goNext() {
+    document.fcus.nav.value = "next";
+    document.fcus.action = "";
+    document.fcus.submit();
+}
+function goPrevious() {
+    document.fcus.nav.value = "previous";    
+    document.fcus.action = "";
+    document.fcus.submit();
+}
+function submitEdit(id) {
+    document.fcus.nav.value = "edit";
+    document.fcus.module_id.value = id;
+    document.fcus.action = "";
+    document.fcus.submit();
+}
+function submitDelete(id) {
+    if ( !confirm("Delete This Module?" ) ) return;
+    document.fcus.nav.value = "delete";
+    document.fcus.module_id.value = id;
+    document.fcus.action = "";
+    document.fcus.submit();
+}
+</script>

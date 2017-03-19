@@ -1,0 +1,36 @@
+   
+#if ( $userIsLogged )
+
+
+#set ( $current_role = "" )
+##if ( $myrole == "" )
+	#set ( $current_role = $primaryRole.description )
+##end
+#foreach( $secondaryRole in $secondaryRoles )
+#if ( $myrole == $secondaryRole.name )
+#set ( $current_role = $secondaryRole.description )
+#end
+#end
+
+<table cellpadding="0" cellspacing="0">
+<tr><td valign="top">
+<span id="menu_parent_roles2">
+<a><font class="font_role_select">Role: $!current_role</font></a></span>
+<div id="menu_child_roles" class="tab_pulldown" style="position: absolute; visibility: hidden;z-index:1000">
+<a class="pulldown_menu" href="javascript:changeRole('')">$!primaryRole.description</a>
+#foreach( $secondaryRole in $secondaryRoles )
+#if ( $secondaryRole.description != "" )
+<a class="pulldown_menu" href="javascript:changeRole('$!secondaryRole.name')">$!secondaryRole.description</a>
+#end
+#end
+</div>
+</td></tr>
+</table>
+
+
+<script type="text/javascript">
+at_attach("menu_parent_roles2", "menu_child_roles", "hover", "y", "pointer");
+</script>
+
+
+#end

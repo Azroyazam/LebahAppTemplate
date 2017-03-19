@@ -1,0 +1,84 @@
+<form name="portalLogin" method="post" action="javascript:submitPortalLogin()">
+<table width="70%" cellpadding="5" align="center">
+	<tr>
+    	<td width="50%">
+			<table width="100%" celpadding="0" cellspacing="0" align="center">
+				<tr>
+					<td width="15" height="15" background="../img/login_topleft_corner.gif"></td>
+					<td bgcolor="#dcdcdc"></td>
+					<td width="17" height="15" background="../img/login_topright_corner.gif"></td>
+				</tr>
+				<tr>
+					<td width="15" bgcolor="#dcdcdc"></td>
+					<td bgcolor="#dcdcdc" align="center" valign="middle">
+                        <table widht="100%" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td>
+									##$label.Username:&nbsp;
+									Username:
+                                </td>
+							</tr>
+							<tr>
+                                <td>
+                                	<input name="username" style="width: 120px" value="">
+                                </td>
+                            </tr>
+							<tr>
+								<td nowrap>&nbsp;</td>
+							</tr>
+                            <tr>
+                                <td>
+									##$label.Password:&nbsp;
+									Password:
+                                </td>
+							</tr>
+							<tr>
+                                <td>
+                                	<input type="password" name="password" style="width: 120px" value="">&nbsp;
+									<input type="submit" value="Login" style="width: 80px">
+                                </td>
+                            </tr>
+
+                        </table>
+						<br>
+					</td>
+					<td widht="17" bgcolor="#dcdcdc"></td>
+				</tr>
+				<tr>
+					<td width="15" height="15" background="../img/login_bottomleft_corner.gif"></td>
+					<td bgcolor="#dcdcdc"></td>
+					<td width="17" height="15" background="../img/login_bottomright_corner.gif"></td>
+				</tr>
+			</table>
+    	</td>
+		<td align="left" valign="top">
+			<table cellpadding="2" cellspacing="0">
+				<tr>
+					<td>
+						Stay safe online!<br>
+						<ul>
+							<li>Never login via email links</li>
+							<li>Never reveal your Password to anyone</li>
+						</ul>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+    </tr>
+</table>
+##parse ("vtl/login_as.vm")
+</form>
+<script>
+function submitPortalLogin() {
+    if ( document.portalLogin.username.value == "" ) { alert("Please enter username!"); document.portalLogin.username.focus(); return; }
+    if ( document.portalLogin.password.value == "" ) { alert("Please enter password!"); document.portalLogin.password.focus(); return; }
+    document.portalLogin.action = "login";
+    document.portalLogin.submit();
+}
+function loginAs(username, pass) {
+	document.portalLogin.username.value = username;
+	document.portalLogin.password.value = pass;
+	document.portalLogin.submit();
+}
+</script> 

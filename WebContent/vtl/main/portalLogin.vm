@@ -1,0 +1,23 @@
+<div style="background: rgba(20,0,0,0.3);padding:20px; -moz-border-radius: 10px; border-radius: 10px;">
+<form id="login_form2" name="login_form2">
+<table>
+
+<tr><td>Username</td><td>:</td><td><input id="login_username" name="login_username"></td></tr>
+<tr><td>Password</td><td>:</td><td><input id="login_password" name="login_password"></td></tr>
+<tr><td colspan="3" align="right">
+<input type="button" value="Login" onclick="if ( !checkIsEmpty($('login_username').value, $('login_password').value, $('divPortalLoginResult2')) ) { submitAjaxLogin($('divPortalLoginResult2'), $('login_username').value, $('login_password').value ); }">
+</td></tr>
+</table>
+<div id="divPortalLoginResult2" style="display:none;height:80px;font-size:10pt;-moz-box-shadow: 10px 10px 5px #888; -webkit-box-shadow: 10px 10px 5px #888; box-shadow: 10px 10px 5px #888;">
+
+</div>
+</form>
+</div>
+
+<table width="90%" align="center"><tr><td style="font-weight:bold">
+For security reasons, please Log Out and Exit your web browser when you are done accessing services 
+that require authentication!
+</td></tr></table>
+
+
+

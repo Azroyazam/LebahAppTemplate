@@ -1,0 +1,9 @@
+<table width="700px" align="center">
+<tr>
+		<td align="right">
+		<input name="student_no">
+		<a href="#" onclick="popwin();doDivAjaxCall$formName('popupwindow','do1','')">Search...</a>
+		</td>
+
+				</tr>
+				</table>

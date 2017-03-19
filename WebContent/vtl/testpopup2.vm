@@ -1,0 +1,9 @@
+<a href="javascript:void()" onclick="doDivAjaxCall$formName('popupwindow', 'do1', '')">Back</a>
+<br>
+<table>
+<tr><td><a href="javascript:void()" onclick="document.getElementById('student_no').value='Student 1'">Student 1</a></td></tr>
+<tr><td><a href="javascript:void()" onclick="document.getElementById('student_no').value='Student 2'">Student 2</a></td></tr>
+<tr><td><a href="javascript:void()" onclick="document.getElementById('student_no').value='Student 3'">Student 3</a></td></tr>
+<tr><td><a href="javascript:void()" onclick="document.getElementById('student_no').value='Student 4'">Student 4</a></td></tr>
+<tr><td><a href="javascript:void()" onclick="document.getElementById('student_no').value='Student 5'">Student 5</a></td></tr>
+</table>

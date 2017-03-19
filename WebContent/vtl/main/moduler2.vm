@@ -1,0 +1,35 @@
+
+<div class="nav-container" style="position:relative;">
+	
+		
+  <div id="nav-menu-open" style="height:40px;width:40px">
+	<button type="button" class="navbar-toggle">
+        <span class="icon-bar" style="background:#fff">&nbsp;</span>
+        <span class="icon-bar" style="background:#fff">&nbsp;</span>
+        <span class="icon-bar" style="background:#fff">&nbsp;</span> 
+	</button>
+  </div>
+<div class="nav-menu-group" style="position:relative;z-index:9999">
+
+  <ul class="nav">
+	#foreach ($module in $modules)
+		#set ( $link = "${session.getAttribute('_portal_action')}?_portal_module=${module.id}" )
+		<li class="nav-li nav_background"  style="cursor:pointer" onclick="document.location = '$link'">
+			<a class="nav-menu">
+			<span class="text-menu">
+				#if ( $label.get("${module.customTitle}") )
+					$label.get("${module.customTitle}")
+				#else							
+					${module.customTitle}
+				#end
+			</span>
+			</a>
+		</li>
+		
+	#end
+
+  </ul>
+
+
+</div>
+</div>

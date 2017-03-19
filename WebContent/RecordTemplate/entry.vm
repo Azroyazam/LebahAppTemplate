@@ -1,0 +1,58 @@
+<div style="padding:10px;text-align:right">
+	<span id="buttonRecords" style="display:none"><a href="javascript:void(0)" onclick="toggleSearchRecords()">Records</a></span>
+	<span id="buttonSearch"><a href="javascript:void(0)" onclick="toggleSearchRecords()">Search</a></span>
+</div>
+
+
+
+##SEARCH FIELDSET
+#if ( $showFilterBar == "no" )
+<div id="divFilterBar">
+	#parse("${viewPath}/filter_bar.vm")
+</div>
+#end
+
+
+
+
+<div id="divSearch" style="display:block">
+    <fieldset>
+    <legend style="font-size:10pt">Search Record:</legend>
+        
+        <div id="_search_page" style="display:block;">
+
+		<div style="padding:10px">
+			#parse("$search_entry_page")
+		</div>
+        <div style="padding:10px">
+			<input class="linkbutton" type="button" value="Find" onclick="$('div_list').style.visibility='visible';doDivAjaxCall$formname('div_list','list_find','');listRecords();">
+				<input class="linkbutton" type="reset" value="Reset">
+        </div>
+		
+        </div>
+    
+    </fieldset>
+</div>
+##END SEARCH FIELDSET
+
+
+</br>
+
+##RECORDS LIST
+<div id="divRecords" style="display:none">
+    <div id="template_records_list">
+        <fieldset>
+        <legend style="font-size:10pt">
+			##List of Records
+		</legend>
+        
+            <table width="100%"><tr><td>
+            <input id="current_page_num" name="current_page_num" type="hidden" value="$!current_page_num">
+            <div id="div_list" name="div_list">
+            #parse("${templateDir}/list.vm")
+            </div>
+            </td></tr></table>
+        </fieldset>
+    </div>
+</div>
+##END RECORDS LIST

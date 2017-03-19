@@ -1,0 +1,74 @@
+<form name="f" method="post">
+<br/>
+<table align="center" border="0">
+    <tr>
+    <td height="420px" width="510px" valign="top">
+    
+    <div style="overflow:auto;height:400px; width:600px;position:absolute;border:1px solid #ccc;padding:5px" >
+        <div style="margin:0px;">          
+            <table width="100%" align="center" cellpadding="2" cellspacing="0" border="0" >
+                #set ( $group_name = "" )
+                #foreach ( $module in $allModules )
+					#set ($i = $i + 1)
+					#if ( $module.marked)
+						#set ( $row = "selected")
+						#set ( $checked = "checked")
+					#else
+						#set ( $row = "row1")
+						#set ( $checked = "")                               
+					#end
+                             
+					#if ( $group_name != $module.groupName )
+						#set ( $group_name = $module.groupName )
+						<tr><td colspan="2">&nbsp;</td></tr>
+						<tr style="height:40px;">
+							<td colspan="2" align="center">
+								<div style="background:#edeeef;border-radius:10px;height:40px;padding-top:10px">
+								<b>$module.groupName</b>
+								</div>
+							</td>                                       
+						</tr>
+					#end                                
+                                                
+					<tr style="height:30px">
+							<td width="25"><input class="cb" type="checkbox" name="cbmodules" value="$module.id" $checked></td>
+							<td #if ( $module.marked ) style="font-weight:bold" #end>
+							#if ( $module.title == "" )
+								[<i>$module.id</i>]
+							#else
+								$module.title
+							#end
+							</td>
+                	</tr>
+				#end
+            </table>  
+        </div>
+    </div>
+    
+    </td></tr>
+    <tr><td align="center">
+    
+    <input class="linkbutton" type="button" value="Save Changes" onclick="updateTabModules()">
+    <input class="linkbutton" type="button" value="Back" onclick="listModules()">
+    
+    </td>
+    </tr>
+</table>
+
+
+
+<input type="hidden" name="role" value="$role">
+<input type="hidden" name="tabId" value="$tab.id">
+<input type="hidden" name="command">
+</form>
+<script>
+function updateTabModules(){
+document.f.command.value = "updateTabModules";
+document.f.submit();
+}
+function listModules() {
+document.f.command.value = "listModules";
+document.f.submit();
+}
+
+</script>

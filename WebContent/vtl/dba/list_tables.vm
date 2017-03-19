@@ -1,0 +1,124 @@
+<p>
+$jdbc_driver<br>
+$jdbc_url<br>
+</p>
+<form name="tables" method="post">
+	<a href="javascript:back()">Back</a>
+	</p>
+	<b>List of tables</b>
+	</p>
+	
+	<table border="1">
+		<tr>
+			<td align="center" colspan="4">
+				$catalog
+				<input type="button" value="SQL" onclick="sql_table()">
+							<select name="targetdb">
+			  <option value="mysql" #if ( $targetdb == "mysql" ) selected #end>MySQL</option>
+			  <option value="hsql" #if ( $targetdb == "hsql" ) selected #end>HSQL</option>
+			  <option value="postgresql" #if ( $targetdb == "postgresql" ) selected #end>PostgreSQL</option>
+			</select>	
+			</td>
+		</tr>
+		<tr bgcolor="silver">
+			<td colspan="4">
+				Name
+			</td>
+			
+		</tr>		
+		#foreach ( $table in $tables )
+		<tr>
+			<td>
+				<a href="javascript:list_columns('$table.name')">
+				$table.name
+				</a>
+			</td>
+			<td>
+				<input type="button" value="Open" onclick="list_columns('$table.name')">
+			</td>			
+			<td>
+				<input type="button" value="Drop" onclick="droptable('$table.name')">
+			</td>
+			<td>
+				<input type="button" value="SQL" onclick="sql('$table.name')">
+			</td>			
+		</tr>
+		
+		#end
+	</table>
+	</p>
+	<table>
+		<tr>
+			<td>
+				Table Name
+			</td>
+			<td>
+				<input name="table_name">
+			</td>
+		<tr>
+			<td>
+				Field Name:
+			</td>
+			<td>
+				<input name="column_name">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Field Type:
+			</td>
+			#set ( $fieldtypes = ["varchar(50)", "varchar(10)", "varchar(100)", "varchar(255)", "text", "float", "int", "bigint", "long", "datetime", "blob", "longblob"] )
+			<td>
+				<select name="column_type">
+					#foreach ( $fieldtype in $fieldtypes )
+					<option value="$fieldtype">$fieldtype</option>
+					#end
+				</select>
+			</td>
+		</tr>	
+
+		<tr>
+			<td align="right" colspan="2">
+				<input type="button" value="Add" onclick="addtable()">
+			</td>
+		</tr>
+	
+	</table>
+
+	
+	<input type="hidden" name="catalog" value="$catalog">
+	<input type="hidden" name="table">
+	<input type="hidden" name="command">
+</form>
+<script>
+function list_columns(table) {
+	document.tables.command.value = "columns";
+	document.tables.table.value = table;
+	document.tables.action = "";
+	document.tables.submit();
+}
+function back() {
+	document.tables.command.value = "catalogs";
+	document.tables.submit();
+}
+function addtable() {
+	document.tables.command.value = "addtable";
+	document.tables.submit();
+}
+function droptable(s) {
+	if ( !window.confirm("Are you SURE to drop this table??") ) return;
+	document.tables.command.value = "droptable";
+	document.tables.table_name.value = s;
+	document.tables.action = "";
+	document.tables.submit();
+}
+function sql(s) {
+	document.tables.table.value = s;
+	document.tables.command.value = "sql";
+	document.tables.submit();
+}
+function sql_table() {
+	document.tables.command.value = "sqltable";
+	document.tables.submit();
+}
+</script>

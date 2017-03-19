@@ -1,0 +1,23 @@
+<p>
+$jdbc_driver<br>
+$jdbc_url<br>
+</p>
+<form name="columns" method="post">
+	<a href="javascript:back()">Back</a>
+	<br>
+	<br>
+	
+	<textarea cols="60" rows="10">$!sql</textarea>
+	
+	<input type="hidden" name="catalog" value="$catalog">
+	<input type="hidden" name="table" value="$table">
+	<input type="hidden" name="command">
+</form>
+<script>
+
+function back() {
+	document.columns.command.value = "tables";
+	document.columns.submit();
+}
+
+</script>

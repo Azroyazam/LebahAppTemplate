@@ -1,0 +1,17 @@
+
+#macro ( input $input_id $input_title $value)
+<tr><td  valign="top">$input_title</td><td valign="top">:</td><td>
+<input class="texts" type="text" id="$input_id" name="$input_id" value="$value" onkeyup="at(this, event)">
+</td></tr>
+#end
+
+
+<fieldset>
+<legend class="legend">$label_entry</legend>
+<table width="100%">
+<tr><td style="width:100px"></td><td style="width:10px"></td><td></td></tr>
+#input("id1" "Title 1" "$!r.title1")
+#input("id2" "Title 2" "$!r.title2")
+</table>
+</fieldset>
+

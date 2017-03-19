@@ -1,0 +1,44 @@
+<div id="popwin" name="popwin" 
+onmouseover="this.style.zIndex=500"
+onmouseout="this.style.zIndex=0"
+style="visibility:hidden;position:absolute;left:200px;background-color:white;border: 2px solid;border-color: #99a #99a #99a #99a;width:500px">
+
+<table width="100%" cellpadding="0" cellspacing="1" border="0" align="center">
+<script>new Draggable('popwin');</script>
+<tr><td>
+
+
+<table bgcolor="lightgrey" width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr height="25px">
+		<td></td>
+		<td bgcolor="lightgrey" valign="bottom" style="cursor:hand; cursor:pointer;">
+&nbsp;
+		</td>
+		<td bgcolor="lightgrey" align="right">
+		<a href="#" onclick="Effect.Fade('popwin' , { duration: 0.2 })"><b>Close</b></a>&nbsp;
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>	
+</table>
+
+
+</td></tr>
+<tr><td>
+<div id="popupwindow" name="popupwindow" style="height:300px; width: 100%; overflow: auto;"></div>
+</td></tr>
+</table>
+</div>
+
+				
+				<script>
+				function popwin() {
+								  document.getElementById('popwin').style.visibility='visible';
+								  document.getElementById('popwin').style.left='200px';
+								  document.getElementById('popwin').style.top='50px';
+								  Effect.Appear('popwin', { duration: 0.2 });
+								}
+								</script>

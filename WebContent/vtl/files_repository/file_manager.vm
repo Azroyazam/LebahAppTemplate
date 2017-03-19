@@ -1,0 +1,239 @@
+
+
+<table width="100%" border="0">
+
+	<tr>
+		<td colspan="2">
+			<table width="100%"  bgcolor="lightgrey">
+				<tr>
+					<td>
+					#if ( $dir != "" ) 
+						<a href="?module=mecca.lcms.modules.ListFilesModule&dir=$upDir">
+						[Up]
+						</a>
+					#end
+					&nbsp;
+
+					<a href="?module=mecca.lcms.modules.ListFilesModule&dir=">
+					<b>..</b>
+					</a>						
+					&nbsp;\ &nbsp;
+					<b>
+					#foreach ( $d in $dirs)
+						<a href="?module=mecca.lcms.modules.ListFilesModule&dir=$goDirTbl.get($d)">
+						$d
+						</a>
+						&nbsp;\ &nbsp;								
+					#end
+					</b>
+
+					</td>
+					<td align="right">
+
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+	
+		<td valign="top" width="60%">
+			<form name="listfiles" method="post">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+
+				<tr>
+					<td align="center" width="10">
+
+					</td>					
+					<td align="center" width="10">
+
+					</td>
+					<td>
+<b>Name</b>
+					</td>
+					<td align="right">
+<b>					Size</b>
+					</td>
+					<td>
+					</td>
+					<td width="20px">
+<b>					Date</b>
+					</td>
+				</tr>
+
+				#foreach ( $name in $folders )
+
+					#set ( $next_dir = "" )
+					#if ( $dir == "" ) 
+						#set ($next_dir = "/$name" )
+					#else
+						#set ($next_dir = "$dir/$name" )
+					#end
+					
+				<tr>
+					<td align="center" width="10">
+						<input type="checkbox" name="folders" value="$name">
+					</td>					
+					<td align="center" width="10">
+						<a href="?module=mecca.lcms.modules.ListFilesModule&dir=$next_dir">
+						<img src="/$appname/img/filefolder.gif" border="0">
+						</a>
+					</td>
+					<td>
+						<a href="?module=mecca.lcms.modules.ListFilesModule&dir=$next_dir" style="text-decoration:none">
+						$name
+						</a>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td width="20px">
+					</td>
+				</tr>
+
+				#end
+
+				#foreach ( $name in $names )
+
+				<tr>
+					<td valign="top" align="center" width="10">
+						<input type="checkbox" name="files" value="$name">
+					</td>				
+					<td valign="top" align="center" width="10">
+						<a target="_new" href="../cdownload?name=$name">
+						<img src="/$appname/img/write.gif" border="0">
+						</a>
+					</td>
+					<td valign="top">
+						<a target="_new" href="../cdownload?name=$name" style="text-decoration:none">
+						$name.fileName
+						</a>
+					</td>
+					<td align="right" valign="top">
+$name.size
+					</td>
+					<td >
+					&nbsp;
+					</td>
+					<td valign="top">
+$util.getDateTime($name.lastModified, "d MMM yyyy")</br>
+$util.getDateTime($name.lastModified, "hh:mm:ss")</BR>
+					</td>
+				</tr>
+				#end
+
+				<tr>
+					<td colspan="3">
+					
+						
+					
+					</td>
+				</tr>
+			</table>
+			</form>
+		</td>
+		<td valign="top" width="50%">
+		
+			<form name="f" method="post" action="?module=mecca.lcms.modules.ListFilesModule&dir=$dir">
+				<table width="100%" border="0">
+					<tr>
+						<td colspan="2" bgcolor="lightgrey">
+							<b>Create New Folder</b>
+						</td>
+					</tr>	
+					<tr>
+					<td><input name="foldername">
+					<input type="submit" value="Create">
+					</td>
+					</tr>
+				</table>
+				<input type="hidden" name="command" value="createfolder">
+			</form>		
+
+			<form method="post" action="?module=mecca.lcms.modules.ListFilesModule&dir=$dir&command=uploadfile" name="f" enctype="multipart/form-data">
+				<table width="100%" border="0">
+					<tr>
+						<td colspan="2" bgcolor="lightgrey">
+							<b>Upload File</b>
+						</td>
+					</tr>	
+					<tr>
+						<td>
+							<input id="fileupload" name="fileupload" type=file>
+							<input type="submit" name="Submit" value="Upload">
+						</td>
+					</tr>
+				</table>
+			</form>
+
+
+
+			<form method="post" action="?module=mecca.lcms.modules.ListFilesModule&dir=$dir&command=uploadpif" name="pif" enctype="multipart/form-data">
+				<table width="100%" border="0">
+					<tr>
+						<td colspan="2" bgcolor="lightgrey">
+							<b>Upload a ZIP file and extract automatically</b>
+						</td>
+					</tr>	
+					<tr>
+						<td>
+						<input id="fileupload" name="fileupload" type=file>
+						<input type="submit" name="Submit" value="Upload">
+						</td>
+					</tr>
+				</table>
+			</form>
+			
+			<form method="post">
+				<table width="100%" border="0">
+					<tr>
+						<td colspan="2" bgcolor="lightgrey">
+							<b>Delete selected files/folders</b>
+						</td>
+					</tr>	
+					<tr>
+						<td>
+							Check the files/folders to delete</br>
+							and click this button <input type="button" value="Delete" onclick="doDelete()">
+						</td>
+					</tr>
+				</table>
+			</form>			
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+
+		</td>
+	</tr>	
+</table>
+<form name="form_2" method="post">
+	<input type="hidden" name="course_id">
+	<input type="hidden" name="file">
+	<input type="hidden" name="dir">
+</form>
+<script>
+function delete_file(name, dir) {
+	if ( !confirm("Delete " + name + " ?") ) return;
+	document.form_2.action = "?module=mecca.lcms.modules.ListFilesModule&command=delete";
+	document.form_2.file.value = name;
+	document.form_2.dir.value = dir;
+	document.form_2.submit();
+}
+function open_manifest(course_id) {
+	document.form_2.action = "?module=mecca.lcms.modules.ManifestModule&command=prepare";
+	document.form_2.course_id.value = course_id;
+	document.form_2.submit();
+}
+function doDelete() {
+	if ( !confirm("Delete selected files?  Are you Sure?") ) return;
+	document.listfiles.action = "?module=mecca.lcms.modules.ListFilesModule&command=deletefiles";
+	document.listfiles.submit();
+}
+</script>
+
+
+

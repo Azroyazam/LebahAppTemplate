@@ -1,0 +1,133 @@
+#if ( $isRoleSelected )
+    #set( $btnStatus = "" )
+#else
+    #set( $btnStatus = "disabled" )
+#end
+<form name="roleEditorForm" method="post">
+<table width="100%" border="0" cellpadding="2" cellspacing="0">
+<tr>
+    <td align="left">
+        <table width="100%" cellpadding="2" cellspacing="0">
+        <tr>
+            <td nowrap>Select a role :</td>
+            <td>
+                <select name="role">
+                    <option value="">- Select One -</option>
+                #foreach ( $role in $roleList )
+                    #if ( $role.getName() != "root" )
+                        #if ( $userRole ==  $role.getName() )
+                            #set ( $description = $role.getDescription() )
+                    <option value="$role.getName()" selected>$role.getName()</option>
+                        #else
+                    <option value="$role.getName()">$role.getName()</option>
+                        #end
+                    #end
+                #end
+                </select>
+            </td>
+            <td width="100%"><input type="button" value="Get" onclick="doGetModule()"></td>
+        </tr>
+        
+        #**
+        <tr>
+            <td valign="top" nowrap>Role Description:&nbsp;</td>
+            <td colspan="2">
+            #if ( $isRoleSelected ) <b>$description</b> #end
+            </td>
+        </tr>
+        **#
+        
+        </table>
+        
+        
+    </td>
+</tr>
+<tr>
+    <td>
+        <br><br>
+        <table width="100%" cellpadding="1" cellspacing="0">
+        
+        ##<tr>
+        ##    <td style="background-color:#ccc"  colspan="5"><b>&nbsp;List Of Modules</b></td>
+        ##</tr>
+        
+        <tr>
+            <td >
+            
+            	<span style="font-size:10pt">Role: #if ( $isRoleSelected ) <b>$description</b> #end</span>
+                <table width="100%" border="0" cellpadding="2" cellspacing="1">
+                <tr  height="30px"  style="background-color:#ccc">
+                    <td  width="5%"></td>
+                    <td  width="5%"></td>
+                    <td  width="40%"><b>Name</b></td>
+                    <td  width="50%"><b>Description</b></td>
+                    ##<td ><input type="button" value="Update Role" onclick="doRoleUpdate()" $btnStatus></td>
+                </tr>
+        #if ( !$isRoleSelected )
+                <tr>
+                    <td class="row1" colspan="4" align="center">No role was selected</td>
+                    <td ></td>
+                </tr>
+        #else
+            #set ( $group = "" )
+            #foreach ( $module in $moduleList )
+                #if ( $group != $module.getGroup() )
+                    #set ( $group = $module.getGroup() )
+                <tr height="30px">
+                    <td  colspan="5"><b>$group</b></td>
+                </tr>
+                #end
+                #if ( $module.isSelected() )
+                    #set( $checked = "checked" )
+                    #set( $row = "background-color:#FFFF66" )
+                #else
+                    #set( $checked = "" )
+                    #set( $row = "background-color:#DCDCDC" )
+                #end
+                <tr>
+                    <td style="$row"valign="top">$velocityCount</td>
+                    <td style="$row"valign="top">
+                        <input type="checkbox" name="module" value="$module.getId()" $checked>
+                    </td>
+                    <td style="$row"valign="top">
+                    #if ( $module.title == "" )
+                    [<i>$module.id</i>]
+                    #else
+                    $module.title
+                    #end
+                    </td>
+                    <td style="$row"valign="top">
+                    $module.description
+                    </td>
+                </tr>
+            #end
+        #end
+                <tr><td  colspan="5" align="right">
+                    <input type="button" value="Update Role" onclick="doRoleUpdate()" $btnStatus>
+                </td></tr>
+                </table>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>
+<input type="hidden" name="form_action" value="">
+</form>
+<script>
+function doSubmit()
+{
+    document.roleEditorForm.action = "";
+    document.roleEditorForm.submit();
+}
+function doGetModule()
+{
+    document.roleEditorForm.form_action.value = "get_modules";
+    doSubmit();
+}
+function doRoleUpdate()
+{
+    document.roleEditorForm.form_action.value = "update_role";
+    doSubmit(); 
+}
+</script>

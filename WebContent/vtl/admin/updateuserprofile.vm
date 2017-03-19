@@ -1,0 +1,101 @@
+ <form name="freg" method="post">
+#if ( $updateUserSuccess && $operation == "update" )
+    <table width="100%" border="0">
+        <tr>
+            <td>
+            <font color="blue">
+            <b>
+            Successfully updated: <u>$user_name<u>
+            </b>
+            </font>
+            </td>
+        </tr>
+    </table>
+#elseif ( $operation == "update" )
+    <table width="100%" border="0">
+        <tr>
+            <td>
+            <font color="red">
+            <b>
+            Operation has failed!!
+            </b>
+            </font>
+            </td>
+        </tr>
+    </table>
+
+#end
+<br>
+<table border="0" cellpadding="2" cellspacing="2">
+    <tr>
+        <td >User ID</td>
+        <td><input name="user_login" size="20" value="$user_login" readonly></td>
+    </tr>
+    <tr>
+        <td >Login Name</td>
+        <td><input name="user_login_alt" size="20" value="$user_login_alt">(1)</td>
+    </tr>
+    
+    <tr>
+        <td >Name</td>
+        <td><input name="user_name" size="50" value="$user_name"></td>
+    </tr>
+        
+    <tr>
+        <td >Password</td>
+        <td><input type="password" name="user_password" size="30" value="">(2)</td>
+    </tr>
+    <tr>
+        <td >Confirm Password</td>
+        <td><input type="password" name="user_password2" size="30" value=""></td>
+    </tr>   
+
+    <tr>
+        <td colspan="2" align="right">
+            <input type="button" value="Update" onclick="submitRegister()">
+        </td>
+    </tr>
+    </table>
+    <table>
+    <tr>
+        <td valign="top">
+            1)
+        </td>
+        <td>Login Name is optional.  This is alternate login name
+            you can use to login into the portal.  If this is left
+            empty, User ID shall be use as login name.
+		</td>
+	<tr>
+	</t>
+		<td valign="top">
+		2)
+         </td>
+         <td>
+            If you don't want to change password,
+            Leave the password field empty.
+        </td>
+    </tr>
+           
+</table>
+<input type="hidden" name="user_role" value="$user_role">
+<input type="hidden" name="command">
+</form>
+<script>
+function submitRegister() {
+    if ( document.freg.user_name.value == "" ) { document.freg.user_name.focus(); return; }
+    if ( document.freg.user_password.value != document.freg.user_password2.value ) {
+        alert("Confirm password does not match!");
+        document.freg.user_password2.focus();
+        return;
+    }
+
+    document.freg.command.value = "update";
+    document.freg.action = "";
+    document.freg.submit();
+}   
+function resetFields() {
+    document.freg.user_name.value = "";
+    document.freg.user_password.value = "";  
+    document.freg.user_name.focus();
+}
+</script>

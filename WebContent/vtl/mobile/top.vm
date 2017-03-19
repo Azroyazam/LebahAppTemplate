@@ -1,0 +1,9 @@
+<p class="nowrap">
+#if ( !$isLogin )
+Welcome GUEST!
+#else
+<font color="green">
+Welcome $userName!
+</font>
+#end
+</p>

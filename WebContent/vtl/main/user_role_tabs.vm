@@ -1,0 +1,38 @@
+   
+#if ( $userIsLogged )
+          
+#if ( $numRoles > 0 )
+<font class="font_role"><b>
+Roles :
+</b></font>
+#end
+
+#if ( $myrole == "" )
+<font class="font_role_select">$!primaryRole.description</font>
+#else
+<a href="javascript:changeRole('')"><font class="font_role">$!primaryRole.description</font></a>
+#end
+          
+<font color="lightgrey">|</font>
+         
+#end
+     
+#foreach( $secondaryRole in $secondaryRoles )
+
+          
+#if ( $myrole == $secondaryRole.name )
+<font class="font_role_select">$!secondaryRole.description</font>
+#else
+
+<a href="javascript:changeRole('$!secondaryRole.name')">
+<font class="font_role">
+$!secondaryRole.description
+</font>
+</a>
+          
+#end
+          
+<font color="lightgrey">|</font>
+
+#end
+

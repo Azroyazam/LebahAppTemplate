@@ -1,0 +1,8 @@
+		
+<table class="module_frame" width="100%" cellpadding="0" cellspacing="1" border="0">
+			<tr><td>
+			#parse("vtl/main/module_title.vm")
+			</td></tr>
+			</table>
+			
+			

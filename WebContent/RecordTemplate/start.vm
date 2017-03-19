@@ -1,0 +1,414 @@
+<link rel="stylesheet" type="text/css" media="all" href="../js/jsDatePick_ltr.min.css" />
+<script type="text/javascript" src="../js/jsDatePick.min.1.3.js"></script>
+
+#parse("${viewPath}/label_titles.vm")
+<style>
+.label {
+	color:#000;
+}
+	
+.underline {
+	border-bottom:1px dotted #ccc;
+}
+.rightline {
+	border-right:1px dotted #ccc;
+}
+
+.record_header {
+	background-color:#cde5f4;
+	font-weight:bold;
+	color:#000;
+	border-right:1px dotted #ccc;
+}    
+
+.record_row1 {
+	background-color:#DCDCDC;
+}
+
+.record_row2 {
+	background-color:#CCCCCC;
+}   
+
+.record_highlight {
+	background-color:#F4F4F4;
+} 
+
+
+td { font-family:verdana; font-size:9pt; padding:1px; }
+.shadow { -moz-box-shadow: 10px 10px 5px #888; -webkit-box-shadow: 10px 10px 5px #888; box-shadow: 10px 10px 5px #888; }
+.gradient { background: -moz-linear-gradient(top, #E1E1E1 0%, #B4B4B4 100%); font-weight:bold;}
+
+.div_error {
+	-moz-box-shadow: 10px 10px 5px #888; -webkit-box-shadow: 10px 10px 5px #888; box-shadow: 10px 10px 5px #888;
+	position:absolute;
+	background-color:#F7A2A9;
+	width:200px;
+	height:100px;
+	left:50%;
+	top:50%;
+	margin-left:-100px;
+	margin-top:-50px;
+	vertical-align:middle;
+	padding-top:10px;
+	padding-left:5px;
+	padding-right:5px;
+	}
+
+.legend {
+	color:#000;
+	padding: 0.5em 0.5em;
+	font-size:10pt;
+	font-weight:bold;
+	border-bottom:2px dotted #ccc;
+}
+
+.texts {
+	color:#000;
+	background-color:#FFF;
+	font-weight:normal;
+	font-family:verdana;
+	font-size:9pt;
+	border-top:1px solid #BCB3B3; 
+	border-bottom:1px solid #969696; 
+	border-left: 1px solid #BCB3B3;
+	border-right:1px solid #969696; 
+	height:30px; 
+	width:100%;
+	padding-left:5px; 
+	padding-top:2px; 
+	padding-bottom: 2px;
+	-moz-border-radius: 5px;
+	border-radius: 5px; 
+	}
+	
+.texts:focus {
+
+	-moz-box-shadow: 5px 5px 5px #888; -webkit-box-shadow: 5px 5px 5px #888; box-shadow: 5px 5px 5px #888;
+
+	}
+
+.textarea {background-color:#fff;font-weight:normal;font-family:arial;font-size:9pt; border-bottom:1px solid #66CCCC; border-top:none; border-left:none; border-right:1px solid #66CCCC; height:100px; width:100%; -moz-box-shadow: 5px 5px 5px #888; -webkit-box-shadow: 5px 5px 5px #888; box-shadow: 5px 5px 5px #888;}
+.textarea:focus {background-color:#FFFFAA;font-weight:normal;font-family:arial;font-size:9pt; border-bottom:1px solid #66CCCC; border-top:none; border-left:none; border-right:1px solid #66CCCC; height:100px; width:100%; -moz-box-shadow: 5px 5px 5px #888; -webkit-box-shadow: 5px 5px 5px #888; box-shadow: 5px 5px 5px #888;}
+
+	
+.text_disabled {
+		color:#000;
+		font-weight:normal;
+		font-family:verdana;
+		font-size:9pt; 
+		width:100%; 
+		padding-left:5px; 
+		padding-top:2px; 
+		padding-bottom: 2px;
+		background-color:#EBEBEB;
+}	
+	
+	
+.textarea {
+	height:50px; 
+	width:100%;
+	color:#000;
+	font-weight:normal;
+	font-family:verdana;
+	font-size:9pt; 
+	padding-left:5px; 
+	padding-top:2px; 
+	padding-bottom: 2px;
+	}
+.textarea:focus {
+	-moz-box-shadow: 5px 5px 5px #888; -webkit-box-shadow: 5px 5px 5px #888; box-shadow: 5px 5px 5px #888;		
+	}
+
+
+.panels {
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	clear: none;
+	width: 100%; /* IE Hack to force proper layout when preceded by a paragraph. (hasLayout Bug)*/
+}
+
+.panelsTabGroup {
+	margin: 0px;
+	padding: 0px;
+}
+
+
+.panelsTab {
+	position: relative;
+	top: 1px;
+	float: left;
+	padding: 4px 10px;
+	margin: 0px 1px 0px 0px;
+	font: bold 12px sans-serif;
+	background-color: #CEAD68;
+	list-style: none;
+	border-left: solid 1px #CCC;
+	border-bottom: solid 1px #999;
+	border-top: solid 1px #999;
+	border-right: solid 1px #999;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	cursor: pointer;
+}
+
+.panelsTabSelected {
+	position: relative;
+	top: 1px;
+	float: left;
+	padding: 4px 10px;
+	margin: 0px 1px 0px 0px;
+	font: bold 12px sans-serif;
+	list-style: none;
+	border-left: solid 1px #CCC;
+	border-top: solid 1px #999;
+	border-right: solid 1px #999;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	cursor: pointer;
+	background-color: #FAF8CC;
+	border-bottom: 1px solid #FAF8CC;
+}   
+
+.panelsContent {
+	padding: 4px;
+}   
+
+.panelsContentGroup {
+	clear: both;
+	border-left: solid 1px #CCC;
+	border-bottom: solid 1px #CCC;
+	border-top: solid 1px #999;
+	border-right: solid 1px #999;
+	background-color: #FAF8CC;
+}   
+  
+
+#div_ontop {
+	z-index: 900;
+	width: 100%;
+	height: 800px;
+	top: 0;
+	left: 0;
+	display: none;
+	position: absolute;	
+	background-color: #cccccc;
+	color: #aaaaaa;
+	opacity: .4;
+	filter: alpha(opacity = 50);
+}
+
+
+#div_main_entry {
+	z-index: 999;
+	margin-left: auto ;
+	margin-right: auto ;
+	width:1000px;
+    border: 1px solid #ccc;
+    padding:3px;
+	background:#FFF;
+	display:none;
+}
+
+
+@media only screen and (max-width : 860px){
+ 
+    #div_main_entry {
+    	z-index: 999;
+		width:100%;
+    	background:#FFF;
+    	display:none;
+    }
+}
+
+@media screen and (max-width : 600px) {
+    table.table-grid {
+        border:0!important;
+    }
+
+    tbody.tbody-grid tr {
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    tbody.tbody-grid td {
+        display: block;
+        text-align: right;
+    }
+
+    tbody.tbody-grid td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+    }
+}
+     
+
+
+.outline-button {
+	background:#fff;color:#000;border:2px solid #000;border-radius:8px;padding:10px;width:100px;height:35px;cursor:pointer;font-size:10pt;text-decoration:none;
+}	
+.jbutton {
+	border:none;background:#31B0D5;color:#fff;border-radius:8px;padding:10px;width:100px;height:35px;cursor:pointer;font-size:10pt;text-decoration:none;
+}
+.sbutton {
+	border:none;background:#31B0D5;color:#fff;border-radius:8px;padding:5px;width:100px;height:35px;cursor:pointer;font-size:10pt;text-decoration:none;
+}
+.delete-button {
+	border:none;background:#EA3B27;color:#fff;border-radius:8px;padding:5px;width:100px;height:35px;cursor:pointer;font-size:10pt;text-decoration:none;
+}
+.green-button {
+	border:none;background:#40A058;color:#fff;border-radius:8px;padding:5px;width:100px;height:35px;cursor:pointer;font-size:10pt;text-decoration:none;
+}
+.bluesky-button {
+	border:none;background:#4dddea;color:#fff;border-radius:8px;padding:5px;width:100px;height:35px;cursor:pointer;font-size:10pt;text-decoration:none;
+}
+.blue-button {
+	border:none;background:#405DA0;color:#fff;border-radius:8px;padding:5px;width:100px;height:35px;cursor:pointer;font-size:10pt;text-decoration:none;
+}
+.red-button {
+	border:none;background:#CE110E;color:#fff;border-radius:8px;padding:5px;width:100px;height:35px;cursor:pointer;font-size:10pt;text-decoration:none;
+}
+.black-button {
+	border:none;background:#444242;color:#fff;border-radius:8px;padding:5px;width:100px;height:35px;cursor:pointer;font-size:10pt;text-decoration:none;
+}
+.orange-button {
+	border:none;background:#F79D20;color:#fff;border-radius:8px;padding:5px;width:100px;height:35px;cursor:pointer;font-size:10pt;text-decoration:none;
+}
+.grey-button {
+	border:none;background:#EBEBEB;color:#000;border:1px solid #000;border-radius:8px;padding:5px;width:100px;height:35px;cursor:pointer;font-size:10pt;text-decoration:none;
+}
+.jborder {
+	border:none;border-radius:8px;padding:10px;cursor:pointer;border:1px dotted #000;
+}
+.round-border {
+	border:none;border-radius:8px;padding:10px;cursor:pointer;border:1px dotted #000;
+}
+.underline {
+	border-bottom:1px dotted #ccc;
+}
+.rightline {
+	border-right:1px dotted #ccc;
+}
+</style>
+
+<script type="text/javascript">
+
+
+var isNN = (navigator.appName.indexOf("Netscape")!=-1);
+function at(input, e) {
+  var keyCode = (isNN) ? e.which : e.keyCode; 
+  if ( keyCode == 13 ) {
+    input.form[(getIndex(input)+1) % input.form.length].focus();
+  }
+}
+
+function getIndex(input) {
+    var index = -1, i = 0, found = false;
+    while (i < input.form.length && index == -1) {
+    	if (input.form[i] == input)index = i;
+    	else i++;
+    }
+    return index;
+}
+
+
+##CALENDAR SCRIPT
+    function openCalendar(e, f) {
+       if ( e.style.visibility=='hidden' ) { 
+           e.style.visibility='visible'; 
+           e.style.width='150px';
+           e.style.height='150px';
+           doDivAjaxCall3$formname(e,'get_calendar','element_id=' + f.id + '&div_id=' + e.id);
+       } else { 
+           e.style.visibility='hidden';
+       }
+    }
+    
+    
+    function openCalendarY1(e, f) {
+       if ( e.style.visibility=='hidden' ) { 
+           e.style.visibility='visible'; 
+           e.style.width='150px';
+           e.style.height='150px';
+           doDivAjaxCall3$formname(e,'get_calendar','element_id=' + f.id + '&div_id=' + e.id + '&year_range=before');
+       } else { 
+           e.style.visibility='hidden';
+       }
+    }
+    
+    function openCalendarY2(e, f) {
+       if ( e.style.visibility=='hidden' ) { 
+           e.style.visibility='visible'; 
+           e.style.width='150px';
+           e.style.height='150px';
+           doDivAjaxCall3$formname(e,'get_calendar','element_id=' + f.id + '&div_id=' + e.id + '&year_range=after');
+       } else { 
+           e.style.visibility='hidden';
+       }
+    }
+    
+    function sort(fieldName) {
+    	doDivAjaxCall3$formname('div_list','order_record','sortBy=' + fieldName)
+    }
+    
+    function sortDesc(fieldName) {
+    	doDivAjaxCall3$formname('div_list','order_record','sortBy=' + fieldName + '&sortOrder=desc')
+    }    
+
+    function sort(fieldName, sortOrder) {
+    	doDivAjaxCall3$formname('div_list','order_record','sortBy=' + fieldName + '&sortOrder=' + sortOrder)
+    } 
+	
+ 
+    
+	function validateField() {
+		return validate();
+	}    
+	
+	function toggleSearchRecords() {
+		if ( $('divSearch').style.display == 'none' ) {
+			$('divSearch').style.display = 'block';
+			$('divRecords').style.display = 'none';
+			$('buttonSearch').style.display = 'none';
+			$('buttonRecords').style.display = 'block';
+		} else {
+			$('divSearch').style.display = 'none';
+			$('divRecords').style.display = 'block';
+			$('buttonSearch').style.display = 'block';
+			$('buttonRecords').style.display = 'none';
+		}
+	}
+	
+	function listRecords() {
+		$('div_main').style.display = 'block';
+		$('div_main_entry').style.display = 'none';
+		$('divSearch').style.display = 'none';
+		$('divRecords').style.display = 'block';
+		$('buttonSearch').style.display = 'block';
+		$('buttonRecords').style.display = 'none';	
+		$('div_ontop').style.display = 'none';
+	}
+    
+#parse("$viewPath/script.vm")
+
+
+
+</script>
+
+#parse("$viewPath/top.vm")
+
+<div id="div_ontop"></div>
+
+<div style="background:#ebebeb">
+<div id="div_main_entry" style="display:none;padding:10px"></div>
+</div>
+
+<div id="div_main" style="display:block">#parse("$templateDir/entry.vm")</div>
+
+<script>
+listRecords();
+</script>
+
+
+

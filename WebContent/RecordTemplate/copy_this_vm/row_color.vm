@@ -1,0 +1,2 @@
+
+#if ( $count % 2 == 0 ) #set ( $rowcolor = "#D9F2F4" ) #else #set ( $rowcolor = "#FFF" ) #end

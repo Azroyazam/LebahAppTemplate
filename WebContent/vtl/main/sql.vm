@@ -1,0 +1,20 @@
+$error<br>
+<form name="f" method="post">
+$dbURL<br>
+<textarea name="sql" cols="80" rows="10"></textarea>
+<br>
+<input type="button" value="Execute SQL" onclick="runSQL()"><br><br>
+<input name="sqlfilename" size="80" value="$!sqlfilename">
+<input type="button" value="runSQLFromFile" onclick="runSQLFromFile()">
+<input type="hidden" name="command">
+</form>
+<script>
+function runSQL(){
+document.f.command.value = "runSQL";
+document.f.submit();
+}
+function runSQLFromFile(){
+document.f.command.value = "runSQLFromFile";
+document.f.submit();
+}
+</script>

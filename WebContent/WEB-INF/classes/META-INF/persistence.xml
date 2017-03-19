@@ -1,0 +1,17 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+  <persistence-unit name="persistence">
+   <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+   <class>app.entity.Person</class>
+   <properties>
+	<property name="openjpa.ConnectionURL" value="jdbc:mysql://localhost:3307/lebah?zeroDateTimeBehavior=convertToNull"/>
+    <property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>
+    <property name="openjpa.ConnectionUserName" value="root"/>
+    <property name="openjpa.ConnectionPassword" value=""/>
+    <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
+    <property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO"/>
+    <property name="openjpa.Multithreaded" value="true"/>
+	<property name="openjpa.jdbc.DBDictionary" value="SupportsSubselect=true"/>
+	<property name="jboss.as.jpa.managed" value="false" />
+  </properties>
+ </persistence-unit>
+</persistence>

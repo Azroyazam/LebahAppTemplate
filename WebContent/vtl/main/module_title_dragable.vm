@@ -1,0 +1,15 @@
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td class="module_title_left"></td>
+		<td class="module_title" valign="bottom">
+			$moduleTitle
+		</td>
+		<td class="module_title_right"></td>
+	</tr>
+	<tr>
+		<td class="module_title_left_bot"></td>
+		<td class="module_title_bot"></td>
+		<td class="module_title_right_bot"></td>
+	</tr>	
+</table>
+

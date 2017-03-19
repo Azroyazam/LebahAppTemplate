@@ -1,0 +1,24 @@
+<style type="text/css">
+#searchdiv{
+	visibility:hidden;
+}
+.row{
+	border : none !important;
+}
+ul.pagination{
+margin-top:0px;
+margin-bottom:10px;
+}
+.modal-form-input{
+display:none;
+}
+.modal{
+
+}
+.list-action{
+padding: 0;
+list-style-type:none;
+}
+
+
+</style>

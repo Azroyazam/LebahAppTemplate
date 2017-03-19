@@ -1,0 +1,9 @@
+  #set( $size = $paginationlist/10 ) 
+    #if($size >= 1)
+        <ul class='pagination'>
+        #foreach ($number in [0..$size])
+          #set( $no = $number + 1 ) 
+        <li><a href="#" onClick="doDivAjaxCall$formname('$target','$action','page=$number')">$no</a></li>
+        #end
+        </ul>
+    #end

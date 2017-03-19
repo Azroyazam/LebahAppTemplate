@@ -1,0 +1,35 @@
+<table height="30px"><tr>
+
+<td style="border-right:1px solid #C3C3C3;width:10px;border-right:1px solid #C3C3C3;cursor:pointer;">
+<span id="ajax-flag"></span>
+</td>
+
+#if ( $userIsLogged )
+
+<td style="border-right:1px solid #C3C3C3;width:195px;cursor:pointer;" align="center" id="whos-online-link"
+onclick="openWhosOnline();"
+>Who's Online <span id="online-counter"></span></td>
+
+<td style="border-right:1px solid #C3C3C3;width:10px;border-right:1px solid #C3C3C3;cursor:pointer;">&nbsp;</td>
+
+<td style="border-right:1px solid #C3C3C3;width:246px;cursor:pointer;" align="center" id="chatbox-1-link"
+onclick="openChat();"
+>Chatbox</td>
+
+
+#**
+<td style="border-right:1px solid #C3C3C3;width:296px;cursor:pointer;" align="center" id="chat-box-link"
+onclick="if ( $('chat-box').style.display == 'none' ) { _jq('#chat-box').hide().slideDown('slow');$('chat-box').style.zIndex='999'; } else { _jq('#chat-box').slideUp('slow'); };"
+>Chat Box</td>
+
+<td style="border-right:1px solid #C3C3C3;width:10px;border-right:1px solid #C3C3C3;cursor:pointer;">&nbsp;</td>
+
+<td style="border-right:1px solid #C3C3C3;width:296px;cursor:pointer;" align="center" id="status-link">
+<span id="status-message"></span>
+</td>
+**#
+
+#end
+
+</tr></table>
+

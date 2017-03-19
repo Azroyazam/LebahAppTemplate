@@ -1,0 +1,80 @@
+
+<br/>
+
+<input type="hidden" name="data_size" value="$!data_size"/>
+<input type="hidden" name="total_page" value="$!total_page"/>
+				
+##<table class="table table-condensed table-grid" cellpadding="1" cellspacing="1">
+<table style="width:100%">
+##<thead class="hidden-xs">
+<thead>
+	
+    <tr style="height:35px">
+		<th class="record_header" style="width:4%;" align="center">&nbsp;</th>
+    
+		#parse("$row_title_page")
+    
+		<th  class="record_header" style="width:3%" align="center">&nbsp;</th> 
+    
+    </tr>
+	
+</thead>
+
+
+#set ( $count = $row_start )
+#if ($records.size() > 0)
+	##<tbody class="tbody-grid">
+	<tbody>
+    #foreach ( $r in $records )
+        #set ( $count = $count + 1 )
+        
+        
+        ##if ( $count % 2 == 0 ) #set ( $className = "record_row1" ) #else #set ( $className = "record_row2" ) #end
+        
+        ##TO SET ROW COLORS
+        #set ( $rowcolor = "#fff" )
+        #parse("${viewPath}/row_color.vm")
+		
+		#set ( $queryParam = "record_id=$r.id" )
+        #if ( $idType == "ICompositeId2" )
+			#set ( $queryParam = "id1=$r.id1&id2=$r.id2" )
+        #elseif ( $idType == "ICompositeId3" )
+			#set ( $queryParam = "id1=$r.id1&id2=$r.id2&id3=$r.id3" )
+        #elseif ( $idType == "ICompositeId4" )
+			#set ( $queryParam = "id1=$r.id1&id2=$r.id2&id3=$r.id3&id4=$r.id" )
+		#end
+        
+        
+        
+        <tr height="35px" id="row_$count" style="background:$rowcolor;">
+            <td align="center" class="underline rightline" style="cursor:pointer" data-label="Rec. #" 
+				onclick="doDivAjaxCall$formname('div_main_entry','edit','$queryParam');$('row_count_${r.id}').style.display='none';$('row_wait_${r.id}').style.display='block';">
+				<div id="row_count_${r.id}">$count</div>
+				<div id="row_wait_${r.id}" style="display:none"><img src="../img/indicator.gif"></div>
+			</td>
+            
+            #parse("$row_data_page")
+            
+            <td align="center" class="underline"  data-label="Edit">
+                <a class="green-button" href="javascript:void()" onclick="doDivAjaxCall$formname('div_main_entry','edit','$queryParam');$('row_count_${r.id}').style.display='none';$('row_wait_${r.id}').style.display='block';">
+					...
+				</a>
+            </td>
+        
+        </tr>
+       
+	#end
+	</tbody>
+#else
+
+    <tr>
+    	<td>&nbsp;</td>
+    	<td>&nbsp;</td>
+    </tr>
+    <tr>
+    	<td>&nbsp;</td>
+    	<td colspan="10"><b>No records.</b></td>
+    </tr>
+#end
+
+</table>

@@ -1,0 +1,199 @@
+#set ($m_name = "")
+#set ($m_login = "")
+#set ($m_password = "")
+#set ($m_role = "")
+#set ($m_style = "")
+#if ( $registerUserStatus != "none" )
+    #set ($m_name = $userData.user_name)
+    #set ($m_login = $userData.user_login)
+    #set ($m_password = $userData.user_password)
+    #set ($m_role = $userData.user_role)
+    #set ($m_style = $userData.page_style)
+#end
+<form name="freg" method="post">
+#if ( $registerUserStatus == "success" )
+    <table width="100%" border="0">
+        <tr>
+            <td nowrap>
+            <font color="blue">
+            <b>
+            #if ( $submit == "add" )
+                Successfully registered new user: <u>$m_name<u>
+            #elseif ( $submit == "update" )
+                Successfully updated: <u>$m_name<u>
+            #end
+            </b>
+            </font>&nbsp;
+            </td>
+        </tr>
+    </table>
+#elseif ( $registerUserStatus == "failed" )
+    <table width="100%" border="0">
+        <tr>
+            <td nowrap>
+            <b>
+            <font color="red">
+            User with this login does not exist!
+            </font>
+            </b>&nbsp;
+            </td>
+        </tr>
+    </table>
+#else
+    <table width="100%" border="0">
+        <tr>
+            <td nowrap>&nbsp;</td>
+        </tr>
+    </table>
+#end
+<table border="0" cellpadding="2" cellspacing="2">
+    <tr>
+        <td >Login Id</td>
+        <td>
+            <input name="user_login" size="20" value="$m_login">
+        </td>
+    </tr>
+    <tr>
+        <td > </td>
+        <td>
+            <input type="button" value="Get User" onclick="submitRegister('getuser')">
+        </td>
+    </tr>   
+    
+    <tr>
+        <td colspan="2" align="right">
+            <hr />
+        </td>
+    </tr>      
+    
+    
+    <tr>
+        <td >Password</td>
+        <td><input type="password" name="user_password" size="20" value=""></td>
+    </tr>
+    <tr>
+        <td >Confirm Password</td>
+        <td>
+        	<input type="password" name="user_password2" size="20" value="">
+        </td>
+    </tr>  
+    <tr>
+        <td > </td>
+        <td>
+        	<input type="button" value="Change Password" onclick="submitRegister('change_password')">
+        </td>
+    </tr> 
+    <tr>
+        <td colspan="2" align="right">
+            <hr />
+        </td>
+    </tr>    
+         
+    
+    
+    <tr>
+        <td >Name</td>
+        <td>
+        	<input name="user_name" size="40" value="$m_name">
+        </td>
+    </tr>
+    <tr>
+        <td > </td>
+        <td>
+        	<input type="button" value="Update Biodata" onclick="submitRegister('update_biodata')">
+        </td>
+    </tr> 
+    <tr>
+        <td colspan="2" align="right">
+            <hr />
+        </td>
+    </tr>
+    
+        
+    
+       
+    <tr>
+        <td >Role</td>
+        <td>
+            <select name="user_role">
+			<option value="">- select -</option>
+            #foreach ( $role in $userRoles )
+                #if ( $m_role == $role.getName() )
+                    #set ( $selected = "selected")
+                #else
+                    #set ($selected = "")
+                #end
+                <option value="$role.getName()" $selected>$role.getName()</option>
+            #end
+            </select>
+        </td>
+    </tr>   
+    <tr>
+        <td > </td>
+        <td>
+        	<input type="button" value="Update Role" onclick="submitRegister('update_role')">
+        </td>
+    </tr> 
+    <tr>
+        <td colspan="2" align="right">
+            <hr />
+        </td>
+    </tr>
+    
+    
+    <tr>
+        <td >Page Theme</td>
+        <td>
+            <select name="page_style">
+
+            #foreach ( $style in $pageStyleList )
+                #if ( $m_style == $style.getCssName() )
+                    #set ( $selected = "selected")
+                #else
+                    #set ($selected = "")
+                #end
+                <option value="$style.getCssName()" $selected>$style.getTitle()</option>
+            #end
+            </select>
+        </td>
+    </tr>   
+    <tr>
+        <td > </td>
+        <td>
+        	<input type="button" value="Update Theme" onclick="submitRegister('update_theme')">
+        </td>
+    </tr>       
+        
+    <!--      
+    <tr>
+        <td colspan="2" align="right">
+            <input type="button" value="Update" onclick="submitRegister('update')">
+        </td>
+    </tr>   
+    -->
+    
+</table>
+<input type="hidden" name="command">
+<input type="hidden" name="user_login_update" value="$m_login">
+<input type="hidden" name="current_role" value="$m_role">
+</form>
+<script>
+function submitRegister(s) {
+    if ( s == "update" ) {
+        if ( document.freg.user_login_update.value != document.freg.user_login.value ) {
+            alert('User id is not allowed to change!'); 
+            return;
+        }
+        if ( document.freg.user_login.value == "" ) { document.freg.user_login.focus(); return; }
+        if ( document.freg.user_name.value == "" ) { document.freg.user_name.focus(); return; }
+        if ( document.freg.user_password.value == "" ) { document.freg.user_password.focus(); return; }
+        if ( document.freg.user_password2.value != document.freg.user_password.value ) {
+            alert('Confirm Password does not match!');
+            return;
+        }
+    }
+    document.freg.command.value = s;
+    document.freg.action = "";
+    document.freg.submit();
+}   
+</script>

@@ -1,0 +1,105 @@
+<form name="f" method="post">
+<table width="600" align="center" border="0">
+    <tr>
+    <td style="font-weight:bold">
+    Role: $role
+    </td></tr>
+    <tr>
+    <td style="font-weight:bold">
+    Tab: $tab.title
+    </td></tr>
+    <td style="font-weight:bold" align="right">
+		Page Layout: 
+		<select class="inputField" style="width:200px" name="displaytype">
+        #foreach( $displaytype in $displaytypes )
+        <option value="$displaytype" #if ( $tab.displayType == $displaytype ) selected #end>$displaytype</option>
+        #end
+        </select>
+    </td></tr>
+    <tr><td>
+			
+    <ul id="modulelist" style="list-style-type:none;padding: 2px;">
+    #set ($cnt = 0 )
+    #foreach( $module in $modules)
+    #set ( $cnt = $cnt + 1 )
+    <li id="modulelist_$cnt" style="cursor:hand;padding:1px">
+		<div style="border-radius:10px;border:1px solid #ccc;background:#C6D9F1">
+            <table width="100%" cellspacing="1" cellpadding="4">
+                <tr style="height:30px"><td>
+                <table width="100%" cellspacing="0">
+                    <tr>
+                        <td style="padding-left:10px">
+                            #if ( $module.title == "" )
+                            <i>No Title[$module.id]</i>
+                            #else
+                            $module.title
+                            #end
+                            <input type="hidden" name="moduleIds" value="${module.id}">
+                        </td>
+                        <td width="250" align="center">
+            				<input class="inputField" name="moduleTitles" style="width:250px" value="$module.moduleTitle">
+                        </td>
+                        <td width="40">
+                            <select class="inputField" style="width:50px" name="columnNumbers">
+                            #foreach( $col in [0..2])
+                            <option value="$col" #if ( $col == $module.column ) selected #end >$col</option>
+                            #end
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                </td></tr>
+            </table>
+		</div>
+    </li>
+    #end
+    </ul>
+    </td></tr>
+    
+    <tr><td align="center">
+    
+    <input class="linkbutton" type="button" value="Select Modules" onclick="addRemoveModules()">
+    <input class="linkbutton" type="button" value="Save Changes" onclick="saveModules()">
+    <input class="linkbutton" type="button" value="Back" onclick="back()">
+    
+    </td></tr>
+
+</table>
+
+<input type="hidden" name="moduleId">
+<input type="hidden" name="tabId" value="$tab.id">
+<input type="hidden" name="role" value="$role">
+<input type="hidden" name="command">
+</form>
+<script type="text/javascript" language="javascript" charset="utf-8">
+Sortable.create('modulelist');
+</script>
+<script>
+function back(){
+document.f.command.value = "listTabs";
+document.f.submit();
+}
+function saveModules() {
+document.f.command.value = "saveModules";
+document.f.submit();
+}
+function deleteModule(id) {
+if ( !confirm('Are you sure?') ) return;
+document.f.command.value = "deleteModule";
+document.f.moduleId.value = id;
+document.f.submit();
+}
+function addModule() {
+if ( document.f.module_title.value == "" ) return;
+document.f.command.value = "addModule";
+document.f.submit();
+}
+function updateModule() {
+document.f.command.value = "updateModule";
+document.f.submit();
+}
+function addRemoveModules(){
+document.f.command.value = "addRemoveModules";
+document.f.submit();
+}
+</script>

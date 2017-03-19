@@ -1,0 +1,8 @@
+<div>
+	<table style="width:100%"><tr><td align="">
+
+		... this is filter bar ... edit this ...
+
+		<input class="linkbutton" type="button" value="..." onclick="doDivAjaxCall$formname('div_list','list_find','');">
+	</td></tr></table>
+</div>

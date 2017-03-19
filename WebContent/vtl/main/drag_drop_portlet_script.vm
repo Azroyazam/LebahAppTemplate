@@ -1,0 +1,15 @@
+</script>
+$(document).ready(function () {
+    $(".portalbox").sortable({
+        connectWith: '.portalBox',
+        items: '.sortable',
+        handle: '.portlet-header',
+        forcePlaceholderSize: true,
+        forceHelperSize: true,
+        revert: true,
+        dropOnEmpty: true
+    });
+ 
+});
+
+</script>

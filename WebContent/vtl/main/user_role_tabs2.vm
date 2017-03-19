@@ -1,0 +1,37 @@
+        <table cellpadding="0" cellspacing="0">
+          <tr>
+          #if ( $userIsLogged )
+          
+          #if ( $myrole == "" )
+          <td class="tab_role2">
+          <font class="font_roles"><i>$!primaryRole.description</i></font>
+          #else
+          <td class="tab_role1">
+          <a href="javascript:changeRole('')">
+          <font class="font_roles">
+          $!primaryRole.description
+          </font>
+          </a>
+          #end
+          </td>          
+          #end
+     
+          #foreach( $secondaryRole in $secondaryRoles )
+
+          
+          #if ( $myrole == $secondaryRole.name )
+          <td class="tab_role2">
+          <font class="font_roles"><i>$!secondaryRole.description</i></font>
+          #else
+          <td class="tab_role1">
+          <a href="javascript:changeRole('$!secondaryRole.name')">
+          <font class="font_roles">
+          $!secondaryRole.description
+          </font>
+          </a>
+          #end
+          </td>
+          #end
+
+          </tr>
+        </table>

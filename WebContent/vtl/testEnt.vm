@@ -1,0 +1,3 @@
+#foreach ( $r in $results )
+	$r.user_login = $r.user_password<br>
+#end

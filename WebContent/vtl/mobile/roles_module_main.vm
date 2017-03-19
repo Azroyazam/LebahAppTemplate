@@ -1,0 +1,23 @@
+<form name="f">
+<table width="100%">
+<tr>
+  <td>
+  <iframe id="A" name="A" 
+src="../x/${securityToken}/lebah.portal.mobile.SetupMobileModule" width="100%" height="400"></iframe>
+  
+  </td>
+  <td>
+  
+  <iframe id="B" name="B" 
+src="../x/${securityToken}/lebah.portal.mobile.ListRegisteredModule" width="100%" height="400"></iframe>
+  
+  </td>
+</tr>
+</table>
+</form>
+<script>
+function setModule(module) {
+document.A.setModule(module);
+}
+
+</script>

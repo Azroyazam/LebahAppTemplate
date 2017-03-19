@@ -1,0 +1,10 @@
+<form name="f" method="post">
+<p>
+$info
+</p>
+<ol>
+#foreach( $subject in $subjectList )
+<li><a href="?subject_id=$subject.id" style="white-space:nowrap">$subject.code - $subject.title</a></li>
+#end
+</ol>
+</form>

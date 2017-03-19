@@ -1,0 +1,300 @@
+#set ($m_id = "")
+#set ($m_title = "")
+#set ($m_class = "")
+#set ($m_location = "")
+#set ($m_xsl = "")
+#set ($m_description = "")
+#set ($m_group = "")
+#if ( $registerModuleStatus != "none" )
+    #set ($m_id = $module_id)
+    #set ($m_title = $module_title)
+    #set ($m_class = $module_class)
+    #set ($m_group = $module_group)
+    #set ($m_description = $module_description)
+    #set( $m_location = $html_location)
+    #set( $m_xsl = $xsl_name)
+#end
+<form name="freg" method="post">
+#if ( $registerModuleStatus == "success" )
+    <table width="100%" border="0">
+        <tr>
+            <td>
+            <font color="blue">
+            <b>
+            #if ( $submit == "add" )
+                Successfully registered new module: <u>$m_title<u>
+            #elseif ($submit == "update" )
+                Successfully updated: <u>$m_title<u>
+            #end
+            </b>
+            </font>
+            </td>
+        </tr>
+    </table>
+#elseif ( $registerModuleStatus == "failed" )
+    <table width="100%" border="0">
+        <tr>
+            <td>
+            <b>
+            <font color="red">
+            Can't register: $m_id - $m_title<br>
+            Module id already exist, please try different module id.
+            </font>
+            </b>
+            </td>
+        </tr>
+    </table>
+#end
+<br>
+<table width="100%" border="0" cellpadding="2" cellspacing="2">
+    <tr>
+        <td >Module Id</td>
+	    #if ( $m_id == "" )
+        <td><input name="module_id" style="width:100%" value=""><br>(Do not use spaces, use under score instead)</td>
+    #else
+        <td><input name="module_id" style="width:100%" value="$m_id" readonly><br>(Module Id cannot be changed)</td>
+    #end
+    </tr>
+    <tr>
+        <td >Module Title: </td>
+        <td><input name="module_title" style="width:100%" value="$m_title"></td>
+    </tr>
+    <tr>
+        <td valign="top">Module Class Name: </td>
+        <td>
+        <input name="module_class" style="width:100%" value="$m_class">
+        <br>
+        OR SELECT:
+        <br>
+        <select name="module_class_select" style="width:100%" onchange="document.freg.module_class.value = this.value">
+        <option value="">-</option>
+        <option value="lebah.app.HtmlContentModule">HTML Container</option>
+        <option value="lebah.app.HtmlProxyModule">HTML Proxy</option>
+        <option value="lebah.app.HtmlProxyAjaxModule">HTML-Ajax based Proxy</option>
+        ##<option value="lebah.app.MessageAjaxModule">Announcement</option>
+        <option value="portal.module.AnnouncementModule">Announcement</option>
+        <option value="lebah.app.ForumAjaxModule">Discussion Forum</option>
+        <option value="lebah.app.shout.ShoutModule">Shout Box</option>
+        <option value="lebah.guestbook.GuestBookModuleImpl">Guest Book</option>
+        <option value="lebah.app.XMLAjaxModule">RSS Feed</option>
+        
+        </select>
+        
+        </td>
+    </tr>
+    <tr>
+        <td >Group Name: </td>
+        <td><input name="module_group" style="width:100%" value="$m_group"><br>(Use upper Case)</td>
+    </tr>
+    <tr>    
+        <td>
+        </td>
+        <td>
+        OR SELECT:
+        <br>
+        <select name="groupList" style="width:100%" onchange="selectGroupName()">
+        <option value=""> - select - </option>
+        #foreach( $name in $groupList)
+        <option value="$name">$name</option>
+        #end
+        </select>
+        </td>
+    </tr>
+    <tr>
+        <td >Module Description: </td>
+        <td><textarea name="module_description" style="width:100%" rows="3">$m_description</textarea></td>
+    </tr>
+    #if ( $object_types.contains("html_container") )
+    <tr>
+        <td >File Location: </td>
+        <td ><input name="html_location" style="width:100%" value="$m_location"></td>
+    </tr>   
+    #end
+    #if ( $object_types.contains("xml_container") )
+    <tr>
+        <td >URL of XML: </td>
+        <td ><input name="html_location" style="width:100%" value="$m_location"></td>
+    </tr>       
+    <tr>
+        <td >URL of XSL: </td>
+        <td ><input name="xsl_name" style="width:100%" value="$m_xsl"></td>
+    </tr>   
+    #end
+#if ( $registerModuleStatus != "none" )
+    #if ( $object_types.contains("attributable") )
+        #set ( $i = 0 )
+        #foreach ( $attribute in $attributes_name )
+            #set ( $i = $i + 1 )
+    <tr>
+        <td >
+            $attribute:
+        </td>
+        <td>
+            <input name="$attribute" style="width:100%" value="$attributes_data.get($attribute)">
+        </td>
+    </tr>   
+        #end
+    #end
+#end
+    <tr>
+        <td colspan="2" align="right">
+            #if ( $registerModuleStatus != "success" )
+                <input type="button" value="Register New Module" onclick="submitRegisterModule('add')">
+            #end
+            #if ( $registerModuleStatus != "none" )
+                <input type="button" value="Update" onclick="submitRegisterModule('update')">
+            #end
+        </td>
+    </tr>   
+    <tr>
+        <td colspan="2">    
+        <table width="100%" border="0" cellpadding="2" cellspacing="0">
+            <tr>
+                <td  colspan="4">
+                <b>Assign to these role(s):</b>
+                </td>
+            </tr>
+            #set ( $checked = "" )
+            #foreach ( $role in $userRoles )
+                #set( $i = $velocityCount )
+                #if ( ($i % 2) == 0 )
+                    #set( $row = "row2" )
+                #else
+                    #set( $row = "row1" )
+                #end
+                #if ( $registerModuleStatus == "success" )
+                    #if ( $assignedRoles.get($role.getName()) == "true" )
+                        #set ( $checked = "checked" )
+                    #else
+                        #set ( $checked = "" )
+                    #end        
+                #end    
+                <tr>
+                    <td class="$row" width="10">
+                        <input class="cb" type="checkbox" name="cbroles" value="$role.getName()" $checked>
+                    </td>
+                    <td class="$row">
+                        $role.getName()
+                    </td>
+                    <td class="$row" align="center" width="5">
+                    -
+                    </td>
+                    <td class="$row">
+                        ##$roleDescription.get($role)
+                        $role.getDescription()
+                    </td>
+                </tr>       
+            #end    
+            </table>
+        </td>
+    </tr>
+    
+    <tr>
+        <td colspan="2" align="right">
+            #if ( $registerModuleStatus != "success" )
+                <input type="button" value="Register New Module" onclick="submitRegisterModule('add')">
+            #end
+            #if ( $registerModuleStatus != "none" )
+                <input type="button" value="Update" onclick="submitRegisterModule('update')">
+            #end
+        </td>
+    </tr>       
+    
+</table>
+<input type="hidden" name="command">
+</form>
+<script>
+var illegalChars= /[\(\)\<\>\,\;\:\\\/\"\[\]\~\!\@\#\$\%\^\&\*\'\?\|\`]/;
+var illegalClassChars= /[\(\)\<\>\,\;\:\\\/\"\[\]\~\!\@\#\$\%\^\&\*\'\?\|\`]/;
+function validateModuleId()
+{
+	var data = document.freg.module_id.value;
+	if (data == "")
+    {
+        alert("Module Id required.");
+        return false;
+        
+    } else if (illegalChars.test(data))
+	{
+	   alert("Invalid Module Id.\nThe Module Id contains the following illegal characters:\n ( ) < > , ; : \\ / \" [ ] ~ ! @ # $ % ^ & * ' ? | . `");
+		return false;
+		
+	} else if (data.indexOf(" ") != -1)
+	{
+    	alert("Invalid Module Id.\nModule Id cannot contain blank spaces.");
+    	return false;
+   	}
+}
+function validateTitle()
+{
+	var data = document.freg.module_title.value;
+	if (data == "")
+    {
+        alert("Module Title required.");
+        return false;
+        
+    } else if (illegalChars.test(data))
+	{
+	   alert("Invalid Module Title.\nThe Module Title contains the following illegal characters:\n ( ) < > , ; : \\ / \" [ ] ~ ! @ # $ % ^ & * ' ? | . `");
+		return false;
+	}
+}
+function validateClassName()
+{
+	var data = document.freg.module_class.value;
+	if (data == "")
+    {
+        alert("Module Class Name required.");
+        return false;
+        
+    } else if (illegalClassChars.test(data))
+	{
+	   alert("Invalid Module Class Name.\nThe Module Class Name contains the following illegal characters:\n ( ) < > , ; : \\ / \" [ ] ~ ! @ # $ % ^ & * ' ? | `");
+		return false;
+		
+	} else if (data.indexOf(" ") != -1)
+	{
+    	alert("Invalid Module Class Name.\nModule Class Name cannot contain blank spaces.");
+    	return false;
+   	}
+}
+function submitRegisterModule(s) {
+    //if ( document.freg.module_id.value == "" ) { document.freg.module_id.focus(); return; }
+    if (validateModuleId() == false) {
+    	document.freg.module_id.focus();
+    	return;
+    }
+    //NOT REQUIRED TO VALIDATE MODULE TITLE
+    //if ( document.freg.module_title.value == "" ) { document.freg.module_title.focus(); return; }
+    //if (validateTitle() == false) {
+    	//document.freg.module_title.focus();
+    	//return;
+    //}
+    //if ( document.freg.module_class.value == "" ) { document.freg.module_class.focus(); return; }
+    if (validateClassName() == false) {
+    	document.freg.module_class.focus();
+    	return;
+    }
+    
+    #if ( $registerModuleStatus != "none" )
+        if ( s == "update" ) {
+            if ( document.freg.module_id.value != '$m_id' ) {
+                alert('Module Id cannot be changed!');
+                return; 
+            }
+        }
+    #end
+    document.freg.command.value = s;
+    document.freg.action = "";
+    document.freg.submit();
+}   
+function resetFields() {
+    document.freg.module_id.value = "";
+    document.freg.module_title.value = "";
+    document.freg.module_class.value = "";   
+    document.freg.module_id.focus();
+}
+function selectGroupName() {
+document.freg.module_group.value = document.freg.groupList.value;
+}
+</script>

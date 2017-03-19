@@ -1,0 +1,89 @@
+
+
+<script>
+$('div_main_entry').style.display='block';
+$('div_main').style.display='none';
+
+#if ( $r )
+$('row_count_${r.id}').style.display='block';
+$('row_wait_${r.id}').style.display='none';
+#end
+</script>
+
+#set ( $displayEntryButtons = "block" )
+
+#parse("${viewPath}/label_titles.vm")
+
+<table width="100%" cellpadding="0" cellspacing="2">
+<tr style="height:40px;background:#4EAECC">
+
+<td align="right" style="padding-right:10px">
+
+<input class="linkbutton" style="padding:2px" type="button" value="X" onclick="listRecords()">
+	
+</td></tr>
+</table>
+
+
+##ENTRY FIELDS
+
+<div id="divEntryPage" style="background:#fff">
+
+#parse("$data_entry_page")
+
+</div>
+
+#if ( $r )
+    #set ( $queryParam = "record_id=$!r.id" )
+    #if ( $idType == "ICompositeId2" )
+    #set ( $queryParam = "id1=$!r.id1&id2=$!r.id2" )
+    #elseif ( $idType == "ICompositeId3" )
+    #set ( $queryParam = "id1=$!r.id1&id2=$!r.id2&id3=$!r.id3" )
+    #elseif ( $idType == "ICompositeId4" )
+    #set ( $queryParam = "id1=$!r.id1&id2=$!r.id2&id3=$!r.id3&id4=$r.id4" )
+	#end
+#else
+	#set ( $queryParam = "" )
+#end
+
+<div id="divEntryButtons" style="display:$displayEntryButtons;padding:20px">
+
+<table width="100%" style="background:#EBEBEB">
+<tr><td style="width:60%" align="right">
+
+		
+#if ( $recordEdit )
+	#if ( !$r )
+		<input class="green-button" type="button" value="Add Record" onclick="if ( validateField() ) { doDivAjaxChainCall$formname('div_main_entry','save_data','$queryParam','div_list','list_page','page_num=$!current_page_num');}">
+	#else
+		<input class="green-button" type="button" value="Update" onclick="if ( validateField() ) { doDivAjaxChainCall$formname('div_main_entry','save_data','$queryParam','div_list','list_page','page_num=$!current_page_num');  }">
+	#end
+	
+#end
+
+<input class="blue-button" type="button" value="Close" onclick="listRecords()">
+</td>
+<td align="right">
+#if ( $r && $recordEdit )
+	#set ( $queryParam = "record_id=$r.id" )
+    #if ( $idType == "ICompositeId2" )
+    #set ( $queryParam = "id1=$r.id1&id2=$r.id2" )
+    #elseif ( $idType == "ICompositeId3" )
+    #set ( $queryParam = "id1=$r.id1&id2=$r.id2&id3=$r.id3" )
+    #elseif ( $idType == "ICompositeId4" )
+    #set ( $queryParam = "id1=$r.id1&id2=$r.id2&id3=$r.id3&id4=$r.id4" )
+	#end
+	<span id="deleteButton" style="">
+	[<a href="javascript:void(0)" onclick="$('confirmDelete').style.display='block';$('deleteButton').style.display='none';">Delete Record</a>]
+	</span>
+	<span id="confirmDelete" style="display:none;font-weight:bold;color:#D44937">
+		Are you sure?: 
+		<a class="orange-button" style="color:#D44937" href="javascript:void(0)" onclick="if ( !confirm('Are you sure to DELETE THIS RECORD?') ) return; doDivAjaxCall3$formname('div_items','delete','$queryParam');$('div_main_entry').style.display='none';$('div_ontop').style.display='none';listRecords()">YES!</a>
+		/
+		<a class="green-button" style="color:#4374E0" href="javascript:void(0)" onclick="$('confirmDelete').style.display='none';$('deleteButton').style.display='block';">No! Don't Delete!</a>
+	</span>
+#end
+</td></tr>
+</table>
+
+</div>

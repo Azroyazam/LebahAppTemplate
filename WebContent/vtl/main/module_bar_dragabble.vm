@@ -1,0 +1,9 @@
+<table>
+<tr>
+		#foreach ( $module in $modules )
+		<td style="background-color:white; border: 2px solid;	 border-color: #f7faff #99a #99a #f7faff;">
+		<a href="#" onclick="document.getElementById('$module.id').style.visibility='visible';Effect.Appear('$module.id', { duration: 0.2 }); ">$module.title</a>
+		</td>
+				#end
+				</tr>
+				</table>

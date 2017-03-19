@@ -1,0 +1,10 @@
+#set ($LearningCentre = $label.LearningCentre )
+#set ($MatricNo       = $label.MatricNo )
+#set ($Institution    = $label.Institution )
+#set ($Faculty        = $label.Faculty )
+#set ($Course         = $label.Course )
+#set ($Program        = $label.Program )
+#set ($Intake         = $label.Intake )
+#set ($Period         = $label.Period )
+
+

@@ -1,0 +1,90 @@
+<form name="f" method="post">
+
+<table width="100%">
+	<tr class="table_header">
+		<td colspan="2" style="font-weight:bold">
+			REGISTRATION FORM
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			Name:
+		</td>
+		<td>
+			<input name="user_name" size="70">
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right">
+			Address:
+		</td>
+		<td>
+			<input name="address" size="70">
+		</td>
+	</tr>
+		
+	<tr>
+		<td align="right">
+			Login Name:
+		</td>
+		<td>
+			<input name="user_login" size="20">
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			Password:
+		</td>
+		<td>
+			<input type="password" name="password" size="20">
+		</td>
+	</tr>	
+	<tr>
+		<td align="right">
+			Confirm Password:
+		</td>
+		<td>
+			<input type="password" name="password2" size="20">
+		</td>
+	</tr>	
+	<tr>
+		<td>
+			
+		</td>
+		<td>
+			<input type="button" value="Register" onclick="doRegister()">
+		</td>
+	</tr>
+</table>
+
+
+<input type="hidden" name="command">
+</form>
+<script>
+function doRegister() {
+	if ( document.f.user_name.value == "" ) {
+		alert("Name is empty!!");
+		return;
+	}
+	if ( document.f.address.value == "" ) {
+		alert("Address name is empty!!");
+		return;
+	}	
+	if ( document.f.user_login.value == "" ) {
+		alert("Login name is empty!!");
+		return;
+	}
+	if ( document.f.password.value == "" ) {
+		alert("Password is empty!!");
+		return;
+	}
+	if ( document.f.password.value != document.f.password2.value ) {
+		alert("Confirm password does not match!!");
+		return;
+	}
+	document.f.command.value = "add";
+	document.f.submit();
+}
+
+</script>

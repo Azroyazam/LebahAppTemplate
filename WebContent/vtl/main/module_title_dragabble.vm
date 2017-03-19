@@ -1,0 +1,19 @@
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td class="module_title_left"></td>
+		<td class="module_title" valign="bottom" style="cursor:hand; cursor:pointer;">
+			$moduleTitle
+		</td>
+		<td align="right" class="module_title">
+		<a href="#" onclick="Effect.Fade('$portletId' , { duration: 0.2 })">
+<img src="../img/close.gif" border="0">
+</a>
+&nbsp;
+		</td>
+	</tr>
+	<tr>
+		<td class="module_title_left_bot"></td>
+		<td class="module_title_bot"></td>
+		<td class="module_title_right_bot"></td>
+	</tr>	
+</table>

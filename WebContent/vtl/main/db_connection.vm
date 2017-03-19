@@ -1,0 +1,29 @@
+<form name="f" method="post">
+<table>
+<tr>
+<td>
+Total = $pools.size()
+</td>
+</tr>
+#foreach( $conn in $pools )
+<tr>
+<td>
+$conn
+</td>
+</tr>
+#end
+</table>
+<input type="button" value="Reload" onclick="reloadMe()">
+<input type="button" value="Release All" onclick="releaseAll()">
+<input type="hidden" name="command">
+</form>
+<script>
+function releaseAll(){
+document.f.command.value = "releaseAll";
+document.f.submit();
+}
+function reloadMe() {
+document.f.command.value = "reload";
+document.f.submit();
+}
+</script>

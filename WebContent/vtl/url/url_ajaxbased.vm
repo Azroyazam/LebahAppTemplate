@@ -1,0 +1,34 @@
+${content.get("$moduleId")}
+
+<input type="hidden" id="__page_url" name="__page_url">
+<input type="hidden" id="__module_id" name="__module_id">
+
+
+#if ( $isLogin && $userId == "anon" )
+<br>
+<table width="100%">
+<tr>
+<td align="right" bgcolor="silver">
+This is AJAX-based HTML PROXY.
+<input type="button" value="X" onclick="delete_${formName}()" style="width:20px">
+</td>
+</tr>
+</table>
+#end
+
+<script>
+function loadURL${formName}(url){
+    document.${formName}.__page_url.value = url;
+	    doAjaxCall${formName}("");
+	    ##Effect.BlindDown('${targetName}');
+	    new Effect.Highlight('${targetName}', {startcolor:'#ff99ff', endcolor:'#FFFFFF'})
+	    ##new Effect.Highlight('${targetName}',{duration:0.5})
+}
+
+function delete_${formName}() {
+   if ( !window.confirm('Are you sure to delete this HTML Module?') ) return;
+	   document.${formName}.action = "../x/${securityToken}/lebah.portal.XModule?command=deleteModule&moduleId=$formname";
+	   document.${formName}.submit();	
+}
+
+</script>

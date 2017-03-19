@@ -1,0 +1,12 @@
+<table width="100%" cellpadding="0" cellspacing="1">
+<tr><td style="height:30px;background-color:#898989;color:#fff"
+onclick="openChat();"
+>&nbsp;Chat with : <span id="chat-user-1">...</span></td></tr>
+<tr><td>
+<div id="chat-area-1" style="overflow:auto;height:218px"></div>
+</td></tr>
+<tr><td>
+<input type="hidden"  id="chat-id-1" name="chat-id-1">
+<textarea id="chat-text-1" name="chat-text-1" style="width:100%;height:40px" onkeypress="return checkKey(event, '1')"></textarea>
+</td></tr>
+</table>

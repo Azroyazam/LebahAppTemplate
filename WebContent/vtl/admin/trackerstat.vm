@@ -1,0 +1,135 @@
+<form name="log" method="post">
+<table class="table_row" align="center" width="99%">
+	<!--
+	<tr>
+		<td align="right">
+			USERNAME: <input name="user_login" value="$!userLogin" size="15">
+		</td>
+		<td>
+		</td>
+	</tr>	
+	-->
+	<tr>
+		<td align="right">
+			FROM:
+			#set ( $selected = "" )
+			<select name="year">
+				<option value="0" $selected>year</option>
+				#foreach ( $y in [2004..2010] )
+					#if ( $y == $year )
+						#set ( $selected = "selected" )
+					#else
+						#set ( $selected = "" )
+					#end
+					<option value="$y" $selected>$y</option>
+				#end
+			</select>
+			<select name="month">
+				<option value="0">month</option>
+				#foreach ( $m in [1..12] )
+					#if ( $m == $month )
+						#set ( $selected = "selected" )
+					#else
+						#set ( $selected = "" )
+					#end				
+					<option value="$m" $selected>$m</option>
+				#end
+			</select>
+			<select name="day">
+				<option value="0">day</option>
+				#foreach ( $d in [1..31] )
+					#if ( $d == $day )
+						#set ( $selected = "selected" )
+					#else
+						#set ( $selected = "" )
+					#end				
+					<option value="$d" $selected>$d</option>
+				#end
+			</select>
+		</td>
+		<td>
+			
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			TO:
+			#set ( $selected = "" )
+			<select name="year2">
+				<option value="0" $selected>year</option>
+				#foreach ( $y in [2004..2010] )
+					#if ( $y == $year2 )
+						#set ( $selected = "selected" )
+					#else
+						#set ( $selected = "" )
+					#end
+					<option value="$y" $selected>$y</option>
+				#end
+			</select>
+			<select name="month2">
+				<option value="0">month</option>
+				#foreach ( $m in [1..12] )
+					#if ( $m == $month2 )
+						#set ( $selected = "selected" )
+					#else
+						#set ( $selected = "" )
+					#end				
+					<option value="$m" $selected>$m</option>
+				#end
+			</select>
+			<select name="day2">
+				<option value="0">day</option>
+				#foreach ( $d in [1..31] )
+					#if ( $d == $day2 )
+						#set ( $selected = "selected" )
+					#else
+						#set ( $selected = "" )
+					#end				
+					<option value="$d" $selected>$d</option>
+				#end
+			</select>
+		</td>
+		<td>
+			<input type="button" value="Go" onclick="getStat();">
+		</td>
+	</tr>	
+</table>
+
+<table width="99%">
+	<tr>
+		<td align="center">
+			<img src="../chart">
+		</td>
+	</tr>
+</table>	
+
+<table class="table_header" align="center" width="50%">
+	<tr class="table_header">
+		<td>
+			Module
+		</td>
+		<td>
+			Hits
+		</td>
+	</tr>
+#foreach ( $log in $logs )
+	<tr class="table_row">
+		<td>
+			$log.module_name
+		</td>
+		<td>
+			$log.count
+		</td>
+	</tr>
+#end
+</table>
+<input type="hidden" name="width" value="500">
+<input type="hidden" name="height" value="500">
+<input type="hidden" name="chart" value="bar">
+</form>
+<script>
+function getStat() {
+	document.log.action = "?command=getStat";
+	document.log.submit();
+}
+</script>

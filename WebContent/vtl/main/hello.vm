@@ -1,0 +1,15 @@
+	Enter some text:<br>
+<input id="hello-name"><br>
+<input id="hello-submit" type="button" value="Say Hello!" onclick="sayHello()">
+<br>
+#if ( $name != "" )
+<b><font size="4">
+HELLO THERE...<br> $util.putLineBreak("$name")
+</font></b>
+#end
+
+<script>
+function sayHello(){
+   doAjaxCall${formName}("sayHello");
+}
+</script>

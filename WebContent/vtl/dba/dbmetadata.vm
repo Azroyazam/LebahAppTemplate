@@ -1,0 +1,27 @@
+
+<p>
+$jdbc_driver<br>
+$jdbc_url<br>
+</p>
+
+<form name="dbmetadata" method="post">
+	<table>
+		<tr>
+			<td>
+			<a href="javascript:list_catalogs()">
+			List Catalogs
+			</a>
+			</td>
+		</tr>
+	</table>
+
+<input type="hidden" name="command">
+</form>
+<script>
+function list_catalogs() {
+	document.dbmetadata.command.value = "catalogs";
+	document.dbmetadata.action = "";
+	document.dbmetadata.submit();
+}
+
+</script>

@@ -1,0 +1,42 @@
+#set ( $object_file = "../css/inceif/mastHead_New.swf" )
+
+<div style="position:absolute;">
+<table cellpadding="1" cellspacing="0" width="100%"  border="0">
+    <tr>
+    
+        <td valign="top">
+													        #parse ( "vtl/main/portal_title.vm" )
+      	  </td>
+    
+        <td valign="top" align="right">
+        #if ( $userIsLogged )
+			           #parse ( "vtl/main/greeting.vm" )
+        #elseif ( $showLogin )
+			           #parse ( "vtl/main/login_input.vm" )                   
+       			 #end
+      </td>
+    </tr>
+</table>
+</div>
+<div  style="postion:absolute">
+<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+ codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0"
+ WIDTH=100% HEIGHT=100>
+<param name="movie" value="$object_file" />
+<param name="quality" value="high" />
+<param name="scale" value="exactfit" />
+<param name="wmode" value="opaque" />
+<param name="bgcolor" value="#666666" />
+<EMBED src="$object_file" quality="high" scale="exactfit" wmode="opaque" 
+bgcolor="#666666"  WIDTH=100% HEIGHT=100%   
+swLiveConnect=true NAME=CF4 TYPE="application/x-shockwave-flash" 
+PLUGINSPAGE="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash">
+</EMBED>
+</OBJECT>
+
+</div>
+
+
+
+
+

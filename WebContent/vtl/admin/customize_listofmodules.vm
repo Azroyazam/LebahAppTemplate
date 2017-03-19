@@ -1,0 +1,173 @@
+#set ($moduleVector = $session.getAttribute("_portal_moduleVector"))
+#set ($currenttab = $cTab.id)
+#set ($total = $totalInt.intValue())
+#set ($startno = $startnoInt.intValue())
+#set ($i = $startno)
+#set ($cnt = 0)
+<br>
+<form name="fcus" method="post">
+<table align="center" width="500" cellpadding="1" cellspacing="1" border="0">
+<tr><td class="table_head">
+<table width="100%" cellpadding="1" cellspacing="1" border="0">
+    <tr>
+        <td class="table_head">
+            <table width="100%" cellpadding="2" cellspacing="0" border="0">
+                <tr>
+                    <td class="table_head"><b>${cTab.title}</b></td>                    
+                    <td class="table_head" align="right">
+                        <input type="button" value="&nbsp;Update This Tab&nbsp;" onclick="saveChanges()">
+                        <input type="button" value="Back To Tab's Modules" onclick="goBack()">
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+
+        <td class="row1">
+            <table width="100%" align="center" cellpadding="1" cellspacing="1" border="1">
+                <tr><td class="row1">
+                <i>Note: 
+                Click on the group name to display list of modules for that group, then check
+                on the modules you want to <b>add</b> and uncheck those that you want
+                to <b>remove</b>.
+                </i></td></tr>
+                <tr>
+                    <td>
+                    
+                    #set ( $group_name = "" )
+                    <div>
+                    #foreach ( $module in $moduleVector )
+                        #set ($i = $i + 1)
+                        #if ( $module.marked)
+                            #set ( $row = "selected")
+                            #set ( $checked = "checked")
+                        #else
+                            #set ( $row = "row1")
+                            #set ( $checked = "")                               
+                        #end
+                        
+                        #if ( $group_name != $module.groupName )
+                            #set ( $group_name = $module.groupName )
+                            </div>
+                            	    <table width="100%" cellpadding="1" cellspacing="1" class="table_header"><tr><td>
+                            	    <input type="button" value="..." onclick="toggleVisible('div_${module.id}');">
+                                <a href="javascript:toggleVisible('div_${module.id}');" style="cursor:hand">
+                                <b>$module.groupName</b>
+                                </a>
+                                </td>
+                                <td align="right">
+                                
+                                </td></tr></table>
+                            <div id="div_${module.id}" name="div_${module.id}" 
+		                            style="visibility:hidden; position:absolute; background-color:white; width=100%">    
+		                                                    
+                        #end
+                                <input class="cb" type="checkbox" name="cbmodules" value="$module.id" $checked>
+                                #if ( $module.title == "" ) <i>[$module.id]</i> #else ${module.title} #end
+                                <br>
+                    #end
+                    
+
+        </td>
+    </tr>
+    #**
+    <tr>
+        <td class="table_head">
+            <table width="100%" cellpadding="2" cellspacing="0" border="0">
+                <tr>
+                    <td width="100">
+                    #if ( $i > $moduleVector.size() )
+                        <input type="button" value="&lt Prev" onclick="goPrevious()">
+                    #end
+                    </td>
+                    <td align="center">
+                    <input type="button" value="&nbsp;Update This Tab&nbsp;" onclick="saveChanges()">   
+                    </td>
+                    <td width="100" align="right">
+                    #if ( $i < $total)
+                    <input type="button" value="Next &gt;" onclick="goNext()">
+                    #end
+                    </td>
+                </tr>
+             </table>
+        </td>
+    </tr>  
+    *#             
+</table>
+</td></tr></table>
+
+</form>
+<script>
+var prev_div = "none";
+var openStatus = "close";
+function toggleVisible(id) {
+if ( openStatus == "close" ) {
+hidePrevious();
+		showDiv(id);
+		openStatus = "open";
+		}
+		else if ( (openStatus == "open") && (prev_div == id) ) {
+		hidePrevious();
+		openStatus = "close";
+		}
+				else if ( (openStatus == "open") && (prev_div != id) ) {
+		hidePrevious();
+		showDiv(id);
+		openStatus = "close";
+		}
+}
+function hidePrevious() {
+	if ( prev_div == "none") return;
+		obj=document.getElementById(prev_div);
+		obj.style.position = "absolute";
+obj.style.visibility = "hidden";
+
+}
+function showDiv(id) {
+	obj=document.getElementById(id);
+				obj.style.visibility = "visible";
+	obj.style.position = "relative";
+obj.style.background = "#FFDC6C";
+prev_div = id;
+	
+}
+function showDivDummy() {
+	obj=document.getElementById("div_dummy");
+	obj.style.visibility = "visible";
+		obj.style.position = "relative";	
+}
+function hideDivDummy() {
+	obj=document.getElementById("div_dummy");
+	obj.style.visibility = "hidden";
+		obj.style.position = "relative";	
+}
+function setBackground(id) {
+	obj = document.getElementById(id);
+	obj.style.background = "#FFDC6C";
+}
+function hideIntro() {
+	obj=document.getElementById("div_intro");
+	obj.style.visibility = "hidden";	
+}
+function closeDiv() {
+hidePrevious();
+}
+
+function goBack() {
+    document.fcus.action = "customize?type=tab&tabid=${currenttab}&do=content";
+    document.fcus.submit();
+}
+function goNext() {
+    document.fcus.action = "customize?type=listmodules&tabid=${currenttab}&do=next";
+    document.fcus.submit();
+}
+function goPrevious() {
+    document.fcus.action = "customize?type=listmodules&tabid=${currenttab}&do=previous";
+    document.fcus.submit();
+}
+function saveChanges() {
+    document.fcus.action = "customize?type=listmodules&tabid=${currenttab}&do=save";
+    document.fcus.submit();  
+}
+</script>

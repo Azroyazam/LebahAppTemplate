@@ -1,0 +1,140 @@
+<p>
+$jdbc_driver<br>
+$jdbc_url<br>
+</p>
+<form name="columns" method="post">
+	<a href="javascript:back()">Back</a>
+	</p>
+	<b>List of fields</b>
+	</p>
+	##red1 has noRecs from DbMetaDataModule	
+			<td align="center" colspan="5">
+				$table has $noRecs record(s).
+			</td>
+	
+	<table border="1">
+		<tr>
+		</tr>
+		<tr>*For record Delete, check only 1 column in View
+	</tr>
+		<tr bgcolor="silver">
+			<td>
+				Name
+			</td>
+			<td>
+				Type Name
+			</td>			
+			<td>
+				Size
+			</td>
+			<td>
+				View* 	##<input type="checkbox" name="checkAll" value="$checkAll" onclick="list_columns('$table.name')">
+			</td>	
+			<td>
+				Sort Desc
+			</td>
+		</tr>	
+		##if($checkAll=="checked")
+			##set($column.check = "checked")
+ 		##else
+ 		 	##set($column.check = "")		
+		##end
+		#foreach ( $column in $columns )
+		<tr>#set($column.check = "checked")
+			<td>
+				$column.name
+			</td>
+			<td>
+				$column.type_name
+			</td>			
+			<td>
+				$column.size
+			</td>
+			<td>
+				<input type="checkbox" name="colnames" value="$column.name" $column.check>
+			</td>
+			<td>
+				<input type="radio" name="orderBy" value="$column.name" >
+			</td>
+			
+			<td>
+				<input type="button" value="Drop" onclick="dropcolumn('$column.name')">
+			</td>			
+		</tr>
+		#end
+		<tr>
+			<td align="center" colspan="5">
+
+							<input type="button"  value="SQL INSERT" onclick="createInsertSQL()">
+				<input type="button"  value="VIEW DATA" onclick="viewdata()">
+				Limit:
+				<select name="limit_size">
+					<option value="">- No Limit -</option>
+					#foreach ( $x in [10, 20, 50, 100] )
+						<option value="$x">$x</option>
+					#end
+				</select>
+			</td>
+		</tr>	
+	</table>
+	</p>
+	<table>
+		<tr>
+			<td>
+				Field Name:
+			</td>
+			<td>
+				<input name="column_name">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Field Type:
+			</td>
+			#set ( $fieldtypes = ["varchar(50)", "varchar(10)", "varchar(100)", "varchar(255)", "text", "float", "int", "bigint", "long", "datetime", "blob", "longblob"] )
+			<td>
+				<select name="column_type">
+					#foreach ( $fieldtype in $fieldtypes )
+					<option value="$fieldtype">$fieldtype</option>
+					#end
+				</select>
+			</td>
+		</tr>	
+		<tr>
+			<td align="right" colspan="2">
+				<input type="button" value="Add" onclick="addcolumn()">
+			</td>
+		</tr>
+	</table>
+	
+	<input type="hidden" name="catalog" value="$catalog">
+	<input type="hidden" name="table" value="$table">
+	<input type="hidden" name="command">
+</form>
+<script>
+function viewdata() {
+	document.columns.command.value = "viewdata";
+	document.columns.action = "";
+	document.columns.submit();
+}
+function back() {
+	document.columns.command.value = "tables";
+	document.columns.submit();
+}
+function addcolumn() {
+	document.columns.command.value = "addcolumn";
+	document.columns.action = "";
+	document.columns.submit();
+}
+function dropcolumn(s) {
+	if ( !window.confirm("Are you SURE to drop this column??") ) return;
+	document.columns.command.value = "dropcolumn";
+	document.columns.column_name.value = s;
+	document.columns.action = "";
+	document.columns.submit();
+}
+function createInsertSQL() {
+document.columns.command.value = "createInsertSQL";
+document.columns.submit();
+}
+</script>

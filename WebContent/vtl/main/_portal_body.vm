@@ -1,0 +1,53 @@
+#if ( ${PORTAL_IS_CUSTOMIZE} )
+
+
+	<table width="100%" cellpadding="1" cellspacing="1" border="0">
+	<tr><td bgcolor="silver">
+	<b>Personalization</b>
+	</td></tr>
+	</table>
+	</td></tr>
+	<tr><td>
+	
+	${PORTAL_CUSTOMIZE.print()}
+	
+	</td></tr>
+
+#elseif ( ${PORTAL_IS_PAGETHEME} )
+
+
+	<table width="100%" cellpadding="1" cellspacing="1" border="0">
+	<tr><td bgcolor="silver">
+	<b>Personalization</b>
+	</td></tr>
+	</table>
+	</td></tr>
+	<tr><td>
+
+	${PORTAL_PAGESTYLE.print()}
+	
+	</td></tr>
+
+#else
+
+	#if ( ${PORTAL_DISPLAY_TYPE} == "left_navigation" )
+		#parse("vtl/main/_display_navigation_type.vm")
+			#elseif ( ${PORTAL_DISPLAY_TYPE} == "top_navigation" )
+		#parse("vtl/main/_display_top_navigation_type.vm")
+	#elseif ( ${PORTAL_DISPLAY_TYPE} == "single_column" )
+		#parse("vtl/main/_display_single_column.vm")
+	#elseif ( ${PORTAL_DISPLAY_TYPE} == "narrow_wide" )
+		#parse("vtl/main/_display_narrow_wide.vm")
+			#elseif ( ${PORTAL_DISPLAY_TYPE} == "wide_narrow" )
+		#parse("vtl/main/_display_wide_narrow.vm")
+	#elseif ( ${PORTAL_DISPLAY_TYPE} == "two_columns" )
+		#parse("vtl/main/_display_two_columns.vm")
+	#elseif ( ${PORTAL_DISPLAY_TYPE} == "three_columns" )
+		#parse("vtl/main/_display_three_columns.vm")
+			#elseif ( ${PORTAL_DISPLAY_TYPE} == "three_columns_with_top" )
+		#parse("vtl/main/_display_three_columns_with_top.vm")
+	#else
+		#parse("vtl/main/_display_navigation_type.vm")
+	#end
+	
+#end

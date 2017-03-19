@@ -1,0 +1,42 @@
+<form name="hit" method="post">
+<table align="center">
+	<tr style="font-weight:bold">
+		<td width="150">
+			IP
+		</td>
+		<td width="50" align="center">
+			Hits
+		</td>
+		<td width="150">
+			Country
+		</td>
+	</tr>
+	#foreach ( $item in $ipList )
+	<tr>
+		<td>
+			$item.ip
+		</td>
+		<td align="center">
+			$item.count
+		</td>
+		<td>
+			$item.country
+		</td>
+	</tr>
+	#end
+	<tr>
+		<td colspan="3" align="right">
+		<br>
+		<a href="javascript:saveHit()">Save</a>
+		</td>
+	</tr>
+</table>
+
+<input type="hidden" name="command">
+</form>
+<script>
+function saveHit() {
+	document.hit.command.value = "saveHit";
+	document.hit.submit();
+}
+</script>

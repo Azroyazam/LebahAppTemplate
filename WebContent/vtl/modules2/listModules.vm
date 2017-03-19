@@ -1,0 +1,27 @@
+<div>
+$module_group
+</div>
+<table>
+<tr style="height:30px;background:#CCCCCC">
+<td style="width:40px">&nbsp;</td>
+<td style="width:300px;font-weight:bold">Title</td>
+<td style="width:500px;font-weight:bold">Class Name</td>
+<td style="width:40px"></td>
+<td style="width:40px"></td>
+</tr>
+#set ( $cnt = 0 )
+#foreach( $m in $modules )
+#set ( $cnt = $cnt + 1 )
+<tr style="height:25px;background:#F2EFEF">
+<td>$cnt.</td>
+<td>$m.title</td>
+<td><a href="$m.className" target="_new$cnt">$m.className</a></td>
+<td><input type="button" value=".." onclick="doDivAjaxCall3$formname('editModule','editModule','editModuleId=$m.id')"></td>
+<td><input type="button" value="X" onclick="if ( !confirm('Delete?') ) return; doDivAjaxCall3$formname('listModules','deleteModule','deleteModuleId=$m.id')"></td>
+</tr>
+#end
+</table>
+
+<script>
+$('editModule').style.display="none";
+</script>

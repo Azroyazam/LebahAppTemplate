@@ -1,0 +1,35 @@
+
+
+
+#set ( $t = 100 - $bar_size )
+<table><tr><td>
+
+<table class="shadow" cellspacing="0" cellpadding="0">
+<tr height="30px">
+#set ( $t = 100 - $bar_size )
+#foreach ($i in [1..$bar_size] )
+<td style="width:1px;background:#00FF00">&nbsp;</td>
+#end
+#foreach ($i in [1..$t] )
+<td style="width:1px;background:#CCCCFF">&nbsp;</td>
+#end
+</tr>
+</table>
+
+</td><td>
+
+&nbsp;&nbsp;$free_memory / $total_memory (${bar_size}%)
+
+
+</td></tr></table>
+<br/><br/>
+<table>
+<tr><td>Up Time:</td><td>$uptime</td></tr>
+</table>
+
+<script>
+
+$('garbage_interval').value = '$!garbage_interval';
+$('garbage_treshold').value = '$!garbage_treshold';
+
+</script>

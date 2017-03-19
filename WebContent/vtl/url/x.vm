@@ -1,0 +1,5 @@
+Please wait..
+
+<script>
+window.location = "../..";
+</script>

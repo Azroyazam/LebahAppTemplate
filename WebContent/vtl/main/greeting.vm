@@ -1,0 +1,53 @@
+#set ( $role  = ${session.getAttribute("_portal_role")} )
+<table cellpadding="0" cellspacing="1" align="right">
+    <tr>
+        <td>
+            <table cellpadding="1" cellspacing="0">
+				<tr>
+					<td class="font_welcome">
+					#if ( $userIsLogged )
+    					#if ( ${session.getAttribute("_portal_role")} == "anon" )
+    						WEBMASTER MODE
+    					#else
+    						Welcome $!{session.getAttribute("_portal_username")}
+    					#end
+					#end
+		            </td>
+        	    </tr>
+				<tr>
+					<td align="right">
+						#set ( $location = "pagetheme" )
+						#set ( $caption = "Page Template" )
+       
+                        #if ( $role == "anon" || $role == "root" ) 
+                        	#set ( $location = "customize")
+                        	#set ( $caption = "Personalize" )
+                        	#end
+                
+                	        #if ( ${session.getAttribute("_portal_action")} != "customize" && ${session.getAttribute("_portal_action")} != "pagetheme" ) 
+                		        <a href='javascript:document.location.href = "${location}"' class="font_welcome"><u>${caption}</u></a>
+                	        #else
+                		        <a href='javascript:document.location.href = "../c/"' class="font_welcome"><u>Done</u></a>
+                	        #end
+                	        |
+                	        <a href='javascript:document.location.href = "logout"' class="font_welcome"><u>Logout</u></a>
+                	        
+                	        
+                				#if ( ${session.getAttribute("_portal_role")} == "anon" && ${session.getAttribute("_portal_action")} != "customize" && ${session.getAttribute("_portal_action")} != "pagetheme" )
+                					#if ( ${session.getAttribute("_portal_action")} != "addHtmlContentModule" &&  ${session.getAttribute("_portal_action")} != "contentManagerModule")
+                	        
+                	        		</td>
+                	        	</tr>
+                				<tr>
+                					<td align="right">
+                		        <a href='javascript:document.location.href = "addHtmlContentModule"' class="font_welcome"><u>Add HTML Module</u></a>
+                		        |<a href='javascript:document.location.href = "contentManagerModule"' class="font_welcome"><u>Content Manager</u></a>
+                		        #else
+                		        #end
+                		        #end	     
+		        	</td>
+		        </tr>
+			</table>
+        </td>
+    </tr>               
+</table>

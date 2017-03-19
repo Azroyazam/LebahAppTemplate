@@ -1,0 +1,15 @@
+#parse("application_menu/start.vm")
+
+<script>
+function loadModule(moduleName) {
+	doDivAjaxCall$formname('app-container','loadModule','menuWidget=yes&loadModuleName=' + moduleName)
+}
+function openChild(childId) {
+	if ( $(childId).style.display == 'none' ) { 
+		$j('#' + childId).show('slow'); 
+	} 
+	else { 
+		$j('#' + childId).hide('slow'); 
+	}
+}
+</script>

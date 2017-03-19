@@ -1,0 +1,15 @@
+
+
+<td>$!r.name</td>
+<td>$!r.contactNumber</td>
+<td>$!r.address</td>
+
+#set ( $birthDate = "" )
+#if ( $r && $r.birthDate )
+	#set ( $birthDate = $dateFormat.format($r.birthDate) )
+#end
+
+<td>$birthDate</td>
+
+
+

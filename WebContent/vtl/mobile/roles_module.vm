@@ -1,0 +1,97 @@
+<form name="f" method="post">
+
+<table width="100%">
+  <tr>
+    <td>
+      Select role:
+    </td>
+    <td>
+      <select name="role" onchange="listModules()">
+      <option value=""> - select - </option>
+      #foreach( $role in $roleList )
+      <option value="$role" #if ( $role == $roleSelect ) selected #end>$role</option>
+      #end
+      </select>
+      <input type="button" value="Get.." onclick="listModules()">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Module Id:
+    </td>
+    <td>
+      <input name="module" size="20">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Title:
+    </td>
+    <td>
+      <input name="title" size="20">
+      <input type="button" value="Submit.." onclick="addModule()">
+    </td>
+  </tr>  
+</table>
+<br/>
+<table width="100%">
+<tr class="table_header">
+  <td>
+    Id
+  </td>
+  <td>
+    Title (Class Name)
+  </td>
+  <td>
+  
+  </td>
+</td>
+#foreach( $module in $modules)
+  <tr>
+    <td>
+       <a href="javascript:doEdit('$module.id', '$module.title')">
+       $module.id
+       </a>
+    </td>
+    <td>
+      $module.title<br>
+      (<i>$module.className</i>)
+    </td>
+    <td align="right">
+    <a href="javascript:deleteModule('$module.id')">X</a>
+    </td>
+  </tr>
+#end
+</table>
+
+
+<input type="hidden" name="command">
+</form>
+<script>
+function listModules() {
+document.f.command.value = "listModules";
+document.f.action = "";
+document.f.submit();
+}
+function addModule() {
+document.f.command.value = "addModule";
+document.f.action = "";
+document.f.submit();
+}
+function deleteModule(id) {
+if ( !window.confirm('Are you sure?') ) return;
+document.f.module.value = id;
+document.f.role.value = "$roleSelect";
+document.f.command.value = "deleteModule";
+document.f.action = "";
+document.f.submit();
+}
+function doEdit(id, title) {
+document.f.module.value = id;
+document.f.title.value = title;
+}
+function setModule(module) {
+alert(module);
+document.f.module.value = module;
+}
+</script>

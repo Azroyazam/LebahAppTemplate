@@ -1,0 +1,3 @@
+#foreach ( $attr in $attr_names )
+	$attr = $attr_values.get($attr)<br>
+#end

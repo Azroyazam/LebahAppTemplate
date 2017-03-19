@@ -1,0 +1,104 @@
+<form name="f" method="post">
+<table width="600" align="center" border="0">
+<tr>
+<td style="font-weight:bold">
+Role: $role
+</td></tr>
+<tr>
+<td style="font-weight:bold">
+</td></tr>
+<tr><td>
+<ul id="tablist" style="list-style-type:none;padding: 2px;">
+    #set ($cnt = 0 )
+    #foreach( $tab in $tabs)
+        #set ( $cnt = $cnt + 1 )
+        <li id="tablist_$cnt"  style="cursor:hand;padding:1px">
+			<div style="border-radius:10px;border:1px solid #ccc;background:#C6D9F1">
+                <table width="100%" cellspacing="1" cellpadding="4" bgcolor="lightgrey">
+                    <tr><td>
+                        <table width="100%" cellspacing="0">
+                            <tr style="height:30px">
+								<td style="padding-left:10px">
+                                    $tab.title
+                                    <input type="hidden" name="tabIds" value="${tab.id}">
+                                </td>
+                                <td width="180" align="center">
+                                    <a href="javascript:listModules('$tab.id')" style="text-decoration:underline">Modules</a>
+                                    |
+                                    <a href="javascript:editTab('$tab.id', '$tab.title')" style="text-decoration:underline">Rename</a>
+                                    |
+                                    <a href="javascript:deleteTab('$tab.id')" style="text-decoration:none">X</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td></tr>
+                </table>
+			</div>
+        </li>
+    #end
+</ul>
+</td></tr>
+<tr><td align="center" height="40">
+<input class="linkbutton" type="button" value="Save Changes" onclick="saveTabs()">
+<input class="linkbutton" type="button" value="Select Other Role" onclick="changeRole()">
+</td></tr>
+<tr><td align="center" height="40">
+Tab:
+<input class="inputField" name="tab_title" style="width:200px">
+<input class="linkbutton" type="button" name="buttonTab" value="Add" onclick="doTab()">
+##<input class="linkbutton" type="button" name="buttonReset" value="RESET" onclick="doReset()">
+</td></tr>
+</table>
+
+<input type="hidden" name="tabId">
+<input type="hidden" name="role" value="$role">
+<input type="hidden" name="command">
+
+</form>
+<script type="text/javascript" language="javascript" charset="utf-8">
+Sortable.create('tablist');
+</script>
+<script>
+function saveTabs() {
+document.f.command.value = "saveTabs";
+document.f.submit();
+}
+function deleteTab(id) {
+if ( !confirm('Are you sure?') ) return;
+document.f.command.value = "deleteTab";
+document.f.tabId.value = id;
+document.f.submit();
+}
+function addTab() {
+if ( document.f.tab_title.value == "" ) return;
+document.f.command.value = "addTab";
+document.f.submit();
+}
+function editTab(id, title) {
+document.f.tabId.value = id;
+document.f.tab_title.value = title;
+document.f.buttonTab.value = "UPDATE";
+}
+function updateTab() {
+document.f.command.value = "updateTab";
+document.f.submit();
+}
+function doTab() {
+if ( document.f.buttonTab.value == "UPDATE" ) updateTab();
+else addTab();
+}
+function doReset(){
+document.f.buttonTab.value = "ADD";
+document.f.tab_title.value = "";
+document.f.tabId.value = "";
+}
+function listModules(tabId) {
+document.f.tabId.value = tabId;
+document.f.command.value = "listModules";
+document.f.submit();
+}
+function changeRole(){
+document.f.command.value = "changeRole";
+document.f.submit();
+}
+</script>

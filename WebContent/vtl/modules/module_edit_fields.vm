@@ -1,0 +1,186 @@
+<form name="freg" method="post" action="javascript:submitRegisterModule()">
+<br>
+<table width="90%" align="center" border="0" cellpadding="2" cellspacing="2">
+    <tr>
+        <td >Module Id</td>
+        <td><input name="module_id" style="width:100%" value="$module.id" readonly><br>(Module Id cannot be changed)</td>
+    </tr>
+    <tr>
+        <td >Module Title</td>
+        <td><input name="module_title" style="width:100%" value="$module.title"></td>
+    </tr>
+    <tr>
+        <td >Module Class Name</td>
+        <td><input name="module_class" style="width:100%" value="$module.className"></td>
+    </tr>
+    <tr>
+        <td >Group Name</td>
+        <td><input name="module_group" style="width:100%" value="$module.groupName"></td>
+    </tr> 
+    <tr>    
+        <td>
+        </td>
+        <td>
+        OR SELECT:
+        <br>
+        <select name="groupList" style="width:100%" onchange="selectGroupName()">
+        <option value=""> - select - </option>
+        #foreach( $name in $groupList)
+        <option value="$name">$name</option>
+        #end
+        </select>
+        </td>
+    </tr>      
+    <tr>
+        <td >Module Description</td>
+        <td><textarea name="module_description" style="width:100%" rows="3">$module.description</textarea></td>
+    </tr>       
+    #if ( $object_types.contains("html_container") )
+    <tr>
+        <td >File Location:</td>
+        <td><input name="html_location" style="width:100%" value="$html_location"></td>
+    </tr>   
+    #end
+    #if ( $object_types.contains("xml_container") )
+    <tr>
+        <td >URL of XML</td>
+        <td><input name="html_location" style="width:100%" value="$html_location"></td>
+    </tr>   
+    <tr>
+        <td >URL of XSL</td>
+        <td><input name="xsl_name" style="width:100%" value="$xsl_name"></td>
+    </tr>   
+    #end
+    #if ( $object_types.contains("attributable") )
+        #set ( $i = 0 )
+        #foreach ( $attribute in $attributes_name )
+            #set ( $i = $i + 1 )
+    <tr>
+        <td >
+            $attribute
+        </td>
+        <td>
+            <input name="$attribute" style="width:100%" value="$!attributes_data.get($attribute)">
+        </td>
+    </tr>   
+        #end
+    #end
+    <tr>
+        <td colspan="2" align="right">
+            <input type="button" value="Cancel" onclick="submitCancel()">
+            <input type="button" value="Update" onclick="submitUpdate()">
+        </td>
+    </tr>   
+    <tr>
+        <td colspan="2" align="center">
+        <table width="100%" border="0" cellpadding="2" cellspacing="0">
+            <tr>
+                <td colspan="4" style="font-weight:bold;font-size:10pt">
+                Assigned to these role(s):
+                <br/><br/>
+                </td>
+            </tr>
+            #set ( $checked = "" )
+            #foreach ( $role in $userRoles )
+                #set( $i = $velocityCount )
+                #if ( ($i % 2) == 0 )
+                    #set( $row = "row2" )
+                #else
+                    #set( $row = "row1" )
+                #end
+                <tr>
+                    <td class="$row" width="10">
+                        #if ( $assignedRoles.get($role.getName()) == "true" )
+                            #set ( $checked = "checked" )
+                        #else
+                            #set ( $checked = "" )
+                        #end
+                        <input class="cb" type="checkbox" name="cbroles" value="$role.getName()" $checked>
+                    </td>
+                    <td class="$row">
+                        $role.getName()
+                    </td>
+                    <td class="$row" align="center" width="5">
+                    -
+                    </td>
+                    <td class="$row">
+                        ##$roleDescription.get($role)
+                        $role.getDescription()
+                    </td>
+                </tr>       
+            #end
+        </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="right">
+            <input type="button" value="Cancel" onclick="submitCancel()">
+            <input type="button" value="Update" onclick="submitUpdate()">
+        </td>
+    </tr>       
+</table>
+<input type="hidden" name="module_id" value="$module.id">
+<input type="hidden" name="nav">
+</form>
+<script>
+var illegalChars= /[\(\)\<\>\,\;\:\\\/\"\[\]\~\!\@\#\$\%\^\&\*\'\?\|\.\`]/;
+var illegalClassChars= /[\(\)\<\>\,\;\:\\\/\"\[\]\~\!\@\#\$\%\^\&\*\'\?\|\`]/;
+function validateTitle()
+{
+	var data = document.freg.module_title.value;
+	if (data == "")
+    {
+        alert("Module Title required.");
+        return false;
+        
+    } else if (illegalChars.test(data))
+	{
+	   alert("Invalid Module Title.\nThe Module Title contains the following illegal characters:\n ( ) < > , ; : \\ / \" [ ] ~ ! @ # $ % ^ & * ' ? | . `");
+		return false;
+	}
+}
+function validateClassName()
+{
+	var data = document.freg.module_class.value;
+	if (data == "")
+    {
+        alert("Module Class Name required.");
+        return false;
+        
+    } else if (illegalClassChars.test(data))
+	{
+	   alert("Invalid Module Class Name.\nThe Module Class Name contains the following illegal characters:\n ( ) < > , ; : \\ / \" [ ] ~ ! @ # $ % ^ & * ' ? | `");
+		return false;
+		
+	} else if (data.indexOf(" ") != -1)
+	{
+    	alert("Invalid Module Class Name.\nModule Class Name cannot contain blank spaces.");
+    	return false;
+   	}
+}
+function submitUpdate() {
+    //if (validateTitle() == false) {
+    	//document.freg.module_title.focus();
+    	//return;
+    //}
+    if (validateClassName() == false) {
+    	document.freg.module_class.focus();
+    	return;
+    }
+    
+    document.freg.nav.value = "update";
+    document.freg.action = "";
+    document.freg.submit();
+}   
+
+function submitCancel() {
+    document.freg.nav.value = "cancel";
+    document.freg.action = "";
+    document.freg.submit();
+}  
+
+function selectGroupName() {
+document.freg.module_group.value = document.freg.groupList.value;
+} 
+
+</script>

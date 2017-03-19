@@ -1,0 +1,145 @@
+<div style="padding:10px">
+<form name="f" method="post"  action="?command=addNewHtml">
+<table>
+<tr style="height:30px">
+<td style="width:300px">
+Module Title:
+</td>
+<td>
+<input class="inputField" name="module_title" size="40">
+</td>
+</tr>
+<tr style="height:30px">
+<td valign="top">
+Column Position: <br/>(0-Left, 2-Right of Middle, 3-Right)
+</td>
+<td>
+<select class="inputField" style="width:50px" name="colNum">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+</select>
+<br />
+For three columns page: 0 = left, 1 = middle, 2 = right<br>
+For two columns page: 0 = left, 1 = right, 2 = NA<br>
+<br>
+
+</td>
+</tr>
+</table>
+<table>
+	<tr style="height:30px"><td style="width:300px">
+			Input Type:
+	</td>
+	<td>
+        <select class="inputField" style="width:200px" name="htmlType" onchange="selectType()">
+        <option value="">- Select - </option>
+        <option value="content_editor">Content Editor</option>
+        <option value="html_container">HTML Container</option>
+        <option value="html_proxy">HTML Proxy</option>
+        <option value="html_ajax_proxy">HTML AJAX Proxy</option>
+        </select>
+	</td></tr>
+</table>
+<div id="pageUrl" name="pageUrl" style="visibility:hidden">
+<table><tr style="height:30px"><td style="width:300px">
+Page URL: 
+</td><td>
+	<input class="inputField" style="width:400px" name="pageUrl" size="80">
+</td><td>
+<input class="linkbutton" type="button" value="Save URL" onclick="saveURL()">
+</td></tr></table>
+</div>
+<br>
+
+
+<div id="richeditor" name="richeditor" style="visibility:hidden;background-color:white;">
+
+<table>
+<tr style="height:30px">
+<td colspan="2">
+<br>
+<b>
+Write your content below.  When done click Save Content button.
+</b>
+<br>
+<br>
+</td>
+</tr>
+</table>
+<textarea class="ckeditor" cols="80" id="editor1" name="editor1" rows="10">$!content</textarea>
+
+<br />
+<table width="100%"><tr><td>
+<input class="linkbutton" type="submit" value="Save Content">
+
+</td></tr></table>
+##<textarea name="content" cols="40" rows="10" style="visibility:hidden">$!content</textarea>
+
+</div>
+
+
+<input type="hidden" name="module_class" value="lebah.app.HtmlContentModule">
+<input type="hidden" name="command">
+</form>
+</div>
+<script>
+
+function hideEditor() {
+	obj=document.getElementById('richeditor');
+	obj.style.visibility = "hidden";
+	obj2=document.getElementById('pageUrl');
+	obj2.style.visibility = "visible";
+}
+
+function showEditor() {
+	obj=document.getElementById('richeditor');
+	obj.style.visibility = "visible";
+	obj2=document.getElementById('pageUrl');
+	obj2.style.visibility = "hidden";
+}
+
+function selectType() {
+
+  var htmlType = document.f.htmlType.value;
+  if ( htmlType == "content_editor" ) {
+    showEditor();
+    document.f.module_class.value = "lebah.app.HtmlContentModule";
+  }
+  else if ( htmlType == "html_container" ) {
+    hideEditor();
+    document.f.module_class.value = "lebah.app.HtmlContentModule";
+    document.f.pageUrl.focus();
+  }
+  else if ( htmlType == "html_proxy" ) {
+    hideEditor();
+    document.f.module_class.value = "lebah.app.HtmlProxyModule";
+    document.f.pageUrl.focus();
+  }
+  else if ( htmlType == "html_ajax_proxy" ) {
+    hideEditor();
+    document.f.module_class.value = "lebah.app.HtmlProxyAjaxModule";
+    document.f.pageUrl.focus();
+  }
+  else {
+    hideEditor();
+    		obj2=document.getElementById('pageUrl');
+		    	obj2.style.visibility = "hidden";
+    document.f.module_class.value = "lebah.app.HtmlContentModule";
+  }
+
+}
+
+function addHtml() {
+	document.f.command.value = "addNewHtml";
+	document.f.action = "";
+	document.f.submit();
+}
+function saveURL() {
+	document.f.command.value = "addNewHtml";
+	document.f.action = "";
+	document.f.submit();
+}
+
+
+</script>

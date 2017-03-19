@@ -1,0 +1,34 @@
+
+<table class="navigation_menu" width="100%"  cellspacing="1" cellpadding="0" border="0">
+<tr>
+<td>
+
+<table cellspacing="0" cellpadding="0" border="0">
+<tr height="30px">
+							
+							
+#set ( $td_class = "" )
+					
+#foreach ($module in $modules)
+
+#if (${session.getAttribute("_portal_module")} == ${module.id})
+	#set ( $td_class = "nav_background_active")
+	#set ( $a_class = "nav_link_active")
+#else
+	#set ( $td_class = "nav_background")
+	#set ( $a_class = "nav_link")
+#end		
+
+	<td align="center"  class="$td_class" style="cursor:pointer;"
+	onclick="document.location='${session.getAttribute("_portal_action")}?_portal_module=${module.id}'">
+	<a class="$a_class">${module.customTitle}</a>
+	</td>
+	<td align="center" style="width:20px">|</td>
+
+#end
+				
+</tr>
+</table>
+</td>
+</tr>
+</table>

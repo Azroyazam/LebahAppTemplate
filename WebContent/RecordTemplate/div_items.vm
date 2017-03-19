@@ -1,0 +1,22 @@
+<script>
+$('page_num').value = '$!page_num';
+$('_wait').innerHTML='';
+$('current_page_num').value = '$!page_num';
+#if ( $update_counter )
+$('data_size').innerHTML = '$data_size';
+$('total_page').innterHTML = '$total_page';
+#end
+</script>
+
+#if ( $error_flag )
+<div id="div_error_message" class="div_error">
+<table width="100%"><tr><td align="right"><a href="javascript:void()" onclick="$('div_error_message').style.visibility='hidden'" style="text-decoration:none">X</a></td></tr>
+<tr><td align="center" style="font-weight:bold">
+#parse("$viewPath/error_message.vm")
+</td></tr></table>
+</div>
+#end
+
+
+#parse("$templateDir/records.vm")
+

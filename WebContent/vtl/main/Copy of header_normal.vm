@@ -1,0 +1,30 @@
+<table class="page_header" cellpadding="1" cellspacing="0" width="100%"  border="0">
+    <tr>
+      <td colspan="2" valign="top">
+      
+       #if ( $userIsLogged && ${session.getAttribute("_portal_role")} != "anon" ) 
+          #parse ( "vtl/main/user_role_tabs_menu.vm" )
+       #end      
+       
+       ##parse ("vtl/main/portal_title.vm")
+      
+      </td>
+     <td valign="top" align="right" style="width:200px">
+        #if ( $userIsLogged )
+           			 #parse ( "vtl/main/greeting.vm" )
+        #else
+            #parse ( "vtl/main/login_input.vm" ) 
+        		#end
+      </td>
+    </tr>
+</table>
+
+<script>
+function changeVisitor(visitor) {
+	var visitor = document.flogin.visitor.value;
+	document.location = "?visitor="+visitor;
+}
+function changeRole(role) {
+	document.location = "?myrole="+role;
+}
+</script> 

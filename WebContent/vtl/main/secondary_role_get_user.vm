@@ -1,0 +1,19 @@
+<form name="f" method="post">
+<center>
+User id :<input name="user_id" value="$!user.login"><input type="button" value="GET" onclick="getUser()">
+</center>
+<input type="hidden" name="command">
+</form>
+#if ( $roleUpdated )
+<center>
+<b>
+User's Secondary Roles has been updated!
+</b>
+</center>
+#end
+<script>
+function getUser(){
+document.f.command.value = "getUser";
+document.f.submit();
+}
+</script>

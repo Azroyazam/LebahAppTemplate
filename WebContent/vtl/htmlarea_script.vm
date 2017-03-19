@@ -1,0 +1,44 @@
+<script type="text/javascript">
+  _editor_url = "/$appname/htmleditor/";
+  _editor_lang = "en";
+</script>
+<script type="text/javascript" src="/$appname/htmleditor/htmlarea.js"></script>
+<script type="text/javascript">
+var editor = null;
+function initEditor() {
+  editor = new HTMLArea("message");
+
+  //comment the following two lines to see how customization works
+  //editor.generate();
+  //return false;
+
+  var cfg = editor.config; // this is the default configuration
+  
+  
+	cfg.toolbar = [
+	[ "fontname", "space",
+	  "fontsize", "space",
+	  "formatblock", "space",
+	  "bold", "italic", "underline", "separator",
+	  "subscript", "superscript", "separator",
+	  "copy", "cut", "paste", "space", "undo", "redo" ],	  
+			
+	[ "justifyleft", "justifycenter", "justifyright", "justifyfull", "separator",
+	  "insertorderedlist", "insertunorderedlist", "outdent", "indent", "separator",
+	  "forecolor", "hilitecolor", "textindicator", "separator",
+	  "inserthorizontalrule", "createlink", "insertimage", "inserttable", "htmlmode", "separator" ]
+	];
+
+  editor.generate();
+}
+function insertHTML() {
+  var html = prompt("Enter some HTML code here");
+  if (html) {
+    editor.insertHTML(html);
+  }
+}
+function highlight() {
+  editor.surroundHTML('<span style="background-color: yellow">', '</span>');
+}
+
+</script>

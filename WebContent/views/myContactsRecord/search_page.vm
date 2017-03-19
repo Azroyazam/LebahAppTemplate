@@ -1,0 +1,23 @@
+<table width="80%" cellpadding="1" cellspacing="2">
+<tr><td  style="width:100px"></td><td style="width:10px"></td><td></td></tr>
+
+<tr><td>Name</td><td>:</td><td><input class="texts" type="text" name="find_name"></td></tr>
+<tr><td>Address</td><td>:</td><td><input class="texts" type="text" name="find_address"></td></tr>
+
+<tr>
+	<td>Birth after</td><td>:</td>
+	<td>
+		<input style="height:30px;width:150px" id="find_birthAfter" name="find_birthAfter" value="">
+		<script> new JsDatePick({ useMode:2, target:"find_birthAfter", dateFormat:"%d-%m-%Y" }); </script>
+	</td>
+</tr>
+
+<tr>
+	<td>Birth before</td><td>:</td>
+	<td>
+		<input style="height:30px;width:150px" id="find_birthBefore" name="find_birthBefore" value="">
+		<script> new JsDatePick({ useMode:2, target:"find_birthBefore", dateFormat:"%d-%m-%Y" }); </script>
+	</td>
+</tr>
+
+</table>

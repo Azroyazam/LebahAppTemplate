@@ -1,0 +1,108 @@
+
+<form name="f" method="post">
+<table width="600" align="center" border="0">
+
+<tr style="height:100px">
+<td style="font-weight:bold;font-size:14pt" align="center">
+$tab.title
+</td></tr>
+<tr style="height:50px">
+<td style="font-weight:bold;" align="right">
+	Page Layout:
+    <select class="inputField" style="width:300px" name="displaytype">
+    #foreach( $d in $displayTypes )
+    <option value="$d.id" #if ( $tab.displayType == $d.id ) selected #end>$d.name</option>
+    #end
+    </select>
+</td></tr>
+<tr><td>
+<ul id="modulelist" style="list-style-type:none;padding: 2px;">
+    #set ($cnt = 0 )
+    #foreach( $module in $modules)
+        #set ( $cnt = $cnt + 1 )
+        <li id="modulelist_$cnt" style="cursor:hand">
+			<div style="border-radius:10px;border:1px solid #ccc;background:#C6D9F1;padding:2px;margin-top:2px">
+                <table width="100%" cellspacing="1" cellpadding="4" bgcolor="lightgrey">
+                    <tr style="height:30px"><td>
+                        <table width="100%" cellspacing="0">
+                            <tr>
+                                <td width="10" align="center" style="cursor:pointer">&nbsp;</td>
+                                <td style="cursor:pointer">
+                                    
+                                    #if ( $module.title == "" )
+                                    <i>No Title[$module.id]</i>
+                                    #else
+                                    $module.title
+                                    #end
+                                    
+                                    <input type="hidden" name="moduleIds" value="${module.id}">
+                                </td>
+                                    <td width="210" align="center">
+                                    <input class="inputField" name="moduleTitles" style="width:200px" value="$module.moduleTitle">
+                                    </td>
+                                    <td width="40">
+                                    <select class="inputField" name="columnNumbers">
+                                    #foreach( $col in [0..2])
+                                    <option value="$col" #if ( $col == $module.column ) selected #end >$col</option>
+                                    #end
+                                    </select>
+                                </td>
+                            </tr>
+                   		</table>
+                	</td></tr>
+                </table>
+			</div>
+        </li>
+    #end
+</ul>
+</td></tr>
+
+<tr><td align="center">
+
+<input class="linkbutton" type="button" value="Add/Remove Contents" onclick="addRemoveModules()">
+<input class="linkbutton" type="button" value="Done" onclick="back()">
+</td></tr>
+
+</table>
+
+<input type="hidden" name="moduleId">
+<input type="hidden" name="tabId" value="$tab.id">
+<input type="hidden" name="role" value="$role">
+<input type="hidden" name="command">
+</form>
+<script type="text/javascript" language="javascript" charset="utf-8">
+Sortable.create('modulelist');
+</script>
+<script>
+function back(){
+document.f.action = "customize?type=module&do=listTabs";
+document.f.submit();
+}
+function cancelSave(){
+document.f.action = "customize?type=module&do=cancelSave";
+document.f.submit();
+}
+function saveModules() {
+document.f.action = "customize?type=module&do=saveModules";
+document.f.submit();
+}
+function deleteModule(id) {
+if ( !confirm('Are you sure?') ) return;
+document.f.action = "customize?type=module&do=deleteModule";
+document.f.moduleId.value = id;
+document.f.submit();
+}
+function addModule() {
+if ( document.f.module_title.value == "" ) return;
+document.f.action = "customize?type=module&do=addModule";
+document.f.submit();
+}
+function updateModule() {
+document.f.action = "customize?type=module&do=updateModule";
+document.f.submit();
+}
+function addRemoveModules(){
+document.f.action = "customize?type=module&do=addRemoveModules";
+document.f.submit();
+}
+</script>

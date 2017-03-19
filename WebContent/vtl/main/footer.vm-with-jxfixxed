@@ -1,0 +1,85 @@
+<div id="demo-bar">
+
+        <ul>
+            <li title="Home"><a id="popup_about_link" href="javascript:void();"><img src="../jx/icons/info.png" alt="" /></a></li>
+        </ul>
+
+        <span class="jx-separator-left"></span>
+        #if ( $userIsLogged )
+        
+		<ul>
+		<li><a href="javascript:void()" style="font-weight:bold">4 New Announcements</a></li>
+		</ul>	
+        
+        <ul>
+		<li><a href="javascript:void()" style="font-weight:bold">8 New Messages</a></li>
+		</ul>
+		
+		<ul>
+			<li><a>Who's Online</a>
+				<ul>
+					<li><a>ali</a></li>
+					<li><a>faiz</a></li>
+					<li><a>khairul</a></li>
+				</ul>
+			</li>
+		</ul>
+		
+        #else
+        
+        <ul>
+        <li>Please Login...</li>
+        </ul>
+        
+        <span class="jx-separator-left"></span>
+        
+        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+        
+        #end
+        <span class="jx-separator-right"></span>
+</div>
+
+<div id="popup_about" style="background: url(../jx/about/bg.png) no-repeat; display:none;height:252px;padding:15px;width:454px;">
+<p style="text-align:right"><a style="cursor:pointer;font-family:helvetica;font-weight:bold;position:absolute;right:15px;text-decoration:none;top:10px;" onclick="_jq('#popup_about').bPopup().close();">X</a></p>
+<p style="font-family:helvetica;font-weight:bold;font-size:18pt;text-align:center">
+LeBAH Portal
+</p>
+<p style="font-family:helvetica;font-weight:bold;font-size:14pt;text-align:center">
+Light and Easy Bussiness Architecture
+</p>
+<p><br><br><br></p>
+<p style="font-family:helvetica;font-weight:bold;font-size:12pt;text-align:center">
+Powered by: LeBAH FRAMEWORK 2011
+</p>
+</div>
+
+<script type="text/javascript">
+##JIXEDBAR
+_jq(document).ready(function() {
+	_jq("#demo-bar").jixedbar();
+});
+
+
+
+##POPUP
+_jq(document).ready(function(){
+   _jq("#popup_about_link").bind('click', function(){
+      _jq("#popup_about").bPopup({fadeSpeed:1, followSpeed:1, opacity:0.8, modalClose:true});
+      return false
+   });
+});
+</script>
+
+	
+
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr> 
+		<td class="page_footer" align="right">
+		Created with LeBAH Portal Framework, 2011.
+		</td>
+	</tr>
+</table>
+
+

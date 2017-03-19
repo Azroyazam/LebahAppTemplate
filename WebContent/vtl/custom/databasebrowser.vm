@@ -1,0 +1,58 @@
+<form name="db_browser" method="post">
+<br>
+<table cellpadding="2" cellspacing="2" border="0" bgcolor="silver">
+	<tr>
+		#set ( $i = 0 )
+		#foreach ( $columnName in $columnNames )
+			#set ( $i = $i + 1 )
+			#if ( $i == 1 )
+			<td bgcolor="lightgrey" align="center">
+				$columnName
+			</td>
+			#else		
+			<td bgcolor="lightgrey">
+				$columnName
+			</td>
+			#end
+		#end
+	</tr>
+	#foreach ( $data in $dataVector )
+	<tr>
+		#set ( $i = 0 )
+		#foreach ( $columnData in $data )
+			#set ( $i = $i + 1 )
+			#if ( $i == 1 )
+			<td bgcolor="lightgrey" align="center">
+				$columnData.
+			</td>
+			#else
+			<td bgcolor="white">
+				$columnData
+			</td>
+			#end
+		#end
+	</tr>
+	#end
+</table>
+<br>
+#if ( $_db_start == "no" )
+	<input type="button" value="Previous" onclick="goPrevious()">
+#end
+#if ( $_db_last == "no" )
+	<input type="button" value="Next" onclick="goNext()">
+#end
+<input type="hidden" name="command">
+</form>
+<script>
+function goNext() {
+	db_browser.command.value = "next";
+	db_browser.action = "";
+	db_browser.submit();
+}
+function goPrevious() {
+	db_browser.command.value = "previous";
+	db_browser.action = "";
+	db_browser.submit();
+}
+
+</script>

@@ -1,0 +1,40 @@
+#if ( $useVisitor )
+<table width="100%" cellpadding="0" cellspacing="0">
+<tr>
+	<td align="right" colspan="2">
+	#if ( $useList )
+
+		<select name="visitor" onchange="changeVisitor()" 
+				style="width:200px;border-top:1px solid;font-family:verdana, arial; font-size:10pt; 				background: -moz-linear-gradient(top, #9AE509 0%, #69C205 100%);">
+		<option value=""> - </option>
+			#foreach ( $key in $listVisitor )
+			<option value="$key" #if ( $key == $visitor ) selected #end>$portalVisitorList.get("$key")</option>
+			#end
+		</select>
+		
+		
+	#else
+	
+	
+		#set ( $cnt = 0 )
+		#foreach ( $key in $listVisitor )
+			#set ( $cnt = $cnt + 1 )	
+			#if ( $key == $visitor )
+				<b>$portalVisitorList.get("$key")</b>
+			#else							
+			<a href="?visitor=$key">	
+				<u>$portalVisitorList.get("$key")</u>
+			<a>	
+			#end	
+			#if ( $cnt < $listVisitor.size() )					
+			|
+			#end
+		
+		#end
+	#end
+	</td>
+</tr>  
+</table>
+#end     
+                    
+

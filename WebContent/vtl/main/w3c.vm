@@ -1,0 +1,24 @@
+#**
+
+<table cellpadding="0" cellspacing="0" bgcolor="#fff"><tr>
+
+<td>
+
+#if ( $lang == "en" ) <span style="background-color:#FFD47F">EN</span> #else <a href="?lang=en" style="font-weight:bold">EN</a> #end
+|#if ( $lang == "bm" ) <span style="background-color:#FFD47F">BM</span> #else <a href="?lang=bm" style="font-weight:bold">BM</a> #end
+
+</td>
+
+<td style="width:20px">
+</td>
+
+<td style="width:50px"><img src="../img/w3c.png" border="0"></td>
+
+<td id="fontStandard" style="width:20px" align="center"><span style="font-size:8pt"><a href="#" onclick="setActiveStyleSheet('standard'); return false;">A</a></span></td>
+<td id="fontMedium" style="width:20px" align="center"><span style="font-size:11pt"><a href="#" onclick="setActiveStyleSheet('medium'); return false;">A</a></span></td>
+<td id="fontLarge" style="width:20px" align="center"><span style="font-size:14pt"><a href="#" onclick="setActiveStyleSheet('large'); return false;">A</a></span></td>
+
+<td style="width:10px"></td></tr></table>
+
+
+**#

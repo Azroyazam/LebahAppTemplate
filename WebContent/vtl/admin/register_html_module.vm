@@ -1,0 +1,32 @@
+<form name="f" method="post">
+<table>
+  <tr>
+    <td>Module Id:</td><td><input name="moduleId" size="60"></td>
+  </tr>
+  <tr>
+    <td>Module Title:</td><td><input name="moduleTitle" size="60"></td>
+  </tr>
+  <tr>
+    <td>Module Class:</td><td>
+    <select name="moduleClass">
+      <option value="lebah.app.HtmlContentModule">HTML Container</option>
+      <option value="lebah.app.HtmlProxyModule">HTML Proxy</option>
+      <option value="lebah.app.HtmlProxyAjaxModule">HTML Proxy Ajax</option>
+    </select>
+    </td>
+  </tr>
+  <tr>
+    <td>Module Group:</td><td><input name="moduleGroup" value="ANON"></td>
+  </tr>
+  <tr>
+     <td>URL:</td><td ><input name="url" size="60" value=""></td>
+  </tr>   
+</table>
+</form>
+<script>
+
+
+
+</script>    
+      
+    
