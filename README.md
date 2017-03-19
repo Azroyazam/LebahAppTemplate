@@ -2,7 +2,7 @@
 
 1. This is a template for developing web applications, based on the Lebah Framework.
 
-2. An Eclipse project that can be right away open with your Eclipse IDE.
+2. This repository contains file structure of an Eclipse project so that you can right away open with Eclipse IDE.
 
 3. Contains example application that is using the LebahRecordTemplateModule to perform database driven web application.
 
