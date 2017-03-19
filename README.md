@@ -1,6 +1,6 @@
 # LebahAppTemplate
 
-1. A Java framework for developing web applications, based on the Lebah Framework.
+1. This is a template for developing web applications, based on the Lebah Framework.
 
 2. An Eclipse project that can be right away open with your Eclipse IDE.
 
