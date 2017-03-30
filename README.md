@@ -1,16 +1,22 @@
 # LebahAppTemplate
 
-1. This is a template for developing web applications, based on the Lebah Framework.
+1.  This is a Java based web-application framework. You can use this framework to develop a web application. This framework comes with pre-setup portal's data where you can right away open it in the web browser, but first you need to open this as an Eclipse project.
 
-2. This repository contains file structure of an Eclipse project so that you can right away open with Eclipse IDE.
+    I am using Derby as database. You can find the derby data inside the derby folder (IMPORTANT: Don't modify or delete any files in this folder). You should copy this folder into your preferred location in your file system, and then set the url connection in the dbconnection.properties file to the location of your derby database.
 
-3. Contains example application that is using the LebahRecordTemplateModule to perform database driven web application.
+    The database url value initially is pointing to my derby folder as below:
 
-4. About Lebah Framework
+    url=jdbc:derby:/Users/Admin/Documents/workspace1/lebah4/derby/db;create=true
 
-    Lebah is a lightweight web-based application that act as a container for other applications called portlets. 
+    Replace the "/Users/Admin/Documents/workspace1/lebah4/" to the location of where your derby folder located, for example if you are using Windows environment, and the you copied derby folder into "c:/MyData", then your database url connection should be like this:
 
-    Lebah can be used as a Content Management System – create or edit content directly on the portal's page, online file explorer to create, edit and manage files (html, images and others), online community tools such as discussion forum, news and chatbox, and different styles of page layout to choose from together with various themes (or skins) to change the appearance of the webpages.
+    url=jdbc:derby:c:/MyData/derby/db;create=true
 
-    Java programmers can use the LeBAH framework to create web-based applications. It provides an Ajax-based module which implement a simple to use Ajax functions, so that web developers can easily develop an application using Ajax calls.
+3. This repository contains example application that is using the LebahRecordTemplateModule to perform database driven web application, and this example is using the JAVA PERSISTENCE API to work with the database.
+
+
+I will update this README again...
+
+Thank You.<br/>
+Shamsul Bahrin b Abd Mutalib
 
